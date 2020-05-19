@@ -28,6 +28,7 @@ packages:
   - lcov
   - gcovr
   - zstd
+  - wget
 sources:
   - https://git.sr.ht/~alextee/zrythm
   - https://git.sr.ht/~alextee/zrythm-installer

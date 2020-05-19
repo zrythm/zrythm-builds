@@ -37,4 +37,4 @@ secrets:
 tasks:
   - make: |
       cd zrythm-installer
-      make ubuntu1910
+      make ubuntu2004

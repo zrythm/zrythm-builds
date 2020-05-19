@@ -27,6 +27,7 @@ packages:
   - libzstd-dev
   - python3
   - xdg-utils
+  - wget
 sources:
   - https://git.sr.ht/~alextee/zrythm
   - https://git.sr.ht/~alextee/zrythm-installer

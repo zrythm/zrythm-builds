@@ -27,6 +27,7 @@ packages:
   - librubberband-dev
   - libzstd-dev
   - xdg-utils
+  - wget
 sources:
   - https://git.sr.ht/~alextee/zrythm
   - https://git.sr.ht/~alextee/zrythm-installer
