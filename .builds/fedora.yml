@@ -1,0 +1,39 @@
+image: fedora/32
+packages:
+  - gcc-c++
+  - gcc
+  - pkgconfig
+  - gtk3-devel
+  - python3
+  - libchromaprint-devel
+  - lilv-devel
+  - lv2-devel
+  - libsndfile-devel
+  - libyaml-devel
+  - libsamplerate-devel
+  - libzstd-devel
+  - gettext
+  - guile22-devel
+  - gtksourceview3-devel
+  - graphviz-devel
+  - suil-devel
+  - help2man
+  - alsa-lib-devel
+  - ladspa-devel
+  - fftw-devel
+  - meson
+  - help2man
+  - jack-audio-connection-kit-devel
+  - libX11-devel
+  - rubberband-devel
+  - xdg-utils
+sources:
+  - https://git.sr.ht/~alextee/zrythm
+  - https://git.sr.ht/~alextee/zrythm-installer
+  - https://github.com/mesonbuild/meson
+secrets:
+  - ffff20bf-6fd3-40d6-b26a-92f6c8dc1fcf
+tasks:
+  - make: |
+      cd zrythm-installer
+      make fedora32

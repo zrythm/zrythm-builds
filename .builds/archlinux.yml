@@ -1,0 +1,40 @@
+image: archlinux
+packages:
+  - meson
+  - gtk3
+  - chromaprint
+  - lilv
+  - libx11
+  - jack
+  - libsndfile
+  - libyaml
+  - libsamplerate
+  - alsa-lib
+  - fftw
+  - suil
+  - ffmpeg
+  - python
+  - gettext
+  - gtksourceview4
+  - sed
+  - ninja
+  - help2man
+  - python-sphinx
+  - ladspa
+  - lv2
+  - graphviz
+  - rubberband
+  - xdg-utils
+  - lcov
+  - gcovr
+  - zstd
+sources:
+  - https://git.sr.ht/~alextee/zrythm
+  - https://git.sr.ht/~alextee/zrythm-installer
+  - https://github.com/mesonbuild/meson
+secrets:
+  - ffff20bf-6fd3-40d6-b26a-92f6c8dc1fcf
+tasks:
+  - make: |
+      cd zrythm-installer
+      make archlinux
