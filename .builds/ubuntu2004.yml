@@ -29,6 +29,7 @@ packages:
   - libyaml-dev
   - librubberband-dev
   - libzstd-dev
+  - librsvg2-dev
   - python3
   - rsync
   - desktop-file-utils
@@ -52,5 +53,5 @@ tasks:
       make ubuntu2004
   - deploy: |
       zrythm-builds/scripts/push-package.sh \
-        "zrythm-installer/build/$(printf '%s' $(cd zrythm-installer && make pkg-filename-DEBIAN))" \
+        "zrythm-installer/build/debian10/$(printf '%s' $(cd zrythm-installer && make pkg-filename-DEBIAN))" \
         ubuntu2004

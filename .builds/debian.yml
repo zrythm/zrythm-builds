@@ -35,6 +35,7 @@ packages:
   - libsdl2-dev
   - lv2-dev
   - liblilv-dev
+  - librsvg2-dev
   - portaudio19-dev
   - tar
   - zip
@@ -52,5 +53,5 @@ tasks:
       make debian10
   - deploy: |
       zrythm-builds/scripts/push-package.sh \
-        "zrythm-installer/build/$(printf '%s' $(cd zrythm-installer && make pkg-filename-DEBIAN))" \
+        "zrythm-installer/build/debian10/$(printf '%s' $(cd zrythm-installer && make pkg-filename-DEBIAN))" \
         debian10

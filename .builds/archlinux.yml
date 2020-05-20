@@ -54,4 +54,6 @@ tasks:
         archlinux
       # deploy manuals
       PKG_VERSION=$(cd zrythm && printf "%s" "$(git describe --tags | sed 's/-/\.r/' | sed 's/v//g' | sed 's/-/\./')")
-      rsync --rsh="ssh -o StrictHostKeyChecking=no" -rP zrythm-installer/build/$PKG_VERSION/build/doc/user/en/latex/Zrythm.pdf srht@forum.zrythm.org:/home/srht/manual/Zrythm-$PKG_VERSION-en.pdf
+      for lang in en de fr ; do
+        rsync --rsh="ssh -o StrictHostKeyChecking=no" -rP "zrythm-installer/build/zrythm-$PKG_VERSION/build/doc/user/$lang/latex/Zrythm.pdf" "srht@forum.zrythm.org:/home/srht/manual/Zrythm-$PKG_VERSION-$lang.pdf"
+      done
