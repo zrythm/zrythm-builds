@@ -26,6 +26,12 @@ packages:
   - librubberband-dev
   - libzstd-dev
   - python3
+  - rsync
+  - desktop-file-utils
+  - libsdl2-dev
+  - lv2-dev
+  - liblilv-dev
+  - portaudio19-dev
   - zip
   - xdg-utils
   - wget
@@ -40,3 +46,7 @@ tasks:
       zrythm-builds/scripts/prepare.sh
       cd zrythm-installer
       make ubuntu1804
+  - deploy: |
+      zrythm-builds/scripts/push-package.sh \
+        "zrythm-installer/build/$(printf '%s' $(cd zrythm-installer && make pkg-filename-DEBIAN))" \
+        ubuntu1804

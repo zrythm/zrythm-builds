@@ -33,6 +33,7 @@ packages:
   - qt5-devel
   - SDL2-devel
   - xdg-utils
+  - rsync
   - tar
   - wget
 sources:
@@ -48,5 +49,5 @@ tasks:
       make fedora32
   - deploy: |
       zrythm-builds/scripts/push-package.sh \
-        zrythm-installer/build/$(printf "%s" make -C zrythm-installer pkg-filename-FEDORA32) \
+        "/home/build/rpmbuild/RPMS/x86_64/$(printf '%s' $(cd zrythm-installer && make pkg-filename-FEDORA32))" \
         fedora32

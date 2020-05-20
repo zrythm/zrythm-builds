@@ -31,6 +31,12 @@ packages:
   - libzstd-dev
   - python3
   - xdg-utils
+  - rsync
+  - desktop-file-utils
+  - libsdl2-dev
+  - lv2-dev
+  - liblilv-dev
+  - portaudio19-dev
   - zip
   - wget
 sources:
@@ -44,3 +50,7 @@ tasks:
       zrythm-builds/scripts/prepare.sh
       cd zrythm-installer
       make ubuntu1910
+  - deploy: |
+      zrythm-builds/scripts/push-package.sh \
+        "zrythm-installer/build/$(printf '%s' $(cd zrythm-installer && make pkg-filename-DEBIAN))" \
+        ubuntu1910
