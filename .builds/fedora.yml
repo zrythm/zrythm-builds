@@ -3,7 +3,6 @@ packages:
   - gcc-c++
   - gcc
   - pkgconfig
-  - gtk3-devel
   - python3
   - libchromaprint-devel
   - lilv-devel
@@ -14,6 +13,8 @@ packages:
   - libzstd-devel
   - gettext
   - guile22-devel
+  - gtk2-devel
+  - gtk3-devel
   - gtksourceview3-devel
   - graphviz-devel
   - suil-devel
@@ -24,9 +25,11 @@ packages:
   - meson
   - help2man
   - rpm-build
+  - portaudio-devel
   - jack-audio-connection-kit-devel
   - libX11-devel
   - rubberband-devel
+  - qt5-devel
   - SDL2-devel
   - xdg-utils
   - tar
@@ -41,4 +44,5 @@ tasks:
   - make: |
       cd zrythm-installer
       sed -i -e "s/ZRYTHM_VERSION=.*/ZRYTHM_VERSION=master/" Makefile
+      sed -i -e "s,/home/ansible,/home/build,g" Makefile
       make fedora32

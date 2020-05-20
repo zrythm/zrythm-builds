@@ -30,6 +30,7 @@ packages:
   - zstd
   - tar
   - zip
+  - unzip
   - wget
 sources:
   - https://git.sr.ht/~alextee/zrythm
