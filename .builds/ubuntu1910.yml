@@ -6,6 +6,7 @@ packages:
   - libsndfile1-dev
   - meson
   - debhelper
+  - devscripts
   - dpkg-dev
   - build-essential
   - ninja-build
@@ -40,6 +41,6 @@ secrets:
   - ffff20bf-6fd3-40d6-b26a-92f6c8dc1fcf
 tasks:
   - make: |
+      zrythm-builds/scripts/prepare.sh
       cd zrythm-installer
-      sed -i -e "s/ZRYTHM_VERSION=.*/ZRYTHM_VERSION=master/" Makefile
       make ubuntu1910
