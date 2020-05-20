@@ -3,6 +3,7 @@ packages:
   - libgtk-3-dev
   - libjack-dev
   - libsndfile1-dev
+  - debhelper
   - ninja-build
   - gettext
   - guile-2.2-dev
@@ -22,6 +23,7 @@ packages:
   - librubberband-dev
   - libzstd-dev
   - python3
+  - zip
   - xdg-utils
   - wget
 sources:

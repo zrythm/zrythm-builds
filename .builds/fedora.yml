@@ -23,10 +23,13 @@ packages:
   - fftw-devel
   - meson
   - help2man
+  - rpm-build
   - jack-audio-connection-kit-devel
   - libX11-devel
   - rubberband-devel
+  - SDL2-devel
   - xdg-utils
+  - tar
   - wget
 sources:
   - https://git.sr.ht/~alextee/zrythm

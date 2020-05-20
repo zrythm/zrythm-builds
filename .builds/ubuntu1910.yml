@@ -5,6 +5,7 @@ packages:
   #- liblilv-dev
   - libsndfile1-dev
   - meson
+  - debhelper
   - ninja-build
   - gettext
   - guile-2.2-dev
@@ -27,6 +28,7 @@ packages:
   - libzstd-dev
   - python3
   - xdg-utils
+  - zip
   - wget
 sources:
   - https://git.sr.ht/~alextee/zrythm
