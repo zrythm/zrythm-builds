@@ -11,5 +11,4 @@ PACKAGE=$1
 DISTRO=$2
 
 SSH_OPTS="ssh -o StrictHostKeyChecking=no"
-SERVER_PACKAGES_DIR="srht@forum.zrythm.org:/home/srht/packages/"
 rsync --rsh="$SSH_OPTS" -rP $PACKAGE srht@forum.zrythm.org:/home/srht/packages/$DISTRO/

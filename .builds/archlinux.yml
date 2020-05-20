@@ -52,3 +52,6 @@ tasks:
       zrythm-builds/scripts/push-package.sh \
         "zrythm-installer/build/archlinux/$(printf '%s' $(cd zrythm-installer && make pkg-filename-ARCH))" \
         archlinux
+      # deploy manuals
+      PKG_VERSION=$(cd zrythm && printf "%s" "$(git describe --tags | sed 's/-/\.r/' | sed 's/v//g' | sed 's/-/\./')")
+      rsync --rsh="ssh -o StrictHostKeyChecking=no" -rP zrythm-installer/build/$PKG_VERSION/build/doc/user/en/latex/Zrythm.pdf srht@forum.zrythm.org:/home/srht/manual/Zrythm-$PKG_VERSION-en.pdf
