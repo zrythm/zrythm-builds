@@ -38,7 +38,7 @@ sources:
   - https://git.sr.ht/~alextee/zrythm-installer
   - https://github.com/mesonbuild/meson
 secrets:
-  - ffff20bf-6fd3-40d6-b26a-92f6c8dc1fcf
+  - 063cb70d-6da6-492a-b530-04edc07651ba
 tasks:
   - make: |
       zrythm-builds/scripts/prepare.sh
