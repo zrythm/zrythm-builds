@@ -37,4 +37,5 @@ secrets:
 tasks:
   - make: |
       cd zrythm-installer
+      sed -i -e "s/ZRYTHM_VERSION=.*/ZRYTHM_VERSION=master/" Makefile
       make ubuntu1910
