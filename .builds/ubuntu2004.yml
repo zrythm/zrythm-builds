@@ -6,6 +6,8 @@ packages:
   - libsndfile1-dev
   - meson
   - debhelper
+  - dpkg-dev
+  - build-essential
   - ninja-build
   - gettext
   - guile-2.2-dev

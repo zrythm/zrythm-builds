@@ -4,6 +4,8 @@ packages:
   - libjack-dev
   - libsndfile1-dev
   - debhelper
+  - dpkg-dev
+  - build-essential
   - ninja-build
   - gettext
   - guile-2.2-dev
