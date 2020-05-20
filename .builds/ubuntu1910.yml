@@ -4,7 +4,7 @@ packages:
   - libjack-dev
   #- liblilv-dev
   - libsndfile1-dev
-  #- meson
+  - meson
   - ninja-build
   - gettext
   - guile-2.2-dev
