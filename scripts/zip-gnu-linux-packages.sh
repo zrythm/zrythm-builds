@@ -28,13 +28,13 @@ wget_package_and_plugins () {
 while [ true ]
 do
   sleep 12
-  for lang in $LINGUAS ; do
+  for lang in $linguas ; do
     remote_file_exists \
       "manual/Zrythm-$ZRYTHM_PKG_VERSION-$lang.pdf" || \
       continue
   done
   for distro in $DISTROS ; do
-    remote_package_exists $distro || continue
+    remote_pkg_exists $distro || continue
   done
   break
 done
@@ -45,7 +45,7 @@ for distro in $DISTROS ; do
 done
 
 # get manual
-for lang in $LINGUAS ; do
+for lang in $linguas ; do
   $SCP \
     "$REMOTE_IP:$REMOTE_HOME/manual/Zrythm-$ZRYTHM_PKG_VERSION-$lang.pdf" \
     zrythm-installer/

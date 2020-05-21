@@ -45,18 +45,12 @@ secrets:
   - 063cb70d-6da6-492a-b530-04edc07651ba
 tasks:
   - make: |
-      . zrythm-builds/scripts/common.sh.in
-      if [ ! is_tag -a remote_file_exists archlinux ] ; then
-        exit 0 ;
-      fi
-      zrythm-builds/scripts/prepare.sh
-      cd zrythm-installer
-      make archlinux
+      zrythm-builds/scripts/make-pkg.sh archlinux
   - deploy: |
+      # deploy packages
       zrythm-builds/scripts/push-package.sh archlinux
       # deploy manuals
-      . zrythm-builds/scripts/common.sh.in
-      for lang in $LINGUAS ; do
+      for lang in $linguas ; do
         $RSYNC -rP \
           "zrythm-installer/build/zrythm-$ZRYTHM_PKG_VERSION/build/doc/user/$lang/latex/Zrythm.pdf" \
           "$REMOTE_IP:$REMOTE_HOME/manual/Zrythm-$ZRYTHM_PKG_VERSION-$lang.pdf"

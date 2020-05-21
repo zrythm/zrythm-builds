@@ -44,8 +44,6 @@ secrets:
   - 063cb70d-6da6-492a-b530-04edc07651ba
 tasks:
   - make: |
-      zrythm-builds/scripts/prepare.sh
-      cd zrythm-installer
-      make fedora32
+      zrythm-builds/scripts/make-pkg.sh fedora32
   - deploy: |
       zrythm-builds/scripts/push-package.sh fedora32
