@@ -3,7 +3,11 @@
 source ~/.sendowl_credentials
 source zrythm-builds/scripts/common.sh.in
 
-res_file=res.json
+# generic response holder
+res_json=res.json
+
+# current bundle
+bundle_json=bundle.json
 
 get_res () {
   suffix=$1
@@ -12,8 +16,11 @@ get_res () {
 }
 
 bundle_exists () {
+}
+
+fetch_bundle () {
   get_res "packages/search?term=$zrythm_pkg_ver"
-  cat $res_file | jq '.[0]' && return 1 || return 0
+  cat $res_file | jq '.[0].package' > $bundle_json && [ "$(cat $bundle_json)" != "null" ] || rm -rf $bundle_json
 }
 
 # check if a bundle already exists for this version
