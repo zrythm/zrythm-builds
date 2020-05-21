@@ -14,8 +14,15 @@ sed -i -e "s,MXE_ZPLUGINS_CLONE_PATH=.*,MXE_ZPLUGINS_CLONE_PATH=$(pwd)/zplugins,
 sed -i -e "s,MXE_GTK3_CLONE_PATH=.*,MXE_GTK3_CLONE_PATH=$(pwd)/gtk,g" $makefile
 sed -i -e "s,BREEZE_DARK_PATH=.*,BREEZE_DARK_PATH=$(pwd)/breeze-icons/icons-dark,g" $makefile
 
-$(cd "$(pwd)/zplugins" && meson subprojects download)
-$(cd "$(pwd)/gtk" && git checkout "3.24.18" && meson subprojects download)
+if [ "$distro" = "archlinux" ] || [ "$distro" = "windows10" ]; then
+  pushd zplugins
+  meson subprojects download
+  popd
+  pushd gtk
+  git checkout "3.24.18"
+  meson subprojects download
+  popd
+fi
 
 # skip if file already exists and not a tag
 source zrythm-builds/scripts/common.sh.in
