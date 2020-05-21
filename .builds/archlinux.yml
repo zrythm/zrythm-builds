@@ -40,7 +40,7 @@ packages:
   - ruby
   - gperf
   - intltool
-  - 7za
+  - p7zip
   - wget
 sources:
   - https://git.sr.ht/~alextee/zrythm
