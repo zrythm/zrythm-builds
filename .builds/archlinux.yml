@@ -22,6 +22,7 @@ packages:
   - help2man
   - python-sphinx
   - ladspa
+  - jq
   - lv2
   - graphviz
   - rubberband

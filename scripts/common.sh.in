@@ -56,7 +56,7 @@ get_package_filename () {
 
 # returns if the file exists in the remote home dir
 remote_file_exists () {
-  $ssh_cmd $remote_ip [[ -f "$remote_home/$1" ]]
+  $ssh_cmd $remote_ip [ -f "$remote_home/$1" ]
 }
 
 # whether a package exists on the server
