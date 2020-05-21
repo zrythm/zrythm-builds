@@ -57,25 +57,39 @@ tasks:
   - make-archlinux: |
       zrythm-builds/scripts/make-pkg.sh archlinux
   - deploy-archlinux: |
-      zrythm-builds/scripts/push-pkg.sh archlinux
+      distro=archlinux
+      zrythm-builds/scripts/push-pkg.sh $distro
+      # deploy manuals
+      source scripts/common.sh.in
+      for lang in $linguas ; do
+        $scp_cmd \
+          "zrythm-installer/build/zrythm-$zrythm_pkg_ver/build/doc/user/$lang/latex/Zrythm.pdf" \
+          "$remote_ip:$remote_home/manual/Zrythm-$zrythm_pkg_ver-$lang.pdf"
+      done
   - make-windows: |
-      # enable multilib
+      # install wine
       sudo sh -c 'echo "[multilib]" >> /etc/pacman.conf'
       sudo sh -c 'echo "Include = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf'
       sudo pacman -Syu --noconfirm
       sudo pacman -S --noconfirm wine
+      wget https://www.zrythm.org/downloads/inno-setup-bin.zip
+      # install inno
+      unzip inno-setup-bin.zip -d ~/
+      # create manuals zip
+      distro=windows10
+      source scripts/common.sh.in
+      for lang in $linguas ; do
+        $scp_cmd \
+          "$remote_ip:$remote_home/manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
+          "zrythm-installer/build/"
+      done
+      pushd "zrythm-installer/build"
+      zip user-manual.zip ./*.pdf
+      popd
       zrythm-builds/scripts/make-pkg.sh windows10
   - deploy-windows: |
       zrythm-builds/scripts/push-pkg.sh windows10
   - deploy: |
-      # deploy packages
-      zrythm-builds/scripts/push-pkg.sh archlinux
-      # deploy manuals
-      for lang in $linguas ; do
-        $rsync_cmd -rP \
-          "zrythm-installer/build/zrythm-$zrythm_pkg_ver/build/doc/user/$lang/latex/Zrythm.pdf" \
-          "$remote_ip:$remote_home/manual/Zrythm-$zrythm_pkg_ver-$lang.pdf"
-      done
       zrythm-builds/scripts/deploy-windows-installer.sh archlinux
   - gen-gnu-linux-installers: |
       timeout 1800 zrythm-builds/scripts/zip-gnu-linux-packages.sh
