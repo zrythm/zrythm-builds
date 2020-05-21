@@ -71,5 +71,4 @@ tasks:
   - deploy-to-server: |
       zrythm-builds/scripts/deploy-installers.sh
   - deploy-to-sendowl: |
-      set -e
-      . ~/.sendowl_credentials
+      zrythm-builds/scripts/send-to-sendowl.sh
