@@ -11,16 +11,16 @@ wget_package_and_plugins () {
   pkg_trial_filename=$(get_package_filename $pkg_type "-trial")
 
   # get package
-  $SCP $REMOTE_IP:$REMOTE_PACKAGES/$distro/$pkg_filename \
+  $scp_cmd $remote_ip:$remote_packages/$distro/$pkg_filename \
     zrythm-installer/artifacts/$distro/
   if is_tag ; then
-    $SCP \
-      $REMOTE_IP:$REMOTE_PACKAGES/$distro/$pkg_trial_filename \
+    $scp_cmd \
+      $remote_ip:$remote_packages/$distro/$pkg_trial_filename \
       zrythm-installer/artifacts/$distro/
   fi
 
   # get plugins
-  $SCP -r $REMOTE_IP:$REMOTE_PACKAGES/$distro/zplugins \
+  $scp_cmd -r $remote_ip:$remote_packages/$distro/zplugins \
     zrythm-installer/artifacts/$distro/
 }
 
@@ -30,31 +30,31 @@ do
   sleep 12
   for lang in $linguas ; do
     remote_file_exists \
-      "manual/Zrythm-$ZRYTHM_PKG_VERSION-$lang.pdf" || \
+      "manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" || \
       continue
   done
-  for distro in $DISTROS ; do
+  for distro in $distros ; do
     remote_pkg_exists $distro || continue
   done
   break
 done
 
 # move packages/plugins to where they are expected
-for distro in $DISTROS ; do
+for distro in $distros ; do
   wget_package_and_plugins $distro
 done
 
 # get manual
 for lang in $linguas ; do
-  $SCP \
-    "$REMOTE_IP:$REMOTE_HOME/manual/Zrythm-$ZRYTHM_PKG_VERSION-$lang.pdf" \
+  $scp_cmd \
+    "$remote_ip:$remote_home/manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
     zrythm-installer/
 done
 
 # make zip
 make -C zrythm-installer \
-  zrythm-$ZRYTHM_PKG_VERSION-installer.zip
+  zrythm-$zrythm_pkg_ver-installer.zip
 if is_tag ; then
   make -C zrythm-installer \
-    zrythm-trial-$ZRYTHM_PKG_VERSION-installer.zip
+    zrythm-trial-$zrythm_pkg_ver-installer.zip
 fi

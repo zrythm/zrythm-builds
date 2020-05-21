@@ -46,16 +46,19 @@ secrets:
 tasks:
   - make: |
       zrythm-builds/scripts/make-pkg.sh archlinux
+  - make-windows: |
+      zrythm-builds/scripts/make-pkg.sh windows10
   - deploy: |
       # deploy packages
       zrythm-builds/scripts/push-package.sh archlinux
       # deploy manuals
       for lang in $linguas ; do
-        $RSYNC -rP \
-          "zrythm-installer/build/zrythm-$ZRYTHM_PKG_VERSION/build/doc/user/$lang/latex/Zrythm.pdf" \
-          "$REMOTE_IP:$REMOTE_HOME/manual/Zrythm-$ZRYTHM_PKG_VERSION-$lang.pdf"
+        $rsync_cmd -rP \
+          "zrythm-installer/build/zrythm-$zrythm_pkg_ver/build/doc/user/$lang/latex/Zrythm.pdf" \
+          "$remote_ip:$remote_home/manual/Zrythm-$zrythm_pkg_ver-$lang.pdf"
       done
-  - package-all: |
+      zrythm-builds/scripts/deploy-windows-installer.sh archlinux
+  - gen-gnu-linux-installers: |
       timeout 1800 zrythm-builds/scripts/zip-gnu-linux-packages.sh
   - deploy-to-server: |
       timeout 1800 zrythm-builds/scripts/deploy-installers.sh

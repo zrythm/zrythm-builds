@@ -1,18 +1,18 @@
 #! /bin/bash
 
-DISTROS="archlinux debian10 fedora32 ubuntu1804 ubuntu1910 ubuntu2004"
+distros="archlinux debian10 fedora32 ubuntu1804 ubuntu1910 ubuntu2004"
 linguas="en de fr"
-SSH_OPTS="-o StrictHostKeyChecking=no"
-RSYNC="rsync --rsh=\"ssh $SSH_OPTS\""
-SSH="ssh -q $SSH_OPTS"
-SCP="scp $SSH_OPTS"
-REMOTE_IP=srht@forum.zrythm.org
-REMOTE_HOME=/home/srht
-REMOTE_PACKAGES=$REMOTE_HOME/packages
-ZRYTHM_PKG_VERSION=$(cd zrythm && printf '%s' "$(git describe --tags | sed 's/-/\.r/' | sed 's/v//g' | sed 's/-/\./')")
+ssh_opts="-o StrictHostKeyChecking=no"
+rsync_cmd="rsync --rsh=\"ssh $ssh_opts\""
+ssh_cmd="ssh -q $ssh_opts"
+scp_cmd="scp $ssh_opts"
+remote_ip=srht@forum.zrythm.org
+remote_home=/home/srht
+remote_packages=$remote_home/packages
+zrythm_pkg_ver=$(cd zrythm && printf '%s' "$(git describe --tags | sed 's/-/\.r/' | sed 's/v//g' | sed 's/-/\./')")
 
 is_tag () {
-  [[ "$ZRYTHM_PKG_VERSION" != *r* ]]
+  [[ "$zrythm_pkg_ver" != *r* ]]
 }
 
 distro_to_pkg_type () {
@@ -39,16 +39,17 @@ get_package_filename () {
 
 # returns if the file exists in the remote home dir
 remote_file_exists () {
-  [ $SSH $REMOTE_IP [[ -f "$REMOTE_HOME/$1" ]] ]
+  $ssh_cmd $remote_ip [[ -f "$remote_home/$1" ]]
 }
 
 # whether a package exists on the server
 remote_pkg_exists () {
   distro=$1
   pkg_type=$(distro_to_pkg_type $distro)
-  [ remote_file_exists packages/$distro/$(get_package_filename $pkg_type) ]
+  remote_file_exists packages/$distro/$(get_package_filename $pkg_type)
 }
 
 should_skip_packaging () {
-  [ ! is_tag -a remote_pkg_exists $distro ]
+  distro=$1
+  ! is_tag && remote_pkg_exists "$distro"
 }

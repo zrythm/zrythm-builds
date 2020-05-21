@@ -17,18 +17,18 @@ pkg_filename=$(get_package_filename $distro)
 pkg_trial_filename=$(get_package_filename $distro "-trial")
 
 # deploy normal package
-$RSYNC \
+$rsync_cmd \
   -rP zrythm-installer/build/$distro/$pkg_filename \
-  $REMOTE_IP:$REMOTE_PACKAGES/$distro/
+  $remote_ip:$remote_packages/$distro/
 
 # also deploy trial if tag
 if is_tag ; then
-  $RSYNC \
+  $rsync_cmd \
     -rP zrythm-installer/build/$distro/$pkg_trial_filename \
-    $REMOTE_IP:$REMOTE_PACKAGES/$distro/
+    $remote_ip:$remote_packages/$distro/
 fi
 
 # deploy plugins
-$SCP -r \
+$scp_cmd -r \
   zrythm-installer/build/$distro/zplugins \
-  $REMOTE_IP:$REMOTE_PACKAGES/$distro/
+  $remote_ip:$remote_packages/$distro/
