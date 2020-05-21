@@ -1,7 +1,5 @@
 #! /bin/bash
 
-set -euo pipefail
-
 distro=$1
 
 source zrythm-builds/scripts/common.sh.in

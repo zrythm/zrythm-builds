@@ -1,7 +1,5 @@
 #! /bin/bash
 
-set -euo pipefail
-
 source zrythm-builds/scripts/common.sh.in
 
 wget_package_and_plugins () {

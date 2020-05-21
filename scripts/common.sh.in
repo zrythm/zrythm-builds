@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -exuo pipefail
+
 distros="archlinux debian10 fedora32 ubuntu1804 ubuntu1910 ubuntu2004"
 linguas="en de fr"
 ssh_opts="-o StrictHostKeyChecking=no"
@@ -32,7 +34,9 @@ distro_to_pkg_type () {
 
 get_package_filename () {
   pkg_type=$1
+  set +u
   trial=$2
+  set -u
   printf '%s' \
     $(cd zrythm-installer && make pkg$trial-filename-$pkg_type)
 }

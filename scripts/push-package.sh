@@ -2,8 +2,6 @@
 
 # this script pushes the given GNU/Linux package to the server
 
-set -euo pipefail
-
 distro=$1
 
 source zrythm-builds/scripts/common.sh.in
