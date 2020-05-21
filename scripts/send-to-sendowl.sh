@@ -1,5 +1,4 @@
 #! /bin/bash
 
-makefile=zrythm-installer/Makefile
-
+source ~/.sendowl_credentials
 source zrythm-builds/scripts/common.sh.in

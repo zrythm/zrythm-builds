@@ -1,10 +1,16 @@
 #! /bin/bash
 
-set -exuo pipefail
+set -euo pipefail
+
+if [[ "$distro" = "osx" ]]; then
+  ssh_opts="-o StrictHostKeyChecking=no -i $id_rsa_path"
+else
+  ssh_opts="-o StrictHostKeyChecking=no"
+fi
+echo "using ssh opts: $ssh_opts"
 
 distros="archlinux debian10 fedora32 ubuntu1804 ubuntu1910 ubuntu2004"
 linguas="en de fr"
-ssh_opts="-o StrictHostKeyChecking=no"
 rsync_cmd="rsync --rsh=\"ssh $ssh_opts\""
 ssh_cmd="ssh -q $ssh_opts"
 scp_cmd="scp $ssh_opts"

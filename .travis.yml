@@ -17,7 +17,11 @@ before_install:
   git clone https://git.sr.ht/~alextee/zrythm
   git clone https://git.sr.ht/~alextee/zrythm-builds
   git clone https://git.sr.ht/~alextee/zrythm-installer
+  git clone https://github.com/KDE/breeze-icons
   git clone https://github.com/mesonbuild/meson
+  echo "$SSH_PRIVATE_KEY" > tmp_rsa
+  openssl base64 -d -A < tmp_rsa > id_rsa
+  grep -q "BEGIN RSA PRIVATE KEY" id_rsa
 
 script:
 - |-

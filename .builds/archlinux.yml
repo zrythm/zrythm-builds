@@ -47,6 +47,7 @@ sources:
   - https://git.sr.ht/~alextee/mxe
   - https://git.sr.ht/~alextee/zrythm-installer
   - https://github.com/mesonbuild/meson
+  - https://github.com/KDE/breeze-icons
 secrets:
   - 063cb70d-6da6-492a-b530-04edc07651ba
 tasks:
