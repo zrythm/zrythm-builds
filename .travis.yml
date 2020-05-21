@@ -9,13 +9,16 @@ before_install:
   set -e
   brew update
   # use || true because it returns 1
-  brew install fftw meson libsamplerate sdl2 chromaprint libgtop lilv librsvg gtk+3 guile gtksourceview4 graphviz zstd || true
+  brew install fftw meson libsamplerate sdl2 chromaprint libgtop lilv librsvg adwaita-icon-theme gtk+3 guile gtksourceview4 graphviz zstd npm || true
   brew link --overwrite python
+  npm install -g appdmg
+  pwd
+  git clone https://git.sr.ht/~alextee/mxe
+  git clone https://git.sr.ht/~alextee/zrythm-builds
+  git clone https://git.sr.ht/~alextee/zrythm-installer
+  git clone https://github.com/mesonbuild/meson
 
 script:
 - |-
   set -e
-  meson build -Dsdl=enabled -Drtaudio=auto -Drtmidi=auto -Denable-tests=true -Dwith-manpage=false
-  ninja -C build
-  ninja -C build test
-  sudo ninja -C build install
+  zrythm-builds/scripts/make-pkg.sh osx

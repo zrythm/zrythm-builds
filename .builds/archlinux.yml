@@ -36,9 +36,15 @@ packages:
   - zip
   - unzip
   - rsync
+  - lzip
+  - ruby
+  - gperf
+  - intltool
+  - 7za
   - wget
 sources:
   - https://git.sr.ht/~alextee/zrythm
+  - https://git.sr.ht/~alextee/mxe
   - https://git.sr.ht/~alextee/zrythm-installer
   - https://github.com/mesonbuild/meson
 secrets:
@@ -61,7 +67,7 @@ tasks:
   - gen-gnu-linux-installers: |
       timeout 1800 zrythm-builds/scripts/zip-gnu-linux-packages.sh
   - deploy-to-server: |
-      timeout 1800 zrythm-builds/scripts/deploy-installers.sh
+      zrythm-builds/scripts/deploy-installers.sh
   - deploy-to-sendowl: |
       set -e
       . ~/.sendowl_credentials
