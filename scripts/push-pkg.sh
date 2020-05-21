@@ -3,6 +3,7 @@
 # this script pushes the given GNU/Linux package to the server
 
 distro=$1
+id_rsa_path=$(pwd)/id_rsa
 
 source zrythm-builds/scripts/common.sh.in
 
@@ -13,20 +14,26 @@ fi
 
 pkg_filename=$(get_package_filename $distro)
 pkg_trial_filename=$(get_package_filename $distro "-trial")
+pkg_dirname="build"
+if [ "$distro" = "osx" ]; then
+  pkg_dirname="artifacts"
+fi
 
 # deploy normal package
-$rsync_cmd \
-  -rP zrythm-installer/build/$distro/$pkg_filename \
+$scp_cmd \
+  zrythm-installer/$pkg_dirname/$distro/$pkg_filename \
   $remote_ip:$remote_packages/$distro/
 
 # also deploy trial if tag
 if is_tag ; then
-  $rsync_cmd \
-    -rP zrythm-installer/build/$distro/$pkg_trial_filename \
+  $scp_cmd \
+    zrythm-installer/$pkg_dirname/$distro/$pkg_trial_filename \
     $remote_ip:$remote_packages/$distro/
 fi
 
 # deploy plugins
-$scp_cmd -r \
-  zrythm-installer/build/$distro/zplugins \
-  $remote_ip:$remote_packages/$distro/
+if [ "$distro" = "osx" ]; then
+  $scp_cmd -r \
+    zrythm-installer/$pkg_dirname/$distro/zplugins \
+    $remote_ip:$remote_packages/$distro/
+fi

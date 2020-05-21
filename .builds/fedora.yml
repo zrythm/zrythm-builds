@@ -46,4 +46,4 @@ tasks:
   - make: |
       zrythm-builds/scripts/make-pkg.sh fedora32
   - deploy: |
-      zrythm-builds/scripts/push-package.sh fedora32
+      zrythm-builds/scripts/push-pkg.sh fedora32

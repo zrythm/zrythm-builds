@@ -28,3 +28,4 @@ script:
 - |-
   set -e
   zrythm-builds/scripts/make-pkg.sh osx
+  zrythm-builds/scripts/push-pkg.sh osx

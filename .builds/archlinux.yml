@@ -58,7 +58,7 @@ tasks:
       zrythm-builds/scripts/make-pkg.sh windows10
   - deploy: |
       # deploy packages
-      zrythm-builds/scripts/push-package.sh archlinux
+      zrythm-builds/scripts/push-pkg.sh archlinux
       # deploy manuals
       for lang in $linguas ; do
         $rsync_cmd -rP \

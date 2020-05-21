@@ -50,4 +50,4 @@ tasks:
   - make: |
       zrythm-builds/scripts/make-pkg.sh debian10
   - deploy: |
-      zrythm-builds/scripts/push-package.sh debian10
+      zrythm-builds/scripts/push-pkg.sh debian10

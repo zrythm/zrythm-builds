@@ -46,4 +46,4 @@ tasks:
   - make: |
       zrythm-builds/scripts/make-pkg.sh ubuntu1804
   - deploy: |
-      zrythm-builds/scripts/push-package.sh ubuntu1804
+      zrythm-builds/scripts/push-pkg.sh ubuntu1804
