@@ -57,15 +57,7 @@ tasks:
   - make-archlinux: |
       zrythm-builds/scripts/make-pkg.sh archlinux
   - deploy-archlinux: |
-      distro=archlinux
-      zrythm-builds/scripts/push-pkg.sh $distro
-      # deploy manuals
-      source scripts/common.sh.in
-      for lang in $linguas ; do
-        $scp_cmd \
-          "zrythm-installer/build/zrythm-$zrythm_pkg_ver/build/doc/user/$lang/latex/Zrythm.pdf" \
-          "$remote_ip:$remote_home/manual/Zrythm-$zrythm_pkg_ver-$lang.pdf"
-      done
+      zrythm-builds/scripts/push-pkg.sh archlinux
   - make-windows: |
       # install wine
       sudo sh -c 'echo "[multilib]" >> /etc/pacman.conf'
@@ -77,11 +69,12 @@ tasks:
       unzip inno-setup-bin.zip -d ~/
       # create manuals zip
       distro=windows10
-      source scripts/common.sh.in
+      source zrythm-builds/scripts/common.sh.in
+      mkdir -p zrythm-installer/build
       for lang in $linguas ; do
         $scp_cmd \
           "$remote_ip:$remote_home/manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
-          "zrythm-installer/build/"
+          zrythm-installer/build/Zrythm-$zrythm_pkg_ver-$lang.pdf
       done
       pushd "zrythm-installer/build"
       zip user-manual.zip ./*.pdf

@@ -12,7 +12,7 @@ sed -i -e "s,ARCH_MXE_ROOT=.*,ARCH_MXE_ROOT=$(pwd)/mxe,g" $makefile
 sed -i -e "s,MXE_ZPLUGINS_CLONE_PATH=.*,MXE_ZPLUGINS_CLONE_PATH=$(pwd)/zplugins,g" $makefile
 sed -i -e "s,MXE_GTK3_CLONE_PATH=.*,MXE_GTK3_CLONE_PATH=$(pwd)/gtk,g" $makefile
 sed -i -e "s,BREEZE_DARK_PATH=.*,BREEZE_DARK_PATH=$(pwd)/breeze-icons/icons-dark,g" $makefile
-sed -i -e "0,90s,/home/ansible,/home/build,g" $makefile
+sed -i -e "1,92s,/home/ansible,/home/build,g" $makefile
 
 if [ "$distro" = "archlinux" ] || [ "$distro" = "windows10" ]; then
   pushd zrythm

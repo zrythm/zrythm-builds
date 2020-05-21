@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# this script pushes the given GNU/Linux package to the server
+# this script pushes the given package/installer to the server
 
 distro=$1
 id_rsa_path=$(pwd)/id_rsa
@@ -29,6 +29,15 @@ if is_tag ; then
   $scp_cmd \
     zrythm-installer/$pkg_dirname/$distro/$pkg_trial_filename \
     $remote_ip:$remote_packages/$distro/
+fi
+
+# if arch, also deploy manuals
+if [ "$distro" = "archlinux" ]; then
+  for lang in $linguas ; do
+    $scp_cmd \
+      "zrythm-installer/build/zrythm-$zrythm_pkg_ver/build/doc/user/$lang/latex/Zrythm.pdf" \
+      "$remote_ip:$remote_home/manual/Zrythm-$zrythm_pkg_ver-$lang.pdf"
+  done
 fi
 
 # deploy plugins
