@@ -54,10 +54,19 @@ sources:
 secrets:
   - 063cb70d-6da6-492a-b530-04edc07651ba
 tasks:
-  - make: |
+  - make-archlinux: |
       zrythm-builds/scripts/make-pkg.sh archlinux
+  - deploy-archlinux: |
+      zrythm-builds/scripts/push-pkg.sh archlinux
   - make-windows: |
+      # enable multilib
+      sudo sh -c 'echo "[multilib]" >> /etc/pacman.conf'
+      sudo sh -c 'echo "Include = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf'
+      sudo pacman -Syu --noconfirm
+      sudo pacman -S --noconfirm wine
       zrythm-builds/scripts/make-pkg.sh windows10
+  - deploy-windows: |
+      zrythm-builds/scripts/push-pkg.sh windows10
   - deploy: |
       # deploy packages
       zrythm-builds/scripts/push-pkg.sh archlinux
@@ -70,7 +79,7 @@ tasks:
       zrythm-builds/scripts/deploy-windows-installer.sh archlinux
   - gen-gnu-linux-installers: |
       timeout 1800 zrythm-builds/scripts/zip-gnu-linux-packages.sh
-  - deploy-to-server: |
+  - deploy-gnu-linux-installers-to-server: |
       zrythm-builds/scripts/deploy-installers.sh
   - deploy-to-sendowl: |
       zrythm-builds/scripts/send-to-sendowl.sh
