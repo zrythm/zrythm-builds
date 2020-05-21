@@ -45,6 +45,10 @@ secrets:
   - 063cb70d-6da6-492a-b530-04edc07651ba
 tasks:
   - make: |
+      . zrythm-builds/scripts/common.sh.in
+      if [ ! is_tag -a remote_file_exists archlinux ] ; then
+        exit 0 ;
+      fi
       zrythm-builds/scripts/prepare.sh
       cd zrythm-installer
       make archlinux
@@ -60,7 +64,7 @@ tasks:
   - package-all: |
       timeout 1800 zrythm-builds/scripts/zip-gnu-linux-packages.sh
   - deploy-to-server: |
-      echo "todo"
+      timeout 1800 zrythm-builds/scripts/deploy-installers.sh
   - deploy-to-sendowl: |
       set -e
       . ~/.sendowl_credentials

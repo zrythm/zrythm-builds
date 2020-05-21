@@ -4,18 +4,6 @@ set -e
 
 source zrythm-builds/scripts/common.sh.in
 
-# returns if the file exists
-file_exists () {
-  $SSH $REMOTE_IP [[ -f "$REMOTE_HOME/$1" ]]
-}
-
-# macro to check if package exists
-package_exists () {
-  distro=$1
-  pkg_type=$(distro_to_pkg_type $distro)
-  file_exists packages/$distro/$(get_package_filename $pkg_type)
-}
-
 wget_package_and_plugins () {
   distro=$1
   pkg_type=$(distro_to_pkg_type $distro)
@@ -41,12 +29,12 @@ while [ true ]
 do
   sleep 12
   for lang in $LINGUAS ; do
-    file_exists \
+    remote_file_exists \
       "manual/Zrythm-$ZRYTHM_PKG_VERSION-$lang.pdf" || \
       continue
   done
   for distro in $DISTROS ; do
-    package_exists $distro || continue
+    remote_package_exists $distro || continue
   done
   break
 done

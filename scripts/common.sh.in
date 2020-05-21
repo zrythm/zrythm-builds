@@ -1,7 +1,7 @@
 #! /bin/bash
 
-DISTROS=archlinux debian10 fedora32 ubuntu1804 ubuntu1910 ubuntu2004
-LINGUAS=en de fr
+DISTROS="archlinux debian10 fedora32 ubuntu1804 ubuntu1910 ubuntu2004"
+LINGUAS="en de fr"
 SSH_OPTS="-o StrictHostKeyChecking=no"
 RSYNC="rsync --rsh=\"ssh $SSH_OPTS\""
 SSH="ssh -q $SSH_OPTS"
@@ -10,7 +10,10 @@ REMOTE_IP=srht@forum.zrythm.org
 REMOTE_HOME=/home/srht
 REMOTE_PACKAGES=$REMOTE_HOME/packages
 ZRYTHM_PKG_VERSION=$(cd zrythm && printf '%s' "$(git describe --tags | sed 's/-/\.r/' | sed 's/v//g' | sed 's/-/\./')")
-IS_TAG=[[ $ZRYTHM_PKG_VERSION != *"r"* ]]
+
+is_tag () {
+  [[ "$ZRYTHM_PKG_VERSION" != *r* ]]
+}
 
 distro_to_pkg_type () {
   distro=$1
@@ -32,4 +35,16 @@ get_package_filename () {
   trial=$2
   printf '%s' \
     $(cd zrythm-installer && make pkg$trial-filename-$pkg_type)
+}
+
+# returns if the file exists in the remote home dir
+remote_file_exists () {
+  [ $SSH $REMOTE_IP [[ -f "$REMOTE_HOME/$1" ]] ]
+}
+
+# whether a package exists on the server
+remote_package_exists () {
+  distro=$1
+  pkg_type=$(distro_to_pkg_type $distro)
+  [ remote_file_exists packages/$distro/$(get_package_filename $pkg_type) ]
 }
