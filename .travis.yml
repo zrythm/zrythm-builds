@@ -1,0 +1,21 @@
+# Copyright (C) 2020 Alexandros Theodotou <alex at zrythm dot org>
+
+language: c
+os:
+  - osx
+
+before_install:
+- |-
+  set -e
+  brew update
+  # use || true because it returns 1
+  brew install fftw meson libsamplerate sdl2 chromaprint libgtop lilv librsvg gtk+3 guile gtksourceview4 graphviz zstd || true
+  brew link --overwrite python
+
+script:
+- |-
+  set -e
+  meson build -Dsdl=enabled -Drtaudio=auto -Drtmidi=auto -Denable-tests=true -Dwith-manpage=false
+  ninja -C build
+  ninja -C build test
+  sudo ninja -C build install

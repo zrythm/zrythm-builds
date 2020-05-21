@@ -29,6 +29,12 @@ distro_to_pkg_type () {
     "fedora32")
       echo "FEDORA32"
       ;;
+    "windows"*)
+      echo "WINDOWS"
+      ;;
+    "osx"* | "macos"*)
+      echo "OSX"
+      ;;
   esac
 }
 
