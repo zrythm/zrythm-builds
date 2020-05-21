@@ -48,6 +48,4 @@ tasks:
       cd zrythm-installer
       make fedora32
   - deploy: |
-      zrythm-builds/scripts/push-package.sh \
-        "/home/build/rpmbuild/RPMS/x86_64/$(printf '%s' $(cd zrythm-installer && make pkg-filename-FEDORA32))" \
-        fedora32
+      zrythm-builds/scripts/push-package.sh fedora32

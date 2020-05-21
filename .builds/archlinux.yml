@@ -49,11 +49,18 @@ tasks:
       cd zrythm-installer
       make archlinux
   - deploy: |
-      zrythm-builds/scripts/push-package.sh \
-        "zrythm-installer/build/archlinux/$(printf '%s' $(cd zrythm-installer && make pkg-filename-ARCH))" \
-        archlinux
+      zrythm-builds/scripts/push-package.sh archlinux
       # deploy manuals
-      PKG_VERSION=$(cd zrythm && printf "%s" "$(git describe --tags | sed 's/-/\.r/' | sed 's/v//g' | sed 's/-/\./')")
-      for lang in en de fr ; do
-        rsync --rsh="ssh -o StrictHostKeyChecking=no" -rP "zrythm-installer/build/zrythm-$PKG_VERSION/build/doc/user/$lang/latex/Zrythm.pdf" "srht@forum.zrythm.org:/home/srht/manual/Zrythm-$PKG_VERSION-$lang.pdf"
+      . zrythm-builds/scripts/common.sh.in
+      for lang in $LINGUAS ; do
+        $RSYNC -rP \
+          "zrythm-installer/build/zrythm-$ZRYTHM_PKG_VERSION/build/doc/user/$lang/latex/Zrythm.pdf" \
+          "$REMOTE_IP:$REMOTE_HOME/manual/Zrythm-$ZRYTHM_PKG_VERSION-$lang.pdf"
       done
+  - package-all: |
+      timeout 1800 zrythm-builds/scripts/zip-gnu-linux-packages.sh
+  - deploy-to-server: |
+      echo "todo"
+  - deploy-to-sendowl: |
+      set -e
+      . ~/.sendowl_credentials

@@ -1,0 +1,35 @@
+#! /bin/bash
+
+DISTROS=archlinux debian10 fedora32 ubuntu1804 ubuntu1910 ubuntu2004
+LINGUAS=en de fr
+SSH_OPTS="-o StrictHostKeyChecking=no"
+RSYNC="rsync --rsh=\"ssh $SSH_OPTS\""
+SSH="ssh -q $SSH_OPTS"
+SCP="scp $SSH_OPTS"
+REMOTE_IP=srht@forum.zrythm.org
+REMOTE_HOME=/home/srht
+REMOTE_PACKAGES=$REMOTE_HOME/packages
+ZRYTHM_PKG_VERSION=$(cd zrythm && printf '%s' "$(git describe --tags | sed 's/-/\.r/' | sed 's/v//g' | sed 's/-/\./')")
+IS_TAG=[[ $ZRYTHM_PKG_VERSION != *"r"* ]]
+
+distro_to_pkg_type () {
+  distro=$1
+  case "$distro" in
+    "archlinux")
+      echo "ARCH"
+      ;;
+    "debian"* | "ubuntu"* )
+      echo "DEBIAN"
+      ;;
+    "fedora32 ")
+      echo "FEDORA32"
+      ;;
+  esac
+}
+
+get_package_filename () {
+  pkg_type=$1
+  trial=$2
+  printf '%s' \
+    $(cd zrythm-installer && make pkg$trial-filename-$pkg_type)
+}

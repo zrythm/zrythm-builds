@@ -52,6 +52,4 @@ tasks:
       cd zrythm-installer
       make debian10
   - deploy: |
-      zrythm-builds/scripts/push-package.sh \
-        "zrythm-installer/build/debian10/$(printf '%s' $(cd zrythm-installer && make pkg-filename-DEBIAN))" \
-        debian10
+      zrythm-builds/scripts/push-package.sh debian10

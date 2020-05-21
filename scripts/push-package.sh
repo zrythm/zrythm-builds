@@ -4,11 +4,21 @@
 
 set -e
 
-# 1: package
-# 2: distro
+DISTRO=$1
 
-PACKAGE=$1
-DISTRO=$2
+source zrythm-builds/scripts/common.sh.in
 
-SSH_OPTS="ssh -o StrictHostKeyChecking=no"
-rsync --rsh="$SSH_OPTS" -rP $PACKAGE srht@forum.zrythm.org:/home/srht/packages/$DISTRO/
+pkg_filename=$(get_package_filename $DISTRO)
+pkg_trial_filename=$(get_package_filename $DISTRO "-trial")
+
+# push normal package
+$RSYNC \
+  -rP zrythm-installer/build/$DISTRO/$pkg_filename \
+  $REMOTE_IP:$REMOTE_PACKAGES/$DISTRO/
+
+# if version contains r (revision), push trial
+if $is_tag ; then
+  $RSYNC \
+    -rP zrythm-installer/build/$DISTRO/$pkg_trial_filename \
+    $REMOTE_IP:$REMOTE_PACKAGES/$DISTRO/
+fi

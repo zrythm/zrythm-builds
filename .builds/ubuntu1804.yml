@@ -48,6 +48,4 @@ tasks:
       cd zrythm-installer
       make ubuntu1804
   - deploy: |
-      zrythm-builds/scripts/push-package.sh \
-        "zrythm-installer/build/debian10/$(printf '%s' $(cd zrythm-installer && make pkg-filename-DEBIAN))" \
-        ubuntu1804
+      zrythm-builds/scripts/push-package.sh ubuntu1804
