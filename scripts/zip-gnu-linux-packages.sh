@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -e
+set -euo pipefail
 
 source zrythm-builds/scripts/common.sh.in
 

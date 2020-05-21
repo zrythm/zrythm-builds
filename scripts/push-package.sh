@@ -2,7 +2,7 @@
 
 # this script pushes the given GNU/Linux package to the server
 
-set -eo pipefail
+set -euo pipefail
 
 distro=$1
 
