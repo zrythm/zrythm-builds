@@ -1,0 +1,63 @@
+image: archlinux
+packages:
+  - meson
+  - chromaprint
+  - jack
+  - ffmpeg
+  - python
+  - gettext
+  - sed
+  - ninja
+  - help2man
+  - ladspa
+  - jq
+  - lv2
+  - graphviz
+  - zstd
+  - tar
+  - zip
+  - unzip
+  - rsync
+  - lzip
+  - ruby
+  - gperf
+  - intltool
+  - p7zip
+  - wget
+  - vim
+sources:
+  - https://git.sr.ht/~alextee/zrythm
+  - https://git.sr.ht/~alextee/zplugins
+  - https://gitlab.gnome.org/GNOME/gtk
+  - https://git.sr.ht/~alextee/mxe
+  - https://git.sr.ht/~alextee/zrythm-installer
+  - https://github.com/mesonbuild/meson
+  - https://github.com/KDE/breeze-icons
+secrets:
+  - 063cb70d-6da6-492a-b530-04edc07651ba
+  - 61caf4ff-56d5-4c2f-96da-63ef6adc241b
+tasks:
+  - make-windows: |
+      # install wine
+      sudo sh -c 'echo "[multilib]" >> /etc/pacman.conf'
+      sudo sh -c 'echo "Include = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf'
+      sudo pacman -Syu --noconfirm
+      sudo pacman -S --noconfirm wine
+      wget https://www.zrythm.org/downloads/inno-setup-bin.zip
+      # install inno
+      unzip inno-setup-bin.zip -d ~/
+      # create manuals zip
+      distro=windows10
+      source zrythm-builds/scripts/common.sh.in
+      mkdir -p zrythm-installer/build
+      for lang in $linguas ; do
+        $scp_cmd \
+          "$remote_ip:$remote_home/manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
+          zrythm-installer/build/Zrythm-$zrythm_pkg_ver-$lang.pdf
+      done
+      pushd "zrythm-installer/build"
+      zip user-manual.zip ./*.pdf
+      popd
+      zrythm-builds/scripts/make-pkg.sh windows10
+  - deploy-windows: |
+      zrythm-builds/scripts/push-pkg.sh windows10
