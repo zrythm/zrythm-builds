@@ -43,6 +43,7 @@ packages:
   - intltool
   - p7zip
   - wget
+  - vim
 sources:
   - https://git.sr.ht/~alextee/zrythm
   - https://git.sr.ht/~alextee/zplugins
@@ -53,6 +54,7 @@ sources:
   - https://github.com/KDE/breeze-icons
 secrets:
   - 063cb70d-6da6-492a-b530-04edc07651ba
+  - 61caf4ff-56d5-4c2f-96da-63ef6adc241b
 tasks:
   - make-archlinux: |
       zrythm-builds/scripts/make-pkg.sh archlinux

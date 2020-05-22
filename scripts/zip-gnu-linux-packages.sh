@@ -6,6 +6,8 @@ source zrythm-builds/scripts/common.sh.in
 artifacts_dir="zrythm-installer/artifacts"
 mkdir -p $artifacts_dir
 
+sed -i -e "s/ZRYTHM_PKG_VERSION=.*/ZRYTHM_PKG_VERSION=$zrythm_pkg_ver/" zrythm-installer/Makefile
+
 wget_package_and_plugins () {
   distro=$1
   pkg_filename=$(get_package_filename $distro)
