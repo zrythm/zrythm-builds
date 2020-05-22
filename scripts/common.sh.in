@@ -20,6 +20,8 @@ remote_ip=srht@forum.zrythm.org
 remote_home=/home/srht
 remote_packages=$remote_home/packages
 zrythm_pkg_ver=$(cd zrythm && printf '%s' "$(git describe --tags | sed 's/-/\.r/' | sed 's/v//g' | sed 's/-/\./')")
+gnu_linux_zip_filename="zrythm-$zrythm_pkg_ver-installer.zip"
+gnu_linux_zip_trial_filename="zrythm-trial-$zrythm_pkg_ver-installer.zip"
 
 is_tag () {
   [[ "$zrythm_pkg_ver" != *r* ]]

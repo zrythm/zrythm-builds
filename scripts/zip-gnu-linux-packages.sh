@@ -2,6 +2,8 @@
 
 source zrythm-builds/scripts/common.sh.in
 
+mkdir -p zrythm-installer/artifacts
+
 wget_package_and_plugins () {
   distro=$1
   pkg_type=$(distro_to_pkg_type $distro)
@@ -49,9 +51,8 @@ for lang in $linguas ; do
 done
 
 # make zip
-make -C zrythm-installer \
-  zrythm-$zrythm_pkg_ver-installer.zip
+make -C zrythm-installer $gnu_linux_zip_filename
 if is_tag ; then
   make -C zrythm-installer \
-    zrythm-trial-$zrythm_pkg_ver-installer.zip
+    $gnu_linux_zip_trial_filename
 fi

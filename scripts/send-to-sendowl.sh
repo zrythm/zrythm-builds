@@ -1,28 +1,69 @@
 #! /bin/bash
+#
+# Copyright (C) 2020 Alexandros Theodotou <alex at zrythm dot org>
 
 source ~/.sendowl_credentials
 source zrythm-builds/scripts/common.sh.in
 
-# generic response holder
-res_json=res.json
+bundle_name="Zrythm $zrythm_pkg_ver"
 
-# current bundle
-bundle_json=bundle.json
-
-get_res () {
+sendowl_get () {
   suffix=$1
-  curl -H "Accept: application/json" "https://$SENDOWL_KEY:$SENDOWL_SECRET@www.sendowl.com/api/v1/$suffix" > res.json
   sleep 2
+  curl -H "Accept: application/json" \
+    "https://$SENDOWL_KEY:$SENDOWL_SECRET@www.sendowl.com/api/v1/$suffix"
 }
 
-bundle_exists () {
+sendowl_post () {
+  suffix=$1
+  json=$2
+  sleep 2
+  curl -X POST -H "Accept: application/json" \
+    -H "Content-type: application/json" \
+    -d \'$json\'
+    "https://$SENDOWL_KEY:$SENDOWL_SECRET@www.sendowl.com/api/v1/$suffix"
 }
 
-fetch_bundle () {
-  get_res "packages/search?term=$zrythm_pkg_ver"
-  cat $res_file | jq '.[0].package' > $bundle_json && [ "$(cat $bundle_json)" != "null" ] || rm -rf $bundle_json
+# prefetch the installers
+prefetch () {
+
 }
 
-# check if a bundle already exists for this version
-bundle_exists=0
-curl -H "Accept: application/json" "https://$SENDOWL_KEY:$SENDOWL_SECRET@www.sendowl.com/api/v1/packages/search?term=0.8.459" > packages.json
+fetch_or_create_bundle () {
+  all_bundles="$(sendowl_get \"packages\")"
+
+  this_bundle="null"
+  i=0
+  while true; do
+    cur_bundle="$(echo \"$all_bundles\" | \
+      jq \".[$i].package\" || echo \"null\")"
+    if [ "$cur_bundle" = "null" ]; then
+      break
+    fi
+    if [ $(echo "$cur_bundle" | jq '.name' || echo "null") = \
+      "\"$bundle_name\"" ]; then
+      this_bundle="$cur_bundle"
+      break
+    fi
+    ((i++))
+  done
+
+  # create or update the products
+
+  # if no bundle exists
+  if [ "$this_bundle" = "null" ]; then
+    # create one
+    json="\
+      { \
+        \"package\": { \
+          \"name\": \"$bundle_name\", \
+          \"price\": \"5.00\", \
+          \"price_is_minimum\": \"true\" \
+          \"components\": { \
+            \"product_ids\": $product_ids \
+          } \
+        } \
+      }"
+    this_bundle=$(sendowl_post "packages" $json)
+  fi
+}

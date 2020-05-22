@@ -82,11 +82,9 @@ tasks:
       zrythm-builds/scripts/make-pkg.sh windows10
   - deploy-windows: |
       zrythm-builds/scripts/push-pkg.sh windows10
-  - deploy: |
-      zrythm-builds/scripts/deploy-windows-installer.sh archlinux
-  - gen-gnu-linux-installers: |
+  - gen-gnu-linux-installer-zips: |
       timeout 1800 zrythm-builds/scripts/zip-gnu-linux-packages.sh
-  - deploy-gnu-linux-installers-to-server: |
+  - deploy-gnu-linux-installer-zips: |
       zrythm-builds/scripts/deploy-installers.sh
-  - deploy-to-sendowl: |
+  - update-sendowl: |
       zrythm-builds/scripts/send-to-sendowl.sh
