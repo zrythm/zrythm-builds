@@ -2,6 +2,10 @@
 #
 # Copyright (C) 2020 Alexandros Theodotou <alex at zrythm dot org>
 
+if [ -f ~/.env ]; then
+  source ~/.env
+fi
+
 set -euo pipefail
 
 if [[ "$distro" = "osx" ]]; then
@@ -16,8 +20,8 @@ linguas="en de fr"
 rsync_cmd="rsync --rsh=\"ssh $ssh_opts\""
 ssh_cmd="ssh -q $ssh_opts"
 scp_cmd="scp $ssh_opts"
-remote_ip=srht@forum.zrythm.org
-remote_home=/home/srht
+remote_ip="$REMOTE_IP"
+remote_home="$REMOTE_HOME"
 remote_packages=$remote_home/packages
 zrythm_pkg_ver=$(cd zrythm && printf '%s' "$(git describe --tags | sed 's/-/\.r/' | sed 's/v//g' | sed 's/-/\./')")
 gnu_linux_zip_filename="zrythm-$zrythm_pkg_ver-installer.zip"
