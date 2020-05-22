@@ -43,7 +43,7 @@ if [ "$distro" = "archlinux" ]; then
 fi
 
 # deploy plugins
-if [ "$distro" = "osx" ]; then
+if package_has_zplugins_dir $distro ; then
   $scp_cmd -r \
     zrythm-installer/$pkg_dirname/$distro/zplugins \
     $remote_ip:$remote_packages/$distro/

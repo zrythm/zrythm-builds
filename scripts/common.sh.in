@@ -58,15 +58,33 @@ get_package_filename () {
     $(cd zrythm-installer && make pkg$trial-filename-$pkg_type)
 }
 
+# whether the package has a separate zplugins dir
+package_has_zplugins_dir () {
+  [ "$distro" != "windows10" ] && [ "$distro" != "osx" ]
+}
+
 # returns if the file exists in the remote home dir
 remote_file_exists () {
   $ssh_cmd $remote_ip [ -f "$remote_home/$1" ]
 }
 
+# returns if the directory exists in the remote home dir
+remote_dir_exists () {
+  $ssh_cmd $remote_ip [ -d "$remote_home/$1" ]
+}
+
 # whether a package exists on the server
 remote_pkg_exists () {
   distro=$1
-  remote_file_exists packages/$distro/$(get_package_filename $distro)
+  if remote_file_exists packages/$distro/$(get_package_filename $distro) ; then
+    if package_has_zplugins_dir $distro ; then
+      remote_dir_exists packages/$distro/zplugins/ZSaw.lv2
+    else
+      true
+    fi
+  else
+    false
+  fi
 }
 
 should_skip_packaging () {
