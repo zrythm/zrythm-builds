@@ -1,27 +1,32 @@
 #! /bin/bash
 
+distro=""
 source zrythm-builds/scripts/common.sh.in
 
-mkdir -p zrythm-installer/artifacts
+artifacts_dir="zrythm-installer/artifacts"
+mkdir -p $artifacts_dir
 
 wget_package_and_plugins () {
   distro=$1
-  pkg_type=$(distro_to_pkg_type $distro)
-  pkg_filename=$(get_package_filename $pkg_type)
-  pkg_trial_filename=$(get_package_filename $pkg_type "-trial")
+  pkg_filename=$(get_package_filename $distro)
+  pkg_trial_filename=$(get_package_filename $distro "-trial")
+
+  artifacts_distro_dir="$artifacts_dir/$distro"
+  mkdir -p "$artifacts_distro_dir"
 
   # get package
-  $scp_cmd $remote_ip:$remote_packages/$distro/$pkg_filename \
-    zrythm-installer/artifacts/$distro/
+  $scp_cmd \
+    "$remote_ip:$remote_packages/$distro/$pkg_filename" \
+    "$artifacts_distro_dir/$pkg_filename"
   if is_tag ; then
     $scp_cmd \
-      $remote_ip:$remote_packages/$distro/$pkg_trial_filename \
-      zrythm-installer/artifacts/$distro/
+      "$remote_ip:$remote_packages/$distro/$pkg_trial_filename" \
+      "$artifacts_distro_dir/$pkg_trial_filename"
   fi
 
   # get plugins
   $scp_cmd -r $remote_ip:$remote_packages/$distro/zplugins \
-    zrythm-installer/artifacts/$distro/
+    "$artifacts_distro_dir"/
 }
 
 # wait for all packages to be submitted
@@ -47,7 +52,7 @@ done
 for lang in $linguas ; do
   $scp_cmd \
     "$remote_ip:$remote_home/manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
-    zrythm-installer/
+    "zrythm-installer/Zrythm-$zrythm_pkg_ver-$lang.pdf"
 done
 
 # make zip
