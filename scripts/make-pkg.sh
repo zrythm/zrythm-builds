@@ -1,4 +1,6 @@
 #! /bin/bash
+#
+# Copyright (C) 2020 Alexandros Theodotou <alex at zrythm dot org>
 
 distro=$1
 id_rsa_path=$(pwd)/id_rsa

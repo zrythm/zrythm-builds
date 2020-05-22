@@ -23,8 +23,7 @@ wget_package_and_plugins () {
 }
 
 # wait for all packages to be submitted
-while [ true ]
-do
+while true; do
   sleep 12
   for lang in $linguas ; do
     remote_file_exists \

@@ -1,4 +1,6 @@
 #! /bin/bash
+#
+# Copyright (C) 2020 Alexandros Theodotou <alex at zrythm dot org>
 
 # this script pushes the given package/installer to the server
 

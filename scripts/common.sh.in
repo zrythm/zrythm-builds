@@ -1,4 +1,6 @@
 #! /bin/bash
+#
+# Copyright (C) 2020 Alexandros Theodotou <alex at zrythm dot org>
 
 set -euo pipefail
 
