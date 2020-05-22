@@ -49,6 +49,9 @@ distro_to_pkg_type () {
     "osx"* | "macos"*)
       echo "OSX"
       ;;
+    "gnu-linux")
+      echo "GNU_LINUX"
+      ;;
   esac
 }
 

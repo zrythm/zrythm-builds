@@ -3,6 +3,7 @@
 # Copyright (C) 2020 Alexandros Theodotou <alex at zrythm dot org>
 
 distro=$1
+opt=$2
 id_rsa_path=$(pwd)/id_rsa
 
 source zrythm-builds/scripts/common.sh.in
@@ -30,7 +31,6 @@ if [ "$distro" = "archlinux" ] || [ "$distro" = "windows10" ]; then
 fi
 
 # skip if file already exists and not a tag
-source zrythm-builds/scripts/common.sh.in
 if should_skip_packaging $distro ; then
   exit 0 ;
 fi
