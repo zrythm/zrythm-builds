@@ -21,11 +21,15 @@ wget_package_and_plugins () {
   $scp_cmd \
     "$remote_ip:$remote_packages/$distro/$pkg_filename" \
     "$artifacts_distro_dir/$pkg_filename" > out.log 2> err.log
+  >&2 echo "done"
+
+  # get trial if tag
   if is_tag ; then
     >&2 echo "getting package $pkg_trial_filename for $distro..."
     $scp_cmd \
       "$remote_ip:$remote_packages/$distro/$pkg_trial_filename" \
       "$artifacts_distro_dir/$pkg_trial_filename" > out.log 2> err.log
+    >&2 echo "done"
   fi
 
   # get plugins
@@ -33,6 +37,7 @@ wget_package_and_plugins () {
     >&2 echo "getting plugins for $distro..."
     $scp_cmd -r $remote_ip:$remote_packages/$distro/zplugins \
       "$artifacts_distro_dir"/ > out.log 2> err.log
+    >&2 echo "done"
   fi
 }
 
@@ -49,6 +54,8 @@ while true; do
   for distro in $distros ; do
     echo "checking if remote pkg exists for $distro..."
     remote_pkg_exists $distro || wait_more=1
+    echo "checking if remote trial_pkg exists for $distro..."
+    remote_pkg_exists $distro "-trial" || wait_more=1
   done
   if [ $wait_more -eq 0 ]; then
     break
@@ -73,8 +80,10 @@ done
 # make zip
 echo "making $gnu_linux_zip_filename..."
 make -C zrythm-installer $gnu_linux_zip_filename
+echo "done"
 if is_tag ; then
   echo "making $gnu_linux_zip_trial_filename..."
   make -C zrythm-installer \
     $gnu_linux_zip_trial_filename
+  echo "done"
 fi

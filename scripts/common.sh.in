@@ -84,8 +84,11 @@ remote_dir_exists () {
 # whether a package exists on the server
 remote_pkg_exists () {
   distro=$1
+  set +u
+  trial=$2
+  set -u
   >&2 echo "checking if remote package for $distro exists..."
-  if remote_file_exists packages/$distro/$(get_package_filename $distro) ; then
+  if remote_file_exists packages/$distro/$(get_package_filename $distro $trial) ; then
     if package_has_zplugins_dir $distro ; then
       remote_dir_exists packages/$distro/zplugins/ZSaw.lv2
     else
