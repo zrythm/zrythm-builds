@@ -15,6 +15,27 @@ steps:
   displayName: 'Run a one-line script'
 
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    set -e
+    brew update
+    # use || true because it returns 1
+    brew install fftw meson libsamplerate sdl2 chromaprint libgtop lilv librsvg adwaita-icon-theme gtk+3 guile gtksourceview4 graphviz zstd npm || true
+    brew link --overwrite python
+    npm install -g appdmg
+    pwd
+    git clone https://git.sr.ht/~alextee/mxe
+    git clone https://git.sr.ht/~alextee/zrythm
+    git clone https://git.sr.ht/~alextee/zrythm-builds
+    git clone https://git.sr.ht/~alextee/zrythm-installer
+    git clone https://github.com/KDE/breeze-icons
+    git clone https://github.com/mesonbuild/meson
+    echo "$SSH_KEY" > tmp_rsa
+    openssl base64 -d -A < tmp_rsa > id_rsa
+    grep -q "BEGIN RSA PRIVATE KEY" id_rsa
+    chmod 600 id_rsa
+    zrythm-builds/scripts/make-pkg.sh osx
+    zrythm-builds/scripts/push-pkg.sh osx
+  displayName: 'Build OSX'
+  env:
+    REMOTE_HOME: $(REMOTE_HOME)
+    REMOTE_IP: $(REMOTE_IP)
+    SSH_KEY: $(SSH_KEY)
