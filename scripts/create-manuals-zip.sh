@@ -8,7 +8,23 @@
 distro=windows10
 source zrythm-builds/scripts/common.sh.in
 
+echo "fetching manuals from server..."
+
 mkdir -p zrythm-installer/build
+while true; do
+  sleep 12
+  wait_more=0
+  for lang in $linguas ; do
+    echo "checking if $lang manual exists..."
+    remote_file_exists \
+      "manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" || \
+      wait_more=1
+  done
+  if [ $wait_more -eq 0 ]; then
+    break
+  fi
+done
+
 for lang in $linguas ; do
   echo "fetching $lang manual..."
   $scp_cmd \
