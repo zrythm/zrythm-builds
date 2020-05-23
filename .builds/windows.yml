@@ -2,16 +2,11 @@ image: archlinux
 packages:
   - meson
   - chromaprint
-  - jack
-  - ffmpeg
   - python
   - gettext
   - sed
   - ninja
   - help2man
-  - ladspa
-  - jq
-  - lv2
   - graphviz
   - zstd
   - tar

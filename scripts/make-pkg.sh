@@ -24,6 +24,9 @@ if [ "$distro" = "archlinux" ] || [ "$distro" = "windows10" ]; then
   pushd zplugins
   meson subprojects download
   popd
+fi
+
+if [ "$distro" = "windows10" ]; then
   pushd gtk
   git checkout "3.24.18"
   meson subprojects download
