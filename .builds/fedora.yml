@@ -46,6 +46,6 @@ secrets:
   - 61caf4ff-56d5-4c2f-96da-63ef6adc241b
 tasks:
   - make: |
-      zrythm-builds/scripts/make-pkg.sh fedora32
+      zrythm-builds/scripts/make-pkg.sh fedora32 > out.log 2> err.log
   - deploy: |
-      zrythm-builds/scripts/push-pkg.sh fedora32
+      zrythm-builds/scripts/push-pkg.sh fedora32 > out.log 2> err.log

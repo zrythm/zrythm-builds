@@ -42,7 +42,7 @@ tasks:
       # install inno
       unzip inno-setup-bin.zip -d ~/
       # create manuals zip
-      zrythm-builds/scripts/create-manuals-zip.sh
-      zrythm-builds/scripts/make-pkg.sh windows10
+      zrythm-builds/scripts/create-manuals-zip.sh > out.log 2> err.log
+      zrythm-builds/scripts/make-pkg.sh windows10 > out.log 2> err.log
   - deploy-windows: |
-      zrythm-builds/scripts/push-pkg.sh windows10
+      zrythm-builds/scripts/push-pkg.sh windows10 > out.log 2> err.log

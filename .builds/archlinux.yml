@@ -53,12 +53,12 @@ secrets:
   - 61caf4ff-56d5-4c2f-96da-63ef6adc241b
 tasks:
   - make-archlinux: |
-      zrythm-builds/scripts/make-pkg.sh archlinux
+      zrythm-builds/scripts/make-pkg.sh archlinux > out.log 2> err.log
   - deploy-archlinux: |
-      zrythm-builds/scripts/push-pkg.sh archlinux
+      zrythm-builds/scripts/push-pkg.sh archlinux > out.log 2> err.log
   - gen-gnu-linux-installer-zips: |
       timeout 1800 zrythm-builds/scripts/zip-gnu-linux-packages.sh
   - deploy-gnu-linux-installer-zips: |
-      zrythm-builds/scripts/deploy-gnu-linux-installer.sh
+      zrythm-builds/scripts/deploy-gnu-linux-installer.sh > out.log 2> err.log
   - update-sendowl: |
-      timeout 7200 zrythm-builds/scripts/send-to-sendowl.sh
+      timeout 7200 zrythm-builds/scripts/send-to-sendowl.sh > out.log 2> err.log
