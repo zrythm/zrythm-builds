@@ -6,6 +6,7 @@ distro=""
 source zrythm-builds/scripts/common.sh.in
 
 bundle_name="Zrythm $zrythm_pkg_ver"
+echo "bundle name: $bundle_name"
 
 get_product_name () {
   os=$1
@@ -179,12 +180,18 @@ update_or_create_bundle () {
 }
 
 # fetch missing installers
+echo "prefetching installers..."
 prefetch
+echo "done"
 
 # create or update products
+echo "creating products..."
 gnu_linux_product_id="$(create_or_update_product "gnu-linux")"
 osx_product_id="$(create_or_update_product "osx")"
 windows_product_id="$(create_or_update_product "windows10")"
+echo "done"
+
+echo "created products $gnu_linux_product_id, $osx_product_id and $windows_product_id"
 
 bundle_id="$(update_or_create_bundle \
   "$gnu_linux_product_id" \
