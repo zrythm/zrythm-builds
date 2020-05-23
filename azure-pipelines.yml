@@ -11,9 +11,6 @@ pool:
   vmImage: 'macOS-latest'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
 - script: |
     set -e
     brew update
