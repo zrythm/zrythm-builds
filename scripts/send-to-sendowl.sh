@@ -72,12 +72,16 @@ sendowl_delete () {
 prefetch () {
   osx_pkg_name="$(get_package_filename osx)"
   windows_pkg_name="$(get_package_filename windows10)"
-  $scp_cmd \
-    "$remote_ip:$remote_home/packages/osx/$osx_pkg_name" \
-    "zrythm-installer/$osx_pkg_name"
-  $scp_cmd \
-    "$remote_ip:$remote_home/packages/windows10/$windows_pkg_name" \
-    "zrythm-installer/$windows_pkg_name"
+  while ! [ -f "zrythm-installer/$osx_pkg_name" -a \
+    -f "zrythm-installer/$windows_pkg_name" ]; do
+    $scp_cmd \
+      "$remote_ip:$remote_home/packages/osx/$osx_pkg_name" \
+      "zrythm-installer/$osx_pkg_name" || true
+    $scp_cmd \
+      "$remote_ip:$remote_home/packages/windows10/$windows_pkg_name" \
+      "zrythm-installer/$windows_pkg_name" || true
+    sleep 12
+  done
 }
 
 # creates a product and returns the json

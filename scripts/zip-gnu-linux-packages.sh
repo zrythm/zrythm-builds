@@ -27,8 +27,10 @@ wget_package_and_plugins () {
   fi
 
   # get plugins
-  $scp_cmd -r $remote_ip:$remote_packages/$distro/zplugins \
-    "$artifacts_distro_dir"/
+  if [ "$distro" != "gnu-linux" ]; then
+    $scp_cmd -r $remote_ip:$remote_packages/$distro/zplugins \
+      "$artifacts_distro_dir"/
+  fi
 }
 
 # wait for all packages to be submitted

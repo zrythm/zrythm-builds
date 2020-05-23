@@ -61,4 +61,4 @@ tasks:
   - deploy-gnu-linux-installer-zips: |
       zrythm-builds/scripts/deploy-gnu-linux-installer.sh
   - update-sendowl: |
-      zrythm-builds/scripts/send-to-sendowl.sh
+      timeout 7200 zrythm-builds/scripts/send-to-sendowl.sh

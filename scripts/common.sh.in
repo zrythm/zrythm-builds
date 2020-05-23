@@ -15,7 +15,7 @@ else
 fi
 echo "using ssh opts: $ssh_opts"
 
-distros="archlinux debian10 fedora32 ubuntu1804 ubuntu1910 ubuntu2004"
+distros="archlinux debian10 fedora32 ubuntu1804 ubuntu1910 ubuntu2004 gnu-linux"
 linguas="en de fr"
 rsync_cmd="rsync --rsh=\"ssh $ssh_opts\""
 ssh_cmd="ssh -q $ssh_opts"
