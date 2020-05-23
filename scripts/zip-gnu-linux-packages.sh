@@ -52,10 +52,12 @@ while true; do
       wait_more=1
   done
   for distro in $distros ; do
-    echo "checking if remote pkg exists for $distro..."
-    remote_pkg_exists $distro || wait_more=1
-    echo "checking if remote trial_pkg exists for $distro..."
-    remote_pkg_exists $distro "-trial" || wait_more=1
+    if [ "$distro" != "gnu-linux" ]; then
+      echo "checking if remote pkg exists for $distro..."
+      remote_pkg_exists $distro || wait_more=1
+      echo "checking if remote trial_pkg exists for $distro..."
+      remote_pkg_exists $distro "-trial" || wait_more=1
+    fi
   done
   if [ $wait_more -eq 0 ]; then
     break
@@ -65,8 +67,10 @@ done
 # move packages/plugins to where they are expected
 echo "fetching packages..."
 for distro in $distros ; do
-  echo "fetching packages and plugins for $distro..."
-  wget_package_and_plugins $distro
+  if [ "$distro" != "gnu-linux" ]; then
+    echo "fetching packages and plugins for $distro..."
+    wget_package_and_plugins $distro
+  fi
 done
 
 # get manual
