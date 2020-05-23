@@ -30,9 +30,11 @@ for lang in $linguas ; do
   $scp_cmd \
     "$remote_ip:$remote_home/manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
     zrythm-installer/build/Zrythm-$zrythm_pkg_ver-$lang.pdf > out.log 2> err.log
+  echo "done"
 done
 
 echo "zipping manuals..."
 pushd "zrythm-installer/build"
 zip user-manual.zip ./*.pdf
 popd
+echo "done"

@@ -26,6 +26,7 @@ echo "deploying normal package for $distro..."
 $scp_cmd \
   zrythm-installer/$pkg_dirname/$distro/$pkg_filename \
   $remote_ip:$remote_packages/$distro/ > out.log 2> err.log
+echo "done"
 
 # also deploy trial if tag
 if is_tag ; then
@@ -33,6 +34,7 @@ if is_tag ; then
   $scp_cmd \
     zrythm-installer/$pkg_dirname/$distro/$pkg_trial_filename \
     $remote_ip:$remote_packages/$distro/ > out.log 2> err.log
+  echo "done"
 fi
 
 # if arch, also deploy manuals
@@ -42,6 +44,7 @@ if [ "$distro" = "archlinux" ]; then
     $scp_cmd \
       "zrythm-installer/build/zrythm-$zrythm_pkg_ver/build/doc/user/$lang/latex/Zrythm.pdf" \
       "$remote_ip:$remote_home/manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" > out.log 2> err.log
+    echo "done"
   done
 fi
 
@@ -51,4 +54,5 @@ if package_has_zplugins_dir $distro ; then
   $scp_cmd -r \
     zrythm-installer/$pkg_dirname/$distro/zplugins \
     $remote_ip:$remote_packages/$distro/ > out.log 2> err.log
+  echo "done"
 fi
