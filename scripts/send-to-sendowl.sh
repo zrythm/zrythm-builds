@@ -7,8 +7,6 @@ source zrythm-builds/scripts/common.sh.in
 
 bundle_name="Zrythm $zrythm_pkg_ver"
 
-exit -1
-
 get_product_name () {
   os=$1
   case "$os" in
@@ -129,6 +127,9 @@ create_or_update_product () {
 }
 
 update_or_create_bundle () {
+  # create bundles on releases manually
+  return
+
   gnu_linux_product_id=$1
   osx_product_id=$2
   windows_product_id=$3
