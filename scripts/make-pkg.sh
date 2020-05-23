@@ -37,10 +37,10 @@ fi
 
 # skip if file already exists and not a tag
 if should_skip_packaging $distro ; then
-  echo "file already exists on server, skipping..."
+  echo "$distro package already exists on server, skipping..."
   exit 0 ;
 fi
 
-echo "file already exists on server, skipping..."
+echo "$distro package does not exist on server, making..."
 cd zrythm-installer
 make $distro

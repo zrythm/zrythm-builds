@@ -17,12 +17,12 @@ wget_package_and_plugins () {
   mkdir -p "$artifacts_distro_dir"
 
   # get package
-  >&2 echo "getting package $pkg_filename..."
+  >&2 echo "getting package $pkg_filename for $distro..."
   $scp_cmd \
     "$remote_ip:$remote_packages/$distro/$pkg_filename" \
     "$artifacts_distro_dir/$pkg_filename" > out.log 2> err.log
   if is_tag ; then
-    >&2 echo "getting package $pkg_trial_filename..."
+    >&2 echo "getting package $pkg_trial_filename for $distro..."
     $scp_cmd \
       "$remote_ip:$remote_packages/$distro/$pkg_trial_filename" \
       "$artifacts_distro_dir/$pkg_trial_filename" > out.log 2> err.log
@@ -30,7 +30,7 @@ wget_package_and_plugins () {
 
   # get plugins
   if [ "$distro" != "gnu-linux" ]; then
-    >&2 echo "getting plugins..."
+    >&2 echo "getting plugins for $distro..."
     $scp_cmd -r $remote_ip:$remote_packages/$distro/zplugins \
       "$artifacts_distro_dir"/ > out.log 2> err.log
   fi
@@ -40,20 +40,25 @@ wget_package_and_plugins () {
 echo "waiting for packages to be submitted..."
 while true; do
   sleep 12
+  wait_more=0
   for lang in $linguas ; do
     remote_file_exists \
       "manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" || \
-      continue
+      wait_more=1
   done
   for distro in $distros ; do
-    remote_pkg_exists $distro || continue
+    echo "checking if remote pkg exists for $distro..."
+    remote_pkg_exists $distro || wait_more=1
   done
-  break
+  if [ $wait_more -eq 0 ]; then
+    break
+  fi
 done
 
 # move packages/plugins to where they are expected
 echo "fetching packages..."
 for distro in $distros ; do
+  echo "fetching packages and plugins for $distro..."
   wget_package_and_plugins $distro
 done
 
