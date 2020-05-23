@@ -5,8 +5,8 @@
 distro=""
 source zrythm-builds/scripts/common.sh.in
 
+echo "sending $gnu_linux_zip_filename..."
 $scp_cmd \
-  echo "sending $gnu_linux_zip_filename..."
   "zrythm-installer/$gnu_linux_zip_filename" \
   "$remote_ip:$remote_home/packages/gnu-linux/$gnu_linux_zip_filename" > out.log 2> err.log
 echo "done"
