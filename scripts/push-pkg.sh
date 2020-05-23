@@ -22,29 +22,33 @@ if [ "$distro" = "osx" ]; then
 fi
 
 # deploy normal package
+echo "deploying normal package for $distro..."
 $scp_cmd \
   zrythm-installer/$pkg_dirname/$distro/$pkg_filename \
-  $remote_ip:$remote_packages/$distro/
+  $remote_ip:$remote_packages/$distro/ > out.log 2> err.log
 
 # also deploy trial if tag
 if is_tag ; then
+  echo "deploying trial package for $distro..."
   $scp_cmd \
     zrythm-installer/$pkg_dirname/$distro/$pkg_trial_filename \
-    $remote_ip:$remote_packages/$distro/
+    $remote_ip:$remote_packages/$distro/ > out.log 2> err.log
 fi
 
 # if arch, also deploy manuals
 if [ "$distro" = "archlinux" ]; then
   for lang in $linguas ; do
+    echo "deploying $lang manual..."
     $scp_cmd \
       "zrythm-installer/build/zrythm-$zrythm_pkg_ver/build/doc/user/$lang/latex/Zrythm.pdf" \
-      "$remote_ip:$remote_home/manual/Zrythm-$zrythm_pkg_ver-$lang.pdf"
+      "$remote_ip:$remote_home/manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" > out.log 2> err.log
   done
 fi
 
 # deploy plugins
 if package_has_zplugins_dir $distro ; then
+  echo "deploying zplugins..."
   $scp_cmd -r \
     zrythm-installer/$pkg_dirname/$distro/zplugins \
-    $remote_ip:$remote_packages/$distro/
+    $remote_ip:$remote_packages/$distro/ > out.log 2> err.log
 fi

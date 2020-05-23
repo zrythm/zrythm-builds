@@ -13,7 +13,6 @@ if [[ "$distro" = "osx" ]]; then
 else
   ssh_opts="-o StrictHostKeyChecking=no"
 fi
-echo "using ssh opts: $ssh_opts"
 
 distros="archlinux debian10 fedora32 ubuntu1804 ubuntu1910 ubuntu2004 gnu-linux"
 linguas="en de fr"
@@ -72,17 +71,20 @@ package_has_zplugins_dir () {
 
 # returns if the file exists in the remote home dir
 remote_file_exists () {
-  $ssh_cmd $remote_ip [ -f "$remote_home/$1" ]
+  >&2 echo "checking if remote file $1 exists..."
+  $ssh_cmd $remote_ip [ -f "$remote_home/$1" ] > out.log 2> err.log
 }
 
 # returns if the directory exists in the remote home dir
 remote_dir_exists () {
-  $ssh_cmd $remote_ip [ -d "$remote_home/$1" ]
+  >&2 echo "checking if remote dir $1 exists..."
+  $ssh_cmd $remote_ip [ -d "$remote_home/$1" ] > out.log 2> err.log
 }
 
 # whether a package exists on the server
 remote_pkg_exists () {
   distro=$1
+  >&2 echo "checking if remote package for $distro exists..."
   if remote_file_exists packages/$distro/$(get_package_filename $distro) ; then
     if package_has_zplugins_dir $distro ; then
       remote_dir_exists packages/$distro/zplugins/ZSaw.lv2

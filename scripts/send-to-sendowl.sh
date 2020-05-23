@@ -35,10 +35,11 @@ sendowl_post_or_put_json () {
   json="$2"
   protocol="$3"
   sleep 2
+  >&2 echo "POST/PUT $suffix"
   curl -X $protocol -H "Accept: application/json" \
     -H "Content-type: application/json" \
     -d "$json" \
-    "https://$SENDOWL_KEY:$SENDOWL_SECRET@www.sendowl.com/api/v1/$suffix"
+    "https://$SENDOWL_KEY:$SENDOWL_SECRET@www.sendowl.com/api/v1/$suffix" > out.log 2> err.log
 }
 
 sendowl_post_json () {
@@ -53,19 +54,21 @@ sendowl_post_form () {
   suffix=$1
   shift
   sleep 2
+  >&2 echo "posting $1..."
   cmd="curl -H \"Accept: application/json\" \
     https://$SENDOWL_KEY:$SENDOWL_SECRET@www.sendowl.com/api/v1/$suffix "
   for arg; do
     cmd="$cmd -F \"$arg\""
   done
-  eval "$cmd"
+  eval "$cmd" > out.log 2> err.log
 }
 
 sendowl_delete () {
   suffix=$1
   sleep 2
+  >&2 echo "deleting $1..."
   curl -X DELETE -H "Accept: application/json" \
-    "https://$SENDOWL_KEY:$SENDOWL_SECRET@www.sendowl.com/api/v1/$suffix"
+    "https://$SENDOWL_KEY:$SENDOWL_SECRET@www.sendowl.com/api/v1/$suffix" > out.log 2> err.log
 }
 
 # prefetch the installers not on this machine
@@ -76,10 +79,10 @@ prefetch () {
     -f "zrythm-installer/$windows_pkg_name" ]; do
     $scp_cmd \
       "$remote_ip:$remote_home/packages/osx/$osx_pkg_name" \
-      "zrythm-installer/$osx_pkg_name" || true
+      "zrythm-installer/$osx_pkg_name" > out.log 2> err.log || true
     $scp_cmd \
       "$remote_ip:$remote_home/packages/windows10/$windows_pkg_name" \
-      "zrythm-installer/$windows_pkg_name" || true
+      "zrythm-installer/$windows_pkg_name" > out.log 2> err.log || true
     sleep 12
   done
 }

@@ -27,10 +27,10 @@ steps:
     git clone https://github.com/mesonbuild/meson
     echo "$SSH_KEY" > tmp_rsa
     openssl base64 -d -A < tmp_rsa > id_rsa > out.log 2> err.log
-    grep -q "BEGIN RSA PRIVATE KEY" id_rsa > out.log 2> err.log
+    grep -q "BEGIN RSA PRIVATE KEY" id_rsa
     chmod 600 id_rsa
-    zrythm-builds/scripts/make-pkg.sh osx > out.log 2> err.log
-    zrythm-builds/scripts/push-pkg.sh osx > out.log 2> err.log
+    zrythm-builds/scripts/make-pkg.sh osx
+    zrythm-builds/scripts/push-pkg.sh osx
   displayName: 'Build OSX'
   env:
     REMOTE_HOME: $(REMOTE_HOME)

@@ -10,10 +10,13 @@ source zrythm-builds/scripts/common.sh.in
 
 mkdir -p zrythm-installer/build
 for lang in $linguas ; do
+  echo "fetching $lang manual..."
   $scp_cmd \
     "$remote_ip:$remote_home/manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
-    zrythm-installer/build/Zrythm-$zrythm_pkg_ver-$lang.pdf
+    zrythm-installer/build/Zrythm-$zrythm_pkg_ver-$lang.pdf > out.log 2> err.log
 done
+
+echo "zipping manuals..."
 pushd "zrythm-installer/build"
 zip user-manual.zip ./*.pdf
 popd
