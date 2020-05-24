@@ -47,16 +47,23 @@ while true; do
   sleep 12
   wait_more=0
   for lang in $linguas ; do
-    remote_file_exists \
-      "manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" || \
-      wait_more=1
+    if ! remote_file_exists \
+      "manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" ; then
+      echo "not exists" && wait_more=1
+    fi
   done
   for distro in $distros ; do
     if [ "$distro" != "gnu-linux" ]; then
       echo "checking if remote pkg exists for $distro..."
-      remote_pkg_exists $distro || wait_more=1
-      echo "checking if remote trial_pkg exists for $distro..."
-      remote_pkg_exists $distro "-trial" || wait_more=1
+      if ! remote_pkg_exists $distro ; then
+        echo "not exists" && wait_more=1
+      fi
+      if is_tag ; then
+        echo "checking if remote trial_pkg exists for $distro..."
+        if ! remote_pkg_exists $distro "-trial"; then
+          echo "not exists" && wait_more=1
+        fi
+      fi
     fi
   done
   if [ $wait_more -eq 0 ]; then

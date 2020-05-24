@@ -42,8 +42,11 @@ distro_to_pkg_type () {
     "fedora32")
       echo "FEDORA32"
       ;;
-    "windows"*)
+    "windows10")
       echo "WINDOWS"
+      ;;
+    "windows10-msys")
+      echo "WINDOWS_MSYS"
       ;;
     "osx"* | "macos"*)
       echo "OSX"

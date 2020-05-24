@@ -74,14 +74,14 @@ sendowl_delete () {
 # prefetch the installers not on this machine
 prefetch () {
   osx_pkg_name="$(get_package_filename osx)"
-  windows_pkg_name="$(get_package_filename windows10)"
+  windows_pkg_name="$(get_package_filename windows10-msys)"
   while ! [ -f "zrythm-installer/$osx_pkg_name" -a \
     -f "zrythm-installer/$windows_pkg_name" ]; do
     $scp_cmd \
       "$remote_ip:$remote_home/packages/osx/$osx_pkg_name" \
       "zrythm-installer/$osx_pkg_name" > out.log 2> err.log || true
     $scp_cmd \
-      "$remote_ip:$remote_home/packages/windows10/$windows_pkg_name" \
+      "$remote_ip:$remote_home/packages/windows10-msys/$windows_pkg_name" \
       "zrythm-installer/$windows_pkg_name" > out.log 2> err.log || true
     sleep 12
   done
@@ -195,7 +195,7 @@ echo "done"
 echo "creating products..."
 gnu_linux_product_id="$(create_or_update_product "gnu-linux")"
 osx_product_id="$(create_or_update_product "osx")"
-windows_product_id="$(create_or_update_product "windows10")"
+windows_product_id="$(create_or_update_product "windows10-msys")"
 echo "done"
 
 echo "created products $gnu_linux_product_id, $osx_product_id and $windows_product_id"
