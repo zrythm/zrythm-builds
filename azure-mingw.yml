@@ -13,17 +13,20 @@ steps:
   - script: cinst msys2 --params "/InstallDir=C:/msys64" --no-progress
     displayName: install msys2
 
-  - script: C:\msys64\usr\bin\bash --login -c "pacman -S --noconfirm --needed mingw-w64-x86_64-toolchain mingw-w64-x86_64-gtk3 mingw-w64-x86_64-meson mingw-w64-x86_64-libsamplerate mingw-w64-x86_64-fftw mingw-w64-x86_64-ffmpeg mingw-w64-x86_64-libyaml mingw-w64-x86_64-libsndfile mingw-w64-x86_64-rubberband mingw-w64-x86_64-dlfcn mingw-w64-x86_64-SDL2 mingw-w64-x86_64-chromaprint guile libguile-devel mingw-w64-x86_64-gtksourceview3 mingw-w64-x86_64-graphviz"
+  - script: C:\msys64\usr\bin\bash --login -c "pacman -S --noconfirm --needed mingw-w64-x86_64-toolchain mingw-w64-x86_64-gtk3 mingw-w64-x86_64-meson mingw-w64-x86_64-libsamplerate mingw-w64-x86_64-fftw mingw-w64-x86_64-ffmpeg mingw-w64-x86_64-libyaml mingw-w64-x86_64-libsndfile mingw-w64-x86_64-rubberband mingw-w64-x86_64-dlfcn mingw-w64-x86_64-SDL2 mingw-w64-x86_64-chromaprint guile libguile-devel mingw-w64-x86_64-gtksourceview3 mingw-w64-x86_64-graphviz git"
     displayName: install mingw deps
 
   - script: |
-      C:\msys64\usr\bin\bash --login -c "cd && \
-      git clone https://git.sr.ht/~alextee/zrythm \
-      git clone https://git.sr.ht/~alextee/zrythm-builds \
-      git clone https://git.sr.ht/~alextee/zrythm-installer \
-      git clone https://github.com/KDE/breeze-icons"
+      C:\msys64\usr\bin\bash --login -c "cd && git clone https://git.sr.ht/~alextee/zrythm && git clone https://git.sr.ht/~alextee/zrythm-builds && git clone https://git.sr.ht/~alextee/zrythm-installer && git clone https://github.com/KDE/breeze-icons"
     displayName: 'Fetch repos'
 
   - script: |
-      C:\msys64\usr\bin\bash --login -c "echo hello"
+      echo REMOTE_HOME=%REMOTE_HOME% >> C:\msys64\mingw64\.env
+      echo REMOTE_IP=%REMOTE_IP% >> C:\msys64\mingw64\.env
+      echo SSH_KEY=%SSH_KEY% >> C:\msys64\mingw64\.env
+      C:\msys64\usr\bin\bash --login -c "cd && source /mingw64/.env && echo \"$SSH_KEY\" > tmp_rsa && openssl base64 -d -A < tmp_rsa > id_rsa && grep -q \"BEGIN RSA PRIVATE KEY\" id_rsa && chmod 600 id_rsa && zrythm-builds/scripts/make-pkg.sh windows10-msys && zrythm-builds/scripts/push-pkg.sh windows10-msys"
     displayName: 'Make installer'
+    env:
+      REMOTE_HOME: $(REMOTE_HOME)
+      REMOTE_IP: $(REMOTE_IP)
+      SSH_KEY: $(SSH_KEY)
