@@ -1,6 +1,20 @@
 #! /bin/bash
 #
 # Copyright (C) 2020 Alexandros Theodotou <alex at zrythm dot org>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
 
 distro=""
 source zrythm-builds/scripts/common.sh.in
@@ -77,6 +91,7 @@ prefetch () {
   windows_pkg_name="$(get_package_filename windows10-msys)"
   while ! [ -f "zrythm-installer/$osx_pkg_name" -a \
     -f "zrythm-installer/$windows_pkg_name" ]; do
+    >&2 echo "$osx_pkg_name and $windows_pkg_name don't exist. fetching..."
     $scp_cmd \
       "$remote_ip:$remote_home/packages/osx/$osx_pkg_name" \
       "zrythm-installer/$osx_pkg_name" > out.log 2> err.log || true
