@@ -106,11 +106,15 @@ prefetch () {
 create_product ()
 {
   os=$1
+  wget "--directory-prefix=$(pwd)/zrythm-installer/" \
+    https://www.zrythm.org/static/icons/zrythm/z_frame_8.png
   sendowl_post_form \
     "products" \
     "product[name]=$(get_product_name $os)" \
     "product[product_type]=digital" \
     "product[price]=5.00" \
+    "product[item_description_attributes][text]=automated build" \
+    "product[product_image]=@$(pwd)/zrythm-installer/z_frame_8.png" \
     "product[attachment]=@$(pwd)/zrythm-installer/$(get_package_filename $os)" | jq '.product'
 }
 
@@ -141,12 +145,13 @@ create_or_update_product () {
   if [ "$this_product" != "null" ]; then
     product_id="$(echo "$this_product" | jq '.id')"
     sendowl_delete "products/$product_id"
+    create_or_update_product $os
+  else
+    # create one
+    this_product="$(create_product $os)"
+
+    echo "$this_product" | jq '.id'
   fi
-
-  # create one
-  this_product="$(create_product $os)"
-
-  echo "$this_product" | jq '.id'
 }
 
 update_or_create_bundle () {
