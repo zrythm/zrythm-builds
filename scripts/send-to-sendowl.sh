@@ -113,7 +113,6 @@ create_product ()
     "product[name]=$(get_product_name $os)" \
     "product[product_type]=digital" \
     "product[price]=5.00" \
-    "product[item_description_attributes][text]=automated build" \
     "product[product_image]=@$(pwd)/zrythm-installer/z_frame_8.png" \
     "product[attachment]=@$(pwd)/zrythm-installer/$(get_package_filename $os)" | jq '.product'
 }
