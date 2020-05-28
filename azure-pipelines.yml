@@ -41,6 +41,7 @@ steps:
     openssl base64 -d -A < tmp_rsa > id_rsa
     grep -q "BEGIN RSA PRIVATE KEY" id_rsa
     chmod 600 id_rsa
+    zrythm-builds/scripts/create-manuals-zip.sh
     zrythm-builds/scripts/make-pkg.sh osx
     zrythm-builds/scripts/push-pkg.sh osx
   displayName: 'Build OSX'
