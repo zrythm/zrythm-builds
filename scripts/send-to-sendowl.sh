@@ -31,7 +31,7 @@ get_product_name () {
     "windows"*)
       echo "$bundle_name (Windows 64bit)"
       ;;
-    "osx")
+    "osx-brew-zip")
       echo "$bundle_name (MacOS)"
       ;;
   esac
@@ -87,13 +87,13 @@ sendowl_delete () {
 
 # prefetch the installers not on this machine
 prefetch () {
-  osx_pkg_name="$(get_package_filename osx)"
+  osx_pkg_name="$(get_package_filename osx-brew-zip)"
   windows_pkg_name="$(get_package_filename windows10-msys)"
   while ! [ -f "zrythm-installer/$osx_pkg_name" -a \
     -f "zrythm-installer/$windows_pkg_name" ]; do
     >&2 echo "$osx_pkg_name and $windows_pkg_name don't exist. fetching..."
     $scp_cmd \
-      "$remote_ip:$remote_home/packages/osx/$osx_pkg_name" \
+      "$remote_ip:$remote_home/packages/osx-brew-zip/$osx_pkg_name" \
       "zrythm-installer/$osx_pkg_name" > out.log 2> err.log || true
     $scp_cmd \
       "$remote_ip:$remote_home/packages/windows10-msys/$windows_pkg_name" \
