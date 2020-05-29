@@ -27,7 +27,7 @@ steps:
     set -e
     brew update
     # use || true because it returns 1
-    brew install fftw meson libsamplerate sdl2 chromaprint libgtop lilv librsvg adwaita-icon-theme gtk+3 guile gtksourceview4 graphviz zstd npm || true
+    brew install fftw meson libsamplerate sdl2 chromaprint libgtop lilv librsvg adwaita-icon-theme gtk+3 guile gtksourceview4 graphviz zstd npm rt-audio rtmidi || true
     brew link --overwrite python
     npm install -g appdmg
     pwd
@@ -42,8 +42,8 @@ steps:
     grep -q "BEGIN RSA PRIVATE KEY" id_rsa
     chmod 600 id_rsa
     zrythm-builds/scripts/create-manuals-zip.sh
-    zrythm-builds/scripts/make-pkg.sh osx
-    zrythm-builds/scripts/push-pkg.sh osx
+    zrythm-builds/scripts/make-pkg.sh osx-brew-zip
+    zrythm-builds/scripts/push-pkg.sh osx-brew-zip
   displayName: 'Build OSX'
   env:
     REMOTE_HOME: $(REMOTE_HOME)

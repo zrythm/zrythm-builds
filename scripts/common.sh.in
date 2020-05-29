@@ -62,8 +62,11 @@ distro_to_pkg_type () {
     "windows10-msys")
       echo "WINDOWS_MSYS"
       ;;
-    "osx"* | "macos"*)
+    "osx" | "macos"*)
       echo "OSX"
+      ;;
+    "osx-brew-zip")
+      echo "OSX_BREW_ZIP"
       ;;
     "gnu-linux")
       echo "GNU_LINUX"
