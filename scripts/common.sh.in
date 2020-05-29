@@ -22,10 +22,12 @@ fi
 
 set -euo pipefail
 
-if [[ "$distro" = "osx" || "$distro" = "windows10-msys" ]]; then
+if [[ "$distro" = "osx" ]] || [[ "$distro" = "windows10-msys" ]] || [[ "$distro" = "osx-brew-zip" ]]; then
   ssh_opts="-o StrictHostKeyChecking=no -i $id_rsa_path"
+  echo "using id_rsa"
 else
   ssh_opts="-o StrictHostKeyChecking=no"
+  echo "not using id_rsa"
 fi
 
 distros="archlinux debian10 fedora32 ubuntu1804 ubuntu1910 ubuntu2004 gnu-linux"

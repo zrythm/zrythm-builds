@@ -19,7 +19,7 @@
 # This script creates the manuals zip (used by the windows
 # build)
 
-distro=windows10-msys
+distro=$1
 id_rsa_path="$(pwd)/id_rsa"
 source zrythm-builds/scripts/common.sh.in
 
