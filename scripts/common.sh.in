@@ -89,7 +89,7 @@ get_package_filename () {
 # whether the package has a separate zplugins dir
 package_has_zplugins_dir () {
   [ "$distro" != "windows10-msys" ] && [ "$distro" != "osx" ] && \
-    [ "$distro" != "windows10" ]
+    [ "$distro" != "windows10" ] && [ "$distro" != "osx-brew-zip" ]
 }
 
 # returns if the file exists in the remote home dir

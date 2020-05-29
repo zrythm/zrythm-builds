@@ -213,7 +213,7 @@ echo "done"
 # create or update products
 echo "creating products..."
 gnu_linux_product_id="$(create_or_update_product "gnu-linux")"
-osx_product_id="$(create_or_update_product "osx")"
+osx_product_id="$(create_or_update_product "osx-brew-zip")"
 windows_product_id="$(create_or_update_product "windows10-msys")"
 echo "done"
 
