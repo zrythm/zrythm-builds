@@ -36,10 +36,16 @@ if [ "$distro" = "osx" ]; then
 fi
 
 # deploy normal package
-echo "deploying normal package for $distro..."
-$scp_cmd \
+echo "deploying normal package for $distro (zrythm-installer/$pkg_dirname/$distro/$pkg_filename)..."
+ls -l zrythm-installer/$pkg_dirname/$distro
+if $scp_cmd \
   zrythm-installer/$pkg_dirname/$distro/$pkg_filename \
-  $remote_ip:$remote_packages/$distro/ > out.log 2> err.log
+  $remote_ip:$remote_packages/$distro/ > out.log 2> err.log ; then
+  echo "succeeded"
+else
+  echo >&2 "failed: $(cat out.log)"
+  echo >&2 "$(cat err.log)"
+fi
 echo "done"
 
 # also deploy trial if tag

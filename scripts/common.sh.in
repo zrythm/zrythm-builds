@@ -113,9 +113,11 @@ remote_pkg_exists () {
     if package_has_zplugins_dir $distro ; then
       remote_dir_exists packages/$distro/zplugins/ZSaw.lv2
     else
+      >&2 echo "exists"
       true
     fi
   else
+    >&2 echo "doesn't exist"
     false
   fi
 }
