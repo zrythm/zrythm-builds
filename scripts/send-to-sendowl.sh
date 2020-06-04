@@ -215,6 +215,7 @@ echo "creating products..."
 gnu_linux_product_id="$(create_or_update_product "gnu-linux")"
 osx_product_id="$(create_or_update_product "osx-brew-zip")"
 windows_product_id="$(create_or_update_product "windows10-msys")"
+exit 1
 echo "done"
 
 echo "created products $gnu_linux_product_id, $osx_product_id and $windows_product_id"
