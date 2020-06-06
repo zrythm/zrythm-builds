@@ -35,25 +35,27 @@ if [ "$distro" = "osx" ]; then
   pkg_dirname="artifacts"
 fi
 
+deploy_pkg () {
+  filename=$1
+  echo "deploying package for $distro (zrythm-installer/$pkg_dirname/$distro/$filename)..."
+  if $scp_cmd \
+    zrythm-installer/$pkg_dirname/$distro/$filename \
+    $remote_ip:$remote_packages/$distro/ > out.log 2> err.log ; then
+    echo "succeeded"
+  else
+    echo >&2 "failed: $(cat out.log)"
+    echo >&2 "$(cat err.log)"
+  fi
+  echo "done"
+}
+
 # deploy normal package
-echo "deploying normal package for $distro (zrythm-installer/$pkg_dirname/$distro/$pkg_filename)..."
-if $scp_cmd \
-  zrythm-installer/$pkg_dirname/$distro/$pkg_filename \
-  $remote_ip:$remote_packages/$distro/ > out.log 2> err.log ; then
-  echo "succeeded"
-else
-  echo >&2 "failed: $(cat out.log)"
-  echo >&2 "$(cat err.log)"
-fi
-echo "done"
+deploy_pkg "$pkg_filename"
 
 # also deploy trial if tag
 if is_tag ; then
-  echo "deploying trial package for $distro..."
-  $scp_cmd \
-    zrythm-installer/$pkg_dirname/$distro/$pkg_trial_filename \
-    $remote_ip:$remote_packages/$distro/ > out.log 2> err.log
-  echo "done"
+  echo "deploying trial package"
+  deploy_pkg "$pkg_trial_filename"
 fi
 
 # if arch, also deploy manuals
