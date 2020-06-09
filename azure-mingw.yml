@@ -17,6 +17,7 @@
 
 trigger:
 - master
+- nightlies
 
 pool:
   vmImage: 'windows-latest'
