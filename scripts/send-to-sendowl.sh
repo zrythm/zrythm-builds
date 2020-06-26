@@ -98,7 +98,7 @@ prefetch () {
     $scp_cmd \
       "$remote_ip:$remote_home/packages/windows10-msys/$windows_pkg_name" \
       "zrythm-installer/$windows_pkg_name" > out.log 2> err.log || true
-    sleep 12
+    sleep 24
   done
 }
 
