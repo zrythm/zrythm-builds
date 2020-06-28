@@ -54,6 +54,7 @@ packages:
   - liblilv-dev
   - librsvg2-dev
   - portaudio19-dev
+  - librtaudio-dev
   - tar
   - zip
   - wget

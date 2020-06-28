@@ -55,6 +55,7 @@ packages:
   - lv2-dev
   - liblilv-dev
   - portaudio19-dev
+  - librtaudio-dev
   - zip
   - wget
 sources:

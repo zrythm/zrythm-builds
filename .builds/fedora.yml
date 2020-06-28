@@ -44,6 +44,7 @@ packages:
   - help2man
   - rpm-build
   - portaudio-devel
+  - rtaudio-devel
   - jack-audio-connection-kit-devel
   - libX11-devel
   - rubberband-devel
