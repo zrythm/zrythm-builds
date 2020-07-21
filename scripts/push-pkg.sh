@@ -40,7 +40,7 @@ deploy_pkg () {
   echo "deploying package for $distro (zrythm-installer/$pkg_dirname/$distro/$filename)..."
   if $scp_cmd \
     zrythm-installer/$pkg_dirname/$distro/$filename \
-    $remote_ip:$remote_packages/$distro/ > out.log 2> err.log ; then
+    $remote_ip:$remote_packages/$distro/$filename > out.log 2> err.log ; then
     echo "succeeded"
   else
     echo >&2 "failed: $(cat out.log)"
