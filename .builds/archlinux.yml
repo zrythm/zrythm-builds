@@ -72,7 +72,7 @@ secrets:
 tasks:
   - make-archlinux: |
       pip3 install meson
-      zrythm-builds/scripts/make-pkg.sh archlinux
+      export PATH=$PATH:/home/build/.local/bin && zrythm-builds/scripts/make-pkg.sh archlinux
   - deploy-archlinux: |
       zrythm-builds/scripts/push-pkg.sh archlinux
   - gen-gnu-linux-installer-zips: |
