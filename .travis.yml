@@ -25,6 +25,7 @@ script:
 addons:
   homebrew:
     packages:
+      - cmake
       - fftw
       - meson
       - libsamplerate

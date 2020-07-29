@@ -27,7 +27,7 @@ steps:
     set -e
     brew update
     # use || true because it returns 1
-    brew install fftw meson libsamplerate sdl2 chromaprint libgtop lilv librsvg adwaita-icon-theme gtk+3 guile gtksourceview4 graphviz zstd npm rt-audio rtmidi jack qjackctl || true
+    brew install fftw meson libsamplerate sdl2 chromaprint libgtop lilv librsvg adwaita-icon-theme gtk+3 guile gtksourceview4 graphviz zstd npm rt-audio rtmidi jack qjackctl cmake || true
     brew link --overwrite python
     #npm install -g appdmg
     pwd

@@ -17,6 +17,7 @@
 
 image: ubuntu/18.04
 packages:
+  - cmake
   - libgtk-3-dev
   - libjack-dev
   - libsndfile1-dev

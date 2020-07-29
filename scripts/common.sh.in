@@ -30,7 +30,7 @@ else
   echo "not using id_rsa"
 fi
 
-distros="archlinux debian10 fedora32 ubuntu1804 ubuntu2004 ubuntu2010 gnu-linux"
+distros="archlinux debian10 debian11 fedora32 ubuntu1804 ubuntu2004 ubuntu2010 gnu-linux"
 linguas="en de fr"
 rsync_cmd="rsync --rsh=\"ssh $ssh_opts\""
 ssh_cmd="ssh -q $ssh_opts"

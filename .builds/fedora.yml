@@ -17,6 +17,7 @@
 
 image: fedora/32
 packages:
+  - cmake
   - gcc-c++
   - gcc
   - pkgconfig
