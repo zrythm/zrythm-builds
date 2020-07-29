@@ -44,6 +44,7 @@ packages:
   - librsvg2-dev
   - libzstd-dev
   - python3
+  - python3-pip
   - rsync
   - desktop-file-utils
   - libsdl2-dev
