@@ -65,6 +65,6 @@ secrets:
 tasks:
   - make: |
       pip3 install cmake
-      zrythm-builds/scripts/make-pkg.sh ubuntu1804
+      export PATH=$PATH:/home/build/.local/bin && zrythm-builds/scripts/make-pkg.sh ubuntu1804
   - deploy: |
       zrythm-builds/scripts/push-pkg.sh ubuntu1804
