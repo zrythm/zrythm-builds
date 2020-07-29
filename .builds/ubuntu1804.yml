@@ -17,7 +17,6 @@
 
 image: ubuntu/18.04
 packages:
-  - cmake
   - libgtk-3-dev
   - libjack-dev
   - libsndfile1-dev
@@ -64,6 +63,7 @@ secrets:
   - a97e7a27-0c61-4e64-b103-fdd2af6cfbda
 tasks:
   - make: |
+      pip3 install cmake
       zrythm-builds/scripts/make-pkg.sh ubuntu1804
   - deploy: |
       zrythm-builds/scripts/push-pkg.sh ubuntu1804
