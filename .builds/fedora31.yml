@@ -37,6 +37,7 @@ packages:
   - gtksourceview3-devel
   - graphviz-devel
   - suil-devel
+  - ninja
   - help2man
   - alsa-lib-devel
   - ladspa-devel
