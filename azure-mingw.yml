@@ -34,7 +34,7 @@ steps:
     displayName: 'Fetch repos'
 
   - script: |
-      C:\msys64\usr\bin\bash --login -c "pip uninstall -y meson && pip install -y meson"
+      C:\msys64\usr\bin\bash --login -c "/mingw64/bin/pip.exe uninstall -y meson && /mingw64/bin/pip.exe install -y meson && /mingw64/bin/meson --version"
     displayName: 'Install meson through pip'
 
   - script: |
