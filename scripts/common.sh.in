@@ -55,8 +55,8 @@ distro_to_pkg_type () {
     "debian"* | "ubuntu"* )
       echo "DEBIAN"
       ;;
-    "fedora32")
-      echo "FEDORA32"
+    "fedora"*)
+      echo "FEDORA"
       ;;
     "windows10")
       echo "WINDOWS"
