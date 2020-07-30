@@ -17,7 +17,6 @@
 
 image: fedora/31
 packages:
-  - cmake
   - gcc-c++
   - gcc
   - pkgconfig
@@ -37,7 +36,6 @@ packages:
   - gtksourceview3-devel
   - graphviz-devel
   - suil-devel
-  - ninja
   - help2man
   - alsa-lib-devel
   - ladspa-devel
@@ -66,6 +64,8 @@ secrets:
 tasks:
   - make: |
       pip3 install --user meson
+      pip3 install --user ninja
+      pip3 install --user cmake
       export PATH=$PATH:/home/build/.local/bin && zrythm-builds/scripts/make-pkg.sh fedora31
   - deploy: |
       zrythm-builds/scripts/push-pkg.sh fedora31
