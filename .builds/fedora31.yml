@@ -64,7 +64,7 @@ secrets:
   - a97e7a27-0c61-4e64-b103-fdd2af6cfbda
 tasks:
   - make: |
-      pip3 install meson
+      pip3 install --user meson
       export PATH=$PATH:/home/build/.local/bin && zrythm-builds/scripts/make-pkg.sh fedora31
   - deploy: |
       zrythm-builds/scripts/push-pkg.sh fedora31
