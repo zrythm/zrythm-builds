@@ -22,7 +22,9 @@ source zrythm-builds/scripts/common.sh.in
 artifacts_dir="zrythm-installer/artifacts"
 mkdir -p $artifacts_dir
 
-sed -i -e "s/ZRYTHM_PKG_VERSION=.*/ZRYTHM_PKG_VERSION=$zrythm_pkg_ver/" zrythm-installer/Makefile
+makefile=zrythm-installer/Makefile
+echo "replacing values in $makefile"
+sed -i -e "s/ZRYTHM_PKG_VERSION=.*/ZRYTHM_PKG_VERSION=$zrythm_pkg_ver/" $makefile
 
 wget_package_and_plugins () {
   distro=$1

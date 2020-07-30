@@ -31,11 +31,6 @@ sed -i -e "s,MXE_ZPLUGINS_CLONE_PATH=.*,MXE_ZPLUGINS_CLONE_PATH=$(pwd)/zplugins,
 sed -i -e "s,MXE_GTK3_CLONE_PATH=.*,MXE_GTK3_CLONE_PATH=$(pwd)/gtk,g" $makefile
 sed -i -e "s,BREEZE_DARK_PATH=.*,BREEZE_DARK_PATH=$(pwd)/breeze-icons/icons-dark,g" $makefile
 sed -i -e "1,92s,/home/ansible,/home/build,g" $makefile
-if [ "$distro" = "fedora32" ]; then
-  sed -i -e "s,FEDORA_VERSION=version,FEDORA_VERSION=32,g" $makefile
-elif [ "$distro" = "fedora31" ]; then
-  sed -i -e "s,FEDORA_VERSION=version,FEDORA_VERSION=31,g" $makefile
-fi
 echo "done"
 
 echo "fetching meson subprojects..."

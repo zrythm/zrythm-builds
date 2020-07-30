@@ -41,7 +41,6 @@ packages:
   - alsa-lib-devel
   - ladspa-devel
   - fftw-devel
-  - meson
   - help2man
   - rpm-build
   - portaudio-devel
@@ -66,6 +65,6 @@ secrets:
 tasks:
   - make: |
       pip3 install meson
-      zrythm-builds/scripts/make-pkg.sh fedora31
+      export PATH=$PATH:/home/build/.local/bin && zrythm-builds/scripts/make-pkg.sh fedora31
   - deploy: |
       zrythm-builds/scripts/push-pkg.sh fedora31
