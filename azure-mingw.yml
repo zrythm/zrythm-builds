@@ -34,7 +34,7 @@ steps:
     displayName: 'Fetch repos'
 
   - script: |
-      C:\msys64\usr\bin\bash --login -c "cd && mkdir meson-build && cd meson-build && cp ../zrythm-installer/PKGBUILD-meson ./PKGBUILD && cp ../zrythm-instaler/mingw-meson/* ./ && makepkg-mingw -sCLf && pacman -U mingw-w64-x86_64-meson-*-any.pkg.tar.xz"
+      C:\msys64\usr\bin\bash --login -c "cd && mkdir meson-build && cd meson-build && cp ../zrythm-installer/PKGBUILD-meson ./PKGBUILD && cp ../zrythm-installer/mingw-meson/* ./ && makepkg-mingw -sCLf && pacman -U mingw-w64-x86_64-meson-*-any.pkg.tar.xz"
     displayName: 'Build and install new meson'
 
   - script: |
