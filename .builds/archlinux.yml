@@ -76,7 +76,7 @@ tasks:
   - deploy-archlinux: |
       zrythm-builds/scripts/push-pkg.sh archlinux
   - gen-gnu-linux-installer-zips: |
-      timeout 1800 zrythm-builds/scripts/zip-gnu-linux-packages.sh
+      timeout 3800 zrythm-builds/scripts/zip-gnu-linux-packages.sh
   - deploy-gnu-linux-installer-zips: |
       zrythm-builds/scripts/deploy-gnu-linux-installer.sh
   - update-sendowl: |
