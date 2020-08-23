@@ -59,6 +59,7 @@ packages:
   - tar
   - zip
   - wget
+  - vim
 sources:
   - https://git.sr.ht/~alextee/zrythm
   - https://git.sr.ht/~alextee/zrythm-installer
