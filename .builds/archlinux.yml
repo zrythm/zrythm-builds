@@ -51,6 +51,7 @@ packages:
   - rtaudio
   - rtmidi
   - texlive-most
+  - texlive-langjapanese
   - tar
   - zip
   - unzip
