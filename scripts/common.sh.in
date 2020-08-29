@@ -31,7 +31,7 @@ else
 fi
 
 distros="archlinux debian10 debian11 fedora31 fedora32 ubuntu1804 ubuntu2004 ubuntu2010 gnu-linux"
-linguas="en de fr gl ja pt"
+linguas="en de fr ja pt"
 rsync_cmd="rsync --rsh=\"ssh $ssh_opts\""
 ssh_cmd="ssh -q $ssh_opts"
 scp_cmd="scp $ssh_opts"
