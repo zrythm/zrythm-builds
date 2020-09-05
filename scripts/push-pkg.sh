@@ -37,9 +37,9 @@ fi
 
 deploy_pkg () {
   filename=$1
-  echo "deploying package for $distro (zrythm-installer/$pkg_dirname/$distro/$filename)..."
+  echo "deploying package for $distro (/tmp/artifacts/$distro/$filename)..."
   if $scp_cmd \
-    zrythm-installer/$pkg_dirname/$distro/$filename \
+    /tmp/artifacts/$distro/$filename \
     $remote_ip:$remote_packages/$distro/$filename > out.log 2> err.log ; then
     echo "succeeded"
   else
@@ -70,10 +70,10 @@ if [ "$distro" = "archlinux" ]; then
 fi
 
 # deploy plugins
-if package_has_zplugins_dir $distro ; then
-  echo "deploying zplugins..."
-  $scp_cmd -r \
-    zrythm-installer/$pkg_dirname/$distro/zplugins \
-    $remote_ip:$remote_packages/$distro/ > out.log 2> err.log
-  echo "done"
-fi
+#if package_has_zplugins_dir $distro ; then
+  #echo "deploying zplugins..."
+  #$scp_cmd -r \
+    #zrythm-installer/$pkg_dirname/$distro/zplugins \
+    #$remote_ip:$remote_packages/$distro/ > out.log 2> err.log
+  #echo "done"
+#fi
