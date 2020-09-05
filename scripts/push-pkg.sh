@@ -63,7 +63,7 @@ if [ "$distro" = "archlinux" ]; then
   for lang in $linguas ; do
     echo "deploying $lang manual..."
     $scp_cmd \
-      "zrythm-installer/build/zrythm-$zrythm_pkg_ver/build/doc/user/$lang/latex/Zrythm.pdf" \
+      "zrythm-installer/build/arch/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
       "$remote_ip:$remote_home/manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" > out.log 2> err.log
     echo "done"
   done
