@@ -86,12 +86,6 @@ get_package_filename () {
     $(zrythm-installer/build/scripts/get_pkg_filename.sh $pkg_type $trial)
 }
 
-# whether the package has a separate zplugins dir
-package_has_zplugins_dir () {
-  [ "$distro" != "windows10-msys" ] && [ "$distro" != "osx" ] && \
-    [ "$distro" != "windows10" ] && [ "$distro" != "osx-brew-zip" ]
-}
-
 # returns if the file exists in the remote home dir
 remote_file_exists () {
   >&2 echo "checking if remote file $1 exists..."
@@ -112,12 +106,8 @@ remote_pkg_exists () {
   set -u
   >&2 echo "checking if remote package for $distro exists $(get_package_filename $distro $trial)..."
   if remote_file_exists packages/$distro/$(get_package_filename $distro $trial) ; then
-    if package_has_zplugins_dir $distro ; then
-      remote_dir_exists packages/$distro/zplugins/ZSaw.lv2
-    else
-      >&2 echo "exists"
-      true
-    fi
+    >&2 echo "exists"
+    true
   else
     >&2 echo "doesn't exist"
     false

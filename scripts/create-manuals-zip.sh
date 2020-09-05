@@ -47,12 +47,12 @@ for lang in $linguas ; do
   echo "fetching $lang manual..."
   $scp_cmd \
     "$remote_ip:$remote_home/manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
-    zrythm-installer/build/Zrythm-$zrythm_pkg_ver-$lang.pdf > out.log 2> err.log
+    zrythm-installer/Zrythm-$zrythm_pkg_ver-$lang.pdf > out.log 2> err.log
   echo "done"
 done
 
 echo "zipping manuals..."
-pushd "zrythm-installer/build"
+pushd "zrythm-installer"
 zip user-manual.zip ./*.pdf
 popd
 echo "done"

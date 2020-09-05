@@ -68,12 +68,3 @@ if [ "$distro" = "archlinux" ]; then
     echo "done"
   done
 fi
-
-# deploy plugins
-#if package_has_zplugins_dir $distro ; then
-  #echo "deploying zplugins..."
-  #$scp_cmd -r \
-    #zrythm-installer/$pkg_dirname/$distro/zplugins \
-    #$remote_ip:$remote_packages/$distro/ > out.log 2> err.log
-  #echo "done"
-#fi
