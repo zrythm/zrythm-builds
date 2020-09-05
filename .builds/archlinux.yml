@@ -67,6 +67,7 @@ sources:
   - https://git.sr.ht/~alextee/zrythm
   - https://git.sr.ht/~alextee/zplugins
   - https://git.sr.ht/~alextee/zrythm-installer
+  - https://github.com/mesonbuild/meson
 secrets:
   - 063cb70d-6da6-492a-b530-04edc07651ba
   - a97e7a27-0c61-4e64-b103-fdd2af6cfbda
