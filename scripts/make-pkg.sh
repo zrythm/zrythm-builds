@@ -22,16 +22,13 @@ id_rsa_path=$(pwd)/id_rsa
 
 source zrythm-builds/scripts/common.sh.in
 
-makefile=zrythm-installer/Makefile
-echo "replacing values in $makefile"
-sed -i -e "s/ZRYTHM_VERSION=.*/ZRYTHM_VERSION=master/" $makefile
-sed -i -e "s/ZRYTHM_PKG_VERSION=.*/ZRYTHM_PKG_VERSION=$zrythm_pkg_ver/" $makefile
-sed -i -e "s/LOCALES=.*/LOCALES=$linguas/" $makefile
-sed -i -e "s,ARCH_MXE_ROOT=.*,ARCH_MXE_ROOT=$(pwd)/mxe,g" $makefile
-sed -i -e "s,MXE_ZPLUGINS_CLONE_PATH=.*,MXE_ZPLUGINS_CLONE_PATH=$(pwd)/zplugins,g" $makefile
-sed -i -e "s,MXE_GTK3_CLONE_PATH=.*,MXE_GTK3_CLONE_PATH=$(pwd)/gtk,g" $makefile
-sed -i -e "s,BREEZE_DARK_PATH=.*,BREEZE_DARK_PATH=$(pwd)/breeze-icons/icons-dark,g" $makefile
-sed -i -e "1,92s,/home/ansible,/home/build,g" $makefile
+echo "configuring zrythm-installer..."
+pushd zrythm-installer
+# TODO linguas
+../meson/meson.py build -Dzrythm-git-ver=master -Dzrythm-pkg-ver=$zrythm_pkg_ver \
+  -Dbreeze-dark-path="$(pwd)/breeze-icons/icons-dark" -Ddistro=$distro \
+  -Dbuild-trial=false
+popd
 echo "done"
 
 echo "fetching meson subprojects..."
@@ -60,4 +57,4 @@ fi
 
 echo "$distro package does not exist on server, making..."
 cd zrythm-installer
-make $distro
+ninja -C build

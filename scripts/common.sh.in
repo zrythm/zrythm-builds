@@ -79,11 +79,8 @@ distro_to_pkg_type () {
 get_package_filename () {
   distro=$1
   pkg_type=$(distro_to_pkg_type $distro)
-  set +u
-  trial=$2
-  set -u
   printf '%s' \
-    $(cd zrythm-installer && make pkg$trial-filename-$pkg_type)
+    $(zrythm-installer/build/scripts/get_pkg_filename.sh $pkg_type)
 }
 
 # whether the package has a separate zplugins dir
