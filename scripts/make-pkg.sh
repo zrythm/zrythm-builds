@@ -26,7 +26,8 @@ echo "configuring zrythm-installer..."
 meson_path="$(pwd)/meson/meson.py"
 pushd zrythm-installer
 # TODO linguas
-$meson_path build -Dmeson-path=$meson_path -Dzrythm-git-ver=master -Dzrythm-pkg-ver=$zrythm_pkg_ver \
+$meson_path build -Dmeson-path=$meson_path \
+  -Dzrythm-git-ver=master -Dzrythm-pkg-ver=$zrythm_pkg_ver \
   -Dbreeze-dark-path="$(pwd)/breeze-icons/icons-dark" -Ddistro=$distro \
   -Dbuild-trial=false --prefix=/tmp/artifacts/$distro
 popd
@@ -57,9 +58,10 @@ if should_skip_packaging $distro ; then
 fi
 
 echo "$distro package does not exist on server, making..."
-cd zrythm-installer
+pushd zrythm-installer
 ninja -C build install
 if is_tag ; then
   $meson_path build --reconfigure -Dbuild-trial=true
   ninja -C build install
 fi
+popd

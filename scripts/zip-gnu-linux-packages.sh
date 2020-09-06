@@ -19,12 +19,23 @@
 distro=""
 source zrythm-builds/scripts/common.sh.in
 
-artifacts_dir="zrythm-installer/artifacts"
+artifacts_dir="$(pwd)/zrythm-installer/artifacts"
 mkdir -p $artifacts_dir
+pdf_dir="$(pwd)/zrythm-installer/pdf"
 
-makefile=zrythm-installer/Makefile
 echo "replacing values in $makefile"
 sed -i -e "s/ZRYTHM_PKG_VERSION=.*/ZRYTHM_PKG_VERSION=$zrythm_pkg_ver/" $makefile
+echo "configuring zrythm-installer..."
+meson_path="$(pwd)/meson/meson.py"
+pushd zrythm-installer
+$meson_path build -Dmeson-path=$meson_path \
+  -Dzrythm-git-ver=master -Dzrythm-pkg-ver=$zrythm_pkg_ver \
+  -Dbreeze-dark-path="$(pwd)/breeze-icons/icons-dark" -Ddistro=gnu-linux \
+  -Dbuild-trial=false -Dpackages-dir=$artifacts_dir \
+  -Dpdf-dir=$pdf_dir \
+  --prefix=/tmp/artifacts/$distro
+popd
+echo "done"
 
 wget_package_and_plugins () {
   distro=$1
@@ -98,21 +109,23 @@ for distro in $distros ; do
   fi
 done
 
-# get manual
+# get manuals
 for lang in $linguas ; do
   echo "fetching $lang manual..."
   $scp_cmd \
     "$remote_ip:$remote_home/manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
-    "zrythm-installer/Zrythm-$zrythm_pkg_ver-$lang.pdf" > out.log 2> err.log
+    "$pdf_dir/Zrythm-$zrythm_pkg_ver-$lang.pdf" > out.log 2> err.log
 done
 
 # make zip
 echo "making $gnu_linux_zip_filename..."
-make -C zrythm-installer $gnu_linux_zip_filename
+pushd zrythm-installer
+ninja -C build install
 echo "done"
 if is_tag ; then
   echo "making $gnu_linux_zip_trial_filename..."
-  make -C zrythm-installer \
-    $gnu_linux_zip_trial_filename
+  $meson_path build --reconfigure -Dbuild-trial=true
+  ninja -C build install
   echo "done"
 fi
+popd

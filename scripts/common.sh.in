@@ -81,9 +81,8 @@ get_package_filename () {
   set +u
   trial=$2
   set -u
-  pkg_type=$(distro_to_pkg_type $distro)
   printf '%s' \
-    $(zrythm-installer/build/scripts/get_pkg_filename.sh $pkg_type $trial)
+    $(zrythm-installer/build/scripts/get_pkg_filename_from_distro.sh $distro $trial)
 }
 
 # returns if the file exists in the remote home dir
