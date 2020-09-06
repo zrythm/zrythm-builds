@@ -30,12 +30,14 @@ else
   meson_path="$MESON_PATH"
 fi
 set -u
+parent_dir=$(pwd)
 pushd zrythm-installer
 # TODO linguas
 $meson_path build -Dmeson-path=$meson_path \
   -Dzrythm-git-ver=master -Dzrythm-pkg-ver=$zrythm_pkg_ver \
-  -Dbreeze-dark-path="$(pwd)/breeze-icons/icons-dark" -Ddistro=$distro \
-  -Dbuild-trial=false --prefix=/tmp/artifacts/$distro
+  -Dbreeze-dark-path="$parent_dir/breeze-icons/icons-dark" -Ddistro=$distro \
+  -Dbuild-trial=false -Dmanuals-zip-file=$(pwd)/user-manual.zip \
+  --prefix=/tmp/artifacts/$distro
 popd
 echo "done"
 
