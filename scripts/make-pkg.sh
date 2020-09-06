@@ -65,9 +65,16 @@ fi
 
 echo "$distro package does not exist on server, making..."
 pushd zrythm-installer
-ninja -C build install
+set +u
+if [ "$NINJA_PATH" = "" ]; then
+  ninja_path=ninja
+else
+  ninja_path="$NINJA_PATH"
+fi
+set -u
+$ninja_path -C build install
 if is_tag ; then
   $meson_path build --reconfigure -Dbuild-trial=true
-  ninja -C build install
+  $ninja_path -C build install
 fi
 popd
