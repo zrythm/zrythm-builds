@@ -89,15 +89,20 @@ sendowl_delete () {
 prefetch () {
   osx_pkg_name="$(get_package_filename osx-brew-zip)"
   windows_pkg_name="$(get_package_filename windows10-msys)"
+  gnu_linux_pkg_name="$(get_package_filename gnu-linux)"
   while ! [ -f "zrythm-installer/$osx_pkg_name" -a \
-    -f "zrythm-installer/$windows_pkg_name" ]; do
-    >&2 echo "$osx_pkg_name and $windows_pkg_name don't exist. fetching..."
+    -f "zrythm-installer/$windows_pkg_name" -a  \
+    -f "zrythm-installer/$gnu_linux_pkg_name" ]; do
+    >&2 echo "$osx_pkg_name or $windows_pkg_name or $gnu_linux_pkg_name don't exist. fetching..."
     $scp_cmd \
       "$remote_ip:$remote_home/packages/osx-brew-zip/$osx_pkg_name" \
       "zrythm-installer/$osx_pkg_name" > out.log 2> err.log || true
     $scp_cmd \
       "$remote_ip:$remote_home/packages/windows10-msys/$windows_pkg_name" \
       "zrythm-installer/$windows_pkg_name" > out.log 2> err.log || true
+    $scp_cmd \
+      "$remote_ip:$remote_home/packages/gnu-linux/$gnu_linux_pkg_name" \
+      "zrythm-installer/$gnu_linux_pkg_name" > out.log 2> err.log || true
     sleep 24
   done
 }
