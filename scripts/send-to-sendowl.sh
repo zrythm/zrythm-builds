@@ -106,6 +106,16 @@ prefetch () {
 create_product ()
 {
   os=$1
+  product_filename="$(get_package_filename $os)"
+  product_file="$(pwd)/zrythm-installer/$product_filename"
+  >&2 echo "sending $os package at $product_file..."
+  if test -f "$product_file"; then
+    >&2 echo "$product_file exists"
+  else
+    >&2 echo "$product_file not found"
+    exit 1
+  fi
+
   wget "--directory-prefix=$(pwd)/zrythm-installer/" \
     https://www.zrythm.org/static/icons/zrythm/z_frame_8.png
   sendowl_post_form \
@@ -114,14 +124,14 @@ create_product ()
     "product[product_type]=digital" \
     "product[price]=5.00" \
     "product[product_image]=@$(pwd)/zrythm-installer/z_frame_8.png" \
-    "product[attachment]=@$(pwd)/zrythm-installer/$(get_package_filename $os)" | jq '.product'
+    "product[attachment]=@$product_file" | jq '.product'
 }
 
 # creates or updates a product for the given type
 # and returns the product ID
 create_or_update_product () {
   os=$1
-  all_products="$(sendowl_get "products?per_page=50&page=1")"
+  all_products="$(sendowl_get "products?per_page=50&page=2")"
 
   this_product="null"
   i=0
