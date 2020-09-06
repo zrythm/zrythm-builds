@@ -23,11 +23,13 @@ id_rsa_path=$(pwd)/id_rsa
 source zrythm-builds/scripts/common.sh.in
 
 echo "configuring zrythm-installer..."
+set +u
 if [ "$MESON_PATH" = "" ]; then
   meson_path="$(pwd)/meson/meson.py"
 else
   meson_path="$MESON_PATH"
 fi
+set -u
 pushd zrythm-installer
 # TODO linguas
 $meson_path build -Dmeson-path=$meson_path \
