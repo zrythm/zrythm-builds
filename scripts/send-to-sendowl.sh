@@ -114,9 +114,7 @@ create_product ()
   product_filename="$(get_package_filename $os)"
   product_file="$(pwd)/zrythm-installer/$product_filename"
   >&2 echo "sending $os package at $product_file..."
-  if test -f "$product_file"; then
-    >&2 echo "$product_file exists"
-  else
+  if ! test -f "$product_file"; then
     >&2 echo "$product_file not found"
     exit 1
   fi
