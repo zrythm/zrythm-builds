@@ -22,18 +22,17 @@ source zrythm-builds/scripts/common.sh.in
 artifacts_dir="$(pwd)/zrythm-installer/artifacts"
 mkdir -p $artifacts_dir
 pdf_dir="$(pwd)/zrythm-installer/pdf"
+mkdir -p $pdf_dir
 
-echo "replacing values in $makefile"
-sed -i -e "s/ZRYTHM_PKG_VERSION=.*/ZRYTHM_PKG_VERSION=$zrythm_pkg_ver/" $makefile
 echo "configuring zrythm-installer..."
 meson_path="$(pwd)/meson/meson.py"
 pushd zrythm-installer
-$meson_path build -Dmeson-path=$meson_path \
+$meson_path build --reconfigure -Dmeson-path=$meson_path \
   -Dzrythm-git-ver=master -Dzrythm-pkg-ver=$zrythm_pkg_ver \
   -Dbreeze-dark-path="$(pwd)/breeze-icons/icons-dark" -Ddistro=gnu-linux \
   -Dbuild-trial=false -Dpackages-dir=$artifacts_dir \
   -Dpdf-dir=$pdf_dir \
-  --prefix=/tmp/artifacts/$distro
+  --prefix=/tmp/artifacts
 popd
 echo "done"
 
@@ -58,14 +57,6 @@ wget_package_and_plugins () {
     $scp_cmd \
       "$remote_ip:$remote_packages/$distro/$pkg_trial_filename" \
       "$artifacts_distro_dir/$pkg_trial_filename" > out.log 2> err.log
-    >&2 echo "done"
-  fi
-
-  # get plugins
-  if [ "$distro" != "gnu-linux" ]; then
-    >&2 echo "getting plugins for $distro..."
-    $scp_cmd -r $remote_ip:$remote_packages/$distro/zplugins \
-      "$artifacts_distro_dir"/ > out.log 2> err.log
     >&2 echo "done"
   fi
 }
