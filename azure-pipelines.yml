@@ -30,6 +30,8 @@ steps:
     brew install fftw meson libsamplerate sdl2 chromaprint libgtop lilv librsvg adwaita-icon-theme gtk+3 guile gtksourceview4 graphviz zstd npm rt-audio rtmidi jack qjackctl cmake || true
     brew link --overwrite python
     #npm install -g appdmg
+    pip3 install scikit-build
+    pip3 install cmake
   displayName: 'Install deps'
 
 - script: |
@@ -47,8 +49,6 @@ steps:
     openssl base64 -d -A < tmp_rsa > id_rsa
     grep -q "BEGIN RSA PRIVATE KEY" id_rsa
     chmod 600 id_rsa
-    pip3 install scikit-build
-    pip3 install cmake
     zrythm-builds/scripts/make-pkg.sh osx-brew-zip osx-brew-prepare
     zrythm-builds/scripts/create-manuals-zip.sh osx-brew-zip
     zrythm-builds/scripts/make-pkg.sh osx-brew-zip

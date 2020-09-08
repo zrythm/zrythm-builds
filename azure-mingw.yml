@@ -48,7 +48,7 @@ jobs:
           echo REMOTE_HOME=%REMOTE_HOME% >> C:\msys64\mingw64\.env
           echo REMOTE_IP=%REMOTE_IP% >> C:\msys64\mingw64\.env
           echo SSH_KEY=%SSH_KEY% >> C:\msys64\mingw64\.env
-          C:\msys64\usr\bin\bash --login -c "cd && source /mingw64/.env && echo \"$SSH_KEY\" > tmp_rsa && openssl base64 -d -A < tmp_rsa > id_rsa && grep -q \"BEGIN RSA PRIVATE KEY\" id_rsa && chmod 600 id_rsa && zrythm-builds/scripts/create-manuals-zip.sh windows10-msys && MESON_PATH=/mingw64/bin/meson NINJA_PATH=/mingw64/bin/ninja zrythm-builds/scripts/make-pkg.sh windows10-msys && zrythm-builds/scripts/push-pkg.sh windows10-msys"
+          C:\msys64\usr\bin\bash --login -c "cd && source /mingw64/.env && echo \"$SSH_KEY\" > tmp_rsa && openssl base64 -d -A < tmp_rsa > id_rsa && grep -q \"BEGIN RSA PRIVATE KEY\" id_rsa && chmod 600 id_rsa && MESON_PATH=/mingw64/bin/meson NINJA_PATH=/mingw64/bin/ninja zrythm-builds/scripts/make-pkg.sh windows10-msys windows-msys-prepare && zrythm-builds/scripts/create-manuals-zip.sh windows10-msys && MESON_PATH=/mingw64/bin/meson NINJA_PATH=/mingw64/bin/ninja zrythm-builds/scripts/make-pkg.sh windows10-msys && zrythm-builds/scripts/push-pkg.sh windows10-msys"
         displayName: 'Make installer'
         env:
           REMOTE_HOME: $(REMOTE_HOME)
