@@ -30,6 +30,9 @@ steps:
     brew install fftw meson libsamplerate sdl2 chromaprint libgtop lilv librsvg adwaita-icon-theme gtk+3 guile gtksourceview4 graphviz zstd npm rt-audio rtmidi jack qjackctl cmake || true
     brew link --overwrite python
     #npm install -g appdmg
+  displayName: 'Install deps'
+
+- script: |
     pwd
     git clone https://git.sr.ht/~alextee/mxe
     git clone https://git.sr.ht/~alextee/zrythm
@@ -37,12 +40,16 @@ steps:
     git clone https://git.sr.ht/~alextee/zrythm-installer
     git clone https://github.com/KDE/breeze-icons
     git clone https://github.com/mesonbuild/meson
+  displayName: 'Clone repos'
+
+- script: |
     echo "$SSH_KEY" > tmp_rsa
     openssl base64 -d -A < tmp_rsa > id_rsa
     grep -q "BEGIN RSA PRIVATE KEY" id_rsa
     chmod 600 id_rsa
     pip3 install scikit-build
     pip3 install cmake
+    zrythm-builds/scripts/make-pkg.sh osx-brew-zip osx-brew-prepare
     zrythm-builds/scripts/create-manuals-zip.sh osx-brew-zip
     zrythm-builds/scripts/make-pkg.sh osx-brew-zip
     zrythm-builds/scripts/push-pkg.sh osx-brew-zip

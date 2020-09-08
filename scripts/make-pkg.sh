@@ -32,14 +32,27 @@ fi
 set -u
 parent_dir=$(pwd)
 pushd zrythm-installer
+reconfigure=
+if [ -d "build" ]; then
+  reconfigure="--reconfigure"
+fi
 # TODO linguas
-$meson_path build -Dmeson-path=$meson_path \
+$meson_path build $reconfigure -Dmeson-path=$meson_path \
   -Dzrythm-git-ver=master -Dzrythm-pkg-ver=$zrythm_pkg_ver \
   -Dbreeze-dark-path="$parent_dir/breeze-icons/icons-dark" -Ddistro=$distro \
   -Dbuild-trial=false -Dmanuals-zip-file=$(pwd)/user-manual.zip \
   --prefix=/tmp/artifacts/$distro
 popd
 echo "done"
+
+if ! [ "$opt" = "" ]; then
+  echo "calling $opt on $distro..."
+  pushd zrythm-installer
+  ninja -C build "$opt"
+  popd
+  echo "returning..."
+  exit 0
+fi
 
 echo "fetching meson subprojects..."
 if [ "$distro" = "archlinux" ] || [ "$distro" = "windows10" ]; then
