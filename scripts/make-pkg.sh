@@ -22,14 +22,21 @@ id_rsa_path=$(pwd)/id_rsa
 
 source zrythm-builds/scripts/common.sh.in
 
-echo "configuring zrythm-installer..."
+echo "setting paths..."
 set +u
 if [ "$MESON_PATH" = "" ]; then
   meson_path="$(pwd)/meson/meson.py"
 else
   meson_path="$MESON_PATH"
 fi
+if [ "$NINJA_PATH" = "" ]; then
+  ninja_path=ninja
+else
+  ninja_path="$NINJA_PATH"
+fi
 set -u
+
+echo "configuring zrythm-installer..."
 parent_dir=$(pwd)
 pushd zrythm-installer
 reconfigure=
@@ -48,7 +55,7 @@ echo "done"
 if ! [ "$opt" = "" ]; then
   echo "calling $opt on $distro..."
   pushd zrythm-installer
-  ninja -C build "$opt"
+  $ninja_path -C build "$opt"
   popd
   echo "returning..."
   exit 0
@@ -80,13 +87,6 @@ fi
 
 echo "$distro package does not exist on server, making..."
 pushd zrythm-installer
-set +u
-if [ "$NINJA_PATH" = "" ]; then
-  ninja_path=ninja
-else
-  ninja_path="$NINJA_PATH"
-fi
-set -u
 $ninja_path -C build install
 if is_tag ; then
   $meson_path build --reconfigure -Dbuild-trial=true
