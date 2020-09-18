@@ -38,7 +38,7 @@ scp_cmd="scp $ssh_opts"
 remote_ip="$REMOTE_IP"
 remote_home="$REMOTE_HOME"
 remote_packages=$remote_home/packages
-zrythm_pkg_ver=$(cd zrythm && printf '%s' "$(git describe --tags | sed 's/-/\.r/' | sed 's/v//g' | sed 's/-/\./')")
+zrythm_pkg_ver=$(cd zrythm && printf '%s' "$(git describe --tags | sed -e 's/-\([0-9]\+\)/\.r\1/' | sed 's/v//g' | sed 's/-/\./g')")
 gnu_linux_zip_filename="zrythm-$zrythm_pkg_ver-installer.zip"
 gnu_linux_zip_trial_filename="zrythm-trial-$zrythm_pkg_ver-installer.zip"
 
