@@ -89,7 +89,10 @@ echo "$distro package does not exist on server, making..."
 pushd zrythm-installer
 $ninja_path -C build install
 if is_tag ; then
+  echo "tag detected, building trial..."
   $meson_path build --reconfigure -Dbuild-trial=true
   $ninja_path -C build install
+else
+  echo "no tag detected, not building trial..."
 fi
 popd
