@@ -30,6 +30,12 @@ else
   echo "not using id_rsa"
 fi
 
+if [[ "$distro" = "osx" ]] || [[ "$distro" = "osx-brew-zip" ]]; then
+  sed_cmd=gsed
+else
+  sed_cmd=sed
+fi
+
 distros="archlinux debian10 debian11 fedora31 fedora32 ubuntu1804 ubuntu2004 ubuntu2010 gnu-linux"
 linguas="en de fr it ja pt"
 rsync_cmd="rsync --rsh=\"ssh $ssh_opts\""
@@ -44,7 +50,7 @@ git describe --tags --exact-match && true || false
 _is_tag=$?
 popd
 set -e
-zrythm_pkg_ver=$(cd zrythm && printf '%s' "$(git describe --tags | sed -e 's/-\([0-9]\+\)/\.r\1/' | sed 's/v//g' | sed 's/-/\./g')")
+zrythm_pkg_ver=$(cd zrythm && printf '%s' "$(git describe --tags | $sed_cmd -e 's/-\([0-9]\+\)/\.r\1/' | $sed_cmd 's/v//g' | $sed_cmd 's/-/\./g')")
 gnu_linux_zip_filename="zrythm-$zrythm_pkg_ver-installer.zip"
 gnu_linux_zip_trial_filename="zrythm-trial-$zrythm_pkg_ver-installer.zip"
 
