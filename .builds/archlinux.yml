@@ -73,7 +73,7 @@ secrets:
   - a97e7a27-0c61-4e64-b103-fdd2af6cfbda
 tasks:
   - make-archlinux: |
-      pip3 install meson
+      sudo pip3 install meson sphinx-intl
       export PATH=$PATH:/home/build/.local/bin && zrythm-builds/scripts/make-pkg.sh archlinux
   - deploy-archlinux: |
       zrythm-builds/scripts/push-pkg.sh archlinux
