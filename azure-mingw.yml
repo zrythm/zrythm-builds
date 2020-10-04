@@ -24,7 +24,7 @@ pool:
 
 jobs:
   - job: Make
-    timeoutInMinutes: 120
+    timeoutInMinutes: 180
     steps:
       - script: cinst msys2 --params "/InstallDir=C:/msys64" --no-progress
         displayName: install msys2
