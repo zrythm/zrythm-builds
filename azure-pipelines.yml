@@ -25,11 +25,15 @@ pool:
 steps:
 - script: |
     set -e
-    brew update
+    echo "updating brew"
+    brew update || true
+    echo "installing deps"
     # use || true because it returns 1
     brew install gnu-sed fftw meson libsamplerate sdl2 chromaprint libgtop lilv librsvg adwaita-icon-theme gtk+3 guile gtksourceview4 graphviz zstd npm rt-audio rtmidi jack qjackctl cmake || true
+    echo "linking python"
     brew link --overwrite python
     #npm install -g appdmg
+    echo "installing cmake"
     pip3 install scikit-build
     pip3 install cmake
   displayName: 'Install deps'
