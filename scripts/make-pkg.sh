@@ -65,10 +65,10 @@ fi
 echo "fetching meson subprojects..."
 if [ "$distro" = "archlinux" ] || [ "$distro" = "windows10" ]; then
   pushd zrythm
-  meson subprojects download
+  meson subprojects download || true
   popd
   pushd zplugins
-  meson subprojects download
+  meson subprojects download || true
   popd
 fi
 
