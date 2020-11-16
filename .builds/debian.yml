@@ -57,6 +57,7 @@ packages:
   - portaudio19-dev
   - librtaudio-dev
   - tar
+  - unzip
   - zip
   - wget
   - vim
