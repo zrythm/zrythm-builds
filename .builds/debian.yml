@@ -23,6 +23,7 @@ packages:
   #- liblilv-dev
   - libsndfile1-dev
   - meson
+  - debhelper
   - dpkg-dev
   - devscripts
   - build-essential
