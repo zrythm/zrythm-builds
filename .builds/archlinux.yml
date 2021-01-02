@@ -41,6 +41,7 @@ packages:
   - ladspa
   - jq
   - lv2
+  - npm
   - graphviz
   - rubberband
   - python-pip
@@ -74,6 +75,7 @@ secrets:
 tasks:
   - make-archlinux: |
       sudo pip3 install meson sphinx-intl
+      sudo npm install -g sass
       export PATH=$PATH:/home/build/.local/bin && zrythm-builds/scripts/make-pkg.sh archlinux
   - deploy-archlinux: |
       zrythm-builds/scripts/push-pkg.sh archlinux
