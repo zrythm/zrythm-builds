@@ -17,6 +17,7 @@
 
 image: ubuntu/18.04
 packages:
+  - binutils
   - libgtk-3-dev
   - libjack-dev
   - libsndfile1-dev

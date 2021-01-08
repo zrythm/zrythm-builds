@@ -17,6 +17,7 @@
 
 image: debian/buster
 packages:
+  - binutils
   - cmake
   - libgtk-3-dev
   - libjack-dev
