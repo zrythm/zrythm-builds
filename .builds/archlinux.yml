@@ -76,7 +76,9 @@ tasks:
   - make-archlinux: |
       sudo pip3 install meson sphinx-intl
       sudo npm install -g sass
-      export PATH=$PATH:/home/build/.local/bin && zrythm-builds/scripts/make-pkg.sh archlinux
+      export PATH=$PATH:/home/build/.local/bin && \
+        export MESON_PATH=meson && \
+        zrythm-builds/scripts/make-pkg.sh archlinux
   - deploy-archlinux: |
       zrythm-builds/scripts/push-pkg.sh archlinux
   - gen-gnu-linux-installer-zips: |
