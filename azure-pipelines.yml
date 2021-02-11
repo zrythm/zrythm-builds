@@ -43,7 +43,7 @@ steps:
     git clone https://git.sr.ht/~alextee/mxe
     git clone https://git.sr.ht/~alextee/zrythm
     git clone https://git.sr.ht/~alextee/zrythm-builds
-    git clone https://git.sr.ht/~alextee/zrythm-installer
+    git clone --recursive https://git.sr.ht/~alextee/zrythm-installer
     git clone https://github.com/KDE/breeze-icons
     git clone https://github.com/mesonbuild/meson
   displayName: 'Clone repos'
