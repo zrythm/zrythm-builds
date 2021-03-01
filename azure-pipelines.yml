@@ -22,43 +22,46 @@ trigger:
 pool:
   vmImage: 'macOS-latest'
 
-steps:
-- script: |
-    set -e
-    echo "updating brew"
-    brew update || true
-    echo "installing deps"
-    # use || true because it returns 1
-    brew install gnu-sed fftw meson libsamplerate sdl2 chromaprint libgtop lilv librsvg adwaita-icon-theme gtk+3 guile gtksourceview4 graphviz zstd npm rt-audio rtmidi jack qjackctl cmake || true
-    echo "linking python"
-    brew link --overwrite python
-    #npm install -g appdmg
-    echo "installing cmake"
-    pip3 install scikit-build
-    pip3 install cmake
-  displayName: 'Install deps'
+jobs:
+  - job: Make
+    timeoutInMinutes: 120
+    steps:
+    - script: |
+        set -e
+        echo "updating brew"
+        brew update || true
+        echo "installing deps"
+        # use || true because it returns 1
+        brew install gnu-sed fftw meson libsamplerate sdl2 chromaprint libgtop lilv librsvg adwaita-icon-theme gtk+3 guile gtksourceview4 graphviz zstd npm rt-audio rtmidi jack qjackctl cmake || true
+        echo "linking python"
+        brew link --overwrite python
+        #npm install -g appdmg
+        echo "installing cmake"
+        pip3 install scikit-build
+        pip3 install cmake
+      displayName: 'Install deps'
 
-- script: |
-    pwd
-    git clone https://git.sr.ht/~alextee/mxe
-    git clone https://git.sr.ht/~alextee/zrythm
-    git clone https://git.sr.ht/~alextee/zrythm-builds
-    git clone --recursive https://git.sr.ht/~alextee/zrythm-installer
-    git clone https://github.com/KDE/breeze-icons
-    git clone https://github.com/mesonbuild/meson
-  displayName: 'Clone repos'
+    - script: |
+        pwd
+        git clone https://git.sr.ht/~alextee/mxe
+        git clone https://git.sr.ht/~alextee/zrythm
+        git clone https://git.sr.ht/~alextee/zrythm-builds
+        git clone --recursive https://git.sr.ht/~alextee/zrythm-installer
+        git clone https://github.com/KDE/breeze-icons
+        git clone https://github.com/mesonbuild/meson
+      displayName: 'Clone repos'
 
-- script: |
-    echo "$SSH_KEY" > tmp_rsa
-    openssl base64 -d -A < tmp_rsa > id_rsa
-    grep -q "BEGIN RSA PRIVATE KEY" id_rsa
-    chmod 600 id_rsa
-    zrythm-builds/scripts/make-pkg.sh osx-brew-zip osx-brew-prepare
-    zrythm-builds/scripts/create-manuals-zip.sh osx-brew-zip
-    zrythm-builds/scripts/make-pkg.sh osx-brew-zip
-    zrythm-builds/scripts/push-pkg.sh osx-brew-zip
-  displayName: 'Build OSX'
-  env:
-    REMOTE_HOME: $(REMOTE_HOME)
-    REMOTE_IP: $(REMOTE_IP)
-    SSH_KEY: $(SSH_KEY)
+    - script: |
+        echo "$SSH_KEY" > tmp_rsa
+        openssl base64 -d -A < tmp_rsa > id_rsa
+        grep -q "BEGIN RSA PRIVATE KEY" id_rsa
+        chmod 600 id_rsa
+        zrythm-builds/scripts/make-pkg.sh osx-brew-zip osx-brew-prepare
+        zrythm-builds/scripts/create-manuals-zip.sh osx-brew-zip
+        zrythm-builds/scripts/make-pkg.sh osx-brew-zip
+        zrythm-builds/scripts/push-pkg.sh osx-brew-zip
+      displayName: 'Build OSX'
+      env:
+        REMOTE_HOME: $(REMOTE_HOME)
+        REMOTE_IP: $(REMOTE_IP)
+        SSH_KEY: $(SSH_KEY)
