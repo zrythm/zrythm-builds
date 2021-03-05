@@ -20,6 +20,7 @@ packages:
   - cmake
   - gtk3
   - chromaprint
+  - curl
   - lilv
   - libx11
   - jack
