@@ -36,7 +36,7 @@ else
   sed_cmd=sed
 fi
 
-distros="archlinux debian10 debian11 fedora31 fedora32 ubuntu1804 ubuntu2004 ubuntu2010 gnu-linux"
+distros="archlinux debian10 debian11 fedora32 fedora33 ubuntu1804 ubuntu2004 ubuntu2010 gnu-linux"
 linguas="en de fr it ja pt"
 rsync_cmd="rsync --rsh=\"ssh $ssh_opts\""
 ssh_cmd="ssh -q $ssh_opts"
