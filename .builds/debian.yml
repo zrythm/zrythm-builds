@@ -47,6 +47,7 @@ packages:
   #- lv2-dev
   - libsamplerate0-dev
   - libyaml-dev
+  - libpcre2-dev
   - python3
   - librubberband-dev
   - libzstd-dev

@@ -45,6 +45,7 @@ packages:
   - libgraphviz-dev
   #- libsuil-dev
   #- lv2-dev
+  - libpcre2-dev
   - libsamplerate0-dev
   - libyaml-dev
   - librubberband-dev

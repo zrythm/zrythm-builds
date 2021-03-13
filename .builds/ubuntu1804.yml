@@ -40,6 +40,7 @@ packages:
   - libchromaprint-dev
   - libgtksourceview-3.0-dev
   - libgraphviz-dev
+  - libpcre2-dev
   - libsamplerate0-dev
   - libyaml-dev
   - librubberband-dev
