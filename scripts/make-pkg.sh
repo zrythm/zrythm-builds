@@ -43,12 +43,13 @@ reconfigure=
 if [ -d "build" ]; then
   reconfigure="--reconfigure"
 fi
-# TODO linguas
+_locales=`join_by , $linguas`
 zrythm_git_ver="$(git ls-remote https://git.zrythm.org/git/zrythm HEAD | awk '{print $1;}')"
 $meson_path build $reconfigure -Dmeson-path=$meson_path \
   -Dzrythm-git-ver=$zrythm_git_ver -Dzrythm-pkg-ver=$zrythm_pkg_ver \
   -Dbreeze-dark-path="$parent_dir/breeze-icons/icons-dark" -Ddistro=$distro \
   -Dbuild-trial=false -Dmanuals-zip-file=$(pwd)/user-manual.zip \
+  -Dlocales="$_locales" \
   --prefix=/tmp/artifacts/$distro
 popd
 echo "done"

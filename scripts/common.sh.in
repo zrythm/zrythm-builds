@@ -129,3 +129,7 @@ should_skip_packaging () {
   distro=$1
   ! is_tag && remote_pkg_exists "$distro"
 }
+
+join_by () {
+  local IFS="$1"; shift; echo "$*";
+}
