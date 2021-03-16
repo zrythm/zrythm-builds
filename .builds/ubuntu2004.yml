@@ -69,7 +69,7 @@ sources:
   - https://github.com/mesonbuild/meson
 secrets:
   - 063cb70d-6da6-492a-b530-04edc07651ba
-  - a97e7a27-0c61-4e64-b103-fdd2af6cfbda
+  - c8e04c4f-fedc-4190-bf29-90ce21ccef44
 tasks:
   - make: |
       zrythm-builds/scripts/make-pkg.sh ubuntu2004
