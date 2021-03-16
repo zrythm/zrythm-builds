@@ -78,7 +78,7 @@ secrets:
   - c8e04c4f-fedc-4190-bf29-90ce21ccef44
 tasks:
   - make-archlinux: |
-      sudo pip3 install meson sphinx-intl
+      sudo pip3 install meson sphinx-intl furo
       sudo npm install -g sass
       export PATH=$PATH:/home/build/.local/bin && \
         export MESON_PATH=meson && \
