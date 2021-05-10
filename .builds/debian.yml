@@ -50,6 +50,7 @@ packages:
   - libpcre2-dev
   - python3
   - librubberband-dev
+  - rubberband-cli
   - libzstd-dev
   - xdg-utils
   - rsync

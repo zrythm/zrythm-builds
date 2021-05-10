@@ -49,6 +49,7 @@ packages:
   - libsamplerate0-dev
   - libyaml-dev
   - librubberband-dev
+  - rubberband-cli
   - libzstd-dev
   - librsvg2-dev
   - python3
