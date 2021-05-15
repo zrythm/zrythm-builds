@@ -50,6 +50,8 @@ jobs:
         git clone --recursive https://git.sr.ht/~alextee/zrythm-installer
         git clone https://github.com/KDE/breeze-icons
         git clone https://github.com/mesonbuild/meson
+        # TODO remove when https://github.com/mesonbuild/meson/issues/5495 is fixed
+        cd meson && git reset --hard origin/gnuobjc
       displayName: 'Clone repos'
 
     - script: |
