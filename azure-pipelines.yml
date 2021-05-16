@@ -51,7 +51,7 @@ jobs:
         git clone https://github.com/KDE/breeze-icons
         git clone https://github.com/mesonbuild/meson
         # TODO remove when https://github.com/mesonbuild/meson/issues/5495 is fixed
-        cd meson && git reset --hard origin/gnuobjc
+        #cd meson && git reset --hard origin/gnuobjc
       displayName: 'Clone repos'
 
     - script: |
