@@ -20,6 +20,7 @@ packages:
   - binutils
   - cmake
   - flex
+  - libfl-dev
   - libcurl4-gnutls-dev
   - libgtk-3-dev
   - libjack-dev
