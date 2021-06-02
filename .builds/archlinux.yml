@@ -68,6 +68,7 @@ packages:
   - p7zip
   - wget
   - vim
+  - xxhash
 sources:
   - https://git.sr.ht/~alextee/zrythm
   - https://git.sr.ht/~alextee/zplugins

@@ -50,6 +50,7 @@ packages:
   - libsamplerate0-dev
   - libyaml-dev
   - libpcre2-dev
+  - libxxhash-dev
   - python3
   - librubberband-dev
   - rubberband-cli

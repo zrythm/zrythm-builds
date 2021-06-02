@@ -46,6 +46,7 @@ packages:
   - libsamplerate0-dev
   - libyaml-dev
   - librubberband-dev
+  - libxxhash-dev
   - rubberband-cli
   - librsvg2-dev
   - libzstd-dev
