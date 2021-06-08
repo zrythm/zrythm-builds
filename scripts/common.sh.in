@@ -85,6 +85,9 @@ distro_to_pkg_type () {
     "gnu-linux")
       echo "GNU_LINUX"
       ;;
+    "appimage")
+      echo "APPIMAGE"
+      ;;
   esac
 }
 

@@ -74,8 +74,12 @@ sources:
 secrets:
   - 063cb70d-6da6-492a-b530-04edc07651ba
   - c8e04c4f-fedc-4190-bf29-90ce21ccef44
+shell: true
 tasks:
   - make: |
+      pip3 install git+https://github.com/AppImageCrafters/appimage-builder.git
       zrythm-builds/scripts/make-pkg.sh ubuntu2004
+      zrythm-builds/scripts/make-pkg.sh appimage
   - deploy: |
       zrythm-builds/scripts/push-pkg.sh ubuntu2004
+      zrythm-builds/scripts/push-pkg.sh appimage
