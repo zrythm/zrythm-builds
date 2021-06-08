@@ -66,6 +66,7 @@ packages:
   - libgdk-pixbuf2.0-dev
   - fakeroot
   - strace
+  - fuse
   - desktop-file-utils
   - patchelf
   - python3-pip
@@ -83,13 +84,15 @@ secrets:
   - c8e04c4f-fedc-4190-bf29-90ce21ccef44
 shell: true
 tasks:
-  - make: |
+  - make-appimage: |
       sudo pip3 install git+https://github.com/AppImageCrafters/appimage-builder.git
       sudo pip3 install -e git+https://github.com/TheAssassin/appimagelint#egg=appimagelint
       sudo wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage -O /usr/local/bin/appimagetool
       sudo chmod +x /usr/local/bin/appimagetool
-      zrythm-builds/scripts/make-pkg.sh ubuntu2004
       zrythm-builds/scripts/make-pkg.sh appimage
+  - deploy-appimage: |
+      zrythm-builds/scripts/push-pkg.sh appimage
+  - make: |
+      zrythm-builds/scripts/make-pkg.sh ubuntu2004
   - deploy: |
       zrythm-builds/scripts/push-pkg.sh ubuntu2004
-      zrythm-builds/scripts/push-pkg.sh appimage
