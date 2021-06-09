@@ -45,9 +45,8 @@ done
 
 for lang in $linguas ; do
   echo "fetching $lang manual..."
-  $scp_cmd \
-    "$remote_ip:$remote_home/manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
-    zrythm-installer/Zrythm-$zrythm_pkg_ver-$lang.pdf > out.log 2> err.log
+  fetch_file "manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
+    "zrythm-installer/Zrythm-$zrythm_pkg_ver-$lang.pdf"
   echo "done"
 done
 

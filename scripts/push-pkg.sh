@@ -38,9 +38,9 @@ fi
 deploy_pkg () {
   filename=$1
   echo "deploying package for $distro (/tmp/artifacts/$distro/$filename)..."
-  if $scp_cmd \
-    /tmp/artifacts/$distro/$filename \
-    $remote_ip:$remote_packages/$distro/$filename > out.log 2> err.log ; then
+  if send_file \
+    "/tmp/artifacts/$distro/$filename" \
+    "packages/$distro/$filename" ; then
     echo "succeeded"
   else
     echo >&2 "failed: $(cat out.log)"
@@ -56,15 +56,17 @@ deploy_pkg "$pkg_filename"
 if is_tag ; then
   echo "deploying trial package"
   deploy_pkg "$pkg_trial_filename"
+  add_file_tag "packages/$distro/$pkg_trial_filename" \
+    "public" "yes"
 fi
 
 # if arch, also deploy manuals
 if [ "$distro" = "archlinux" ]; then
   for lang in $linguas ; do
     echo "deploying $lang manual..."
-    $scp_cmd \
+    send_file \
       "zrythm-installer/build/arch/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
-      "$remote_ip:$remote_home/manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" > out.log 2> err.log
+      "manual/Zrythm-$zrythm_pkg_ver-$lang.pdf"
     echo "done"
   done
 fi

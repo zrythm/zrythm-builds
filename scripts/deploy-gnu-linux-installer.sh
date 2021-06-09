@@ -20,15 +20,15 @@ distro=""
 source zrythm-builds/scripts/common.sh.in
 
 echo "sending $gnu_linux_zip_filename..."
-$scp_cmd \
+send_file \
   "/tmp/artifacts/$gnu_linux_zip_filename" \
-  "$remote_ip:$remote_home/packages/gnu-linux/$gnu_linux_zip_filename" > out.log 2> err.log
+  "packages/gnu-linux/$gnu_linux_zip_filename"
 echo "done"
 
 if is_tag ; then
   echo "sending $gnu_linux_zip_trial_filename..."
-  $scp_cmd \
+  send_file \
     "/tmp/artifacts/$gnu_linux_zip_trial_filename" \
-    "$remote_ip:$remote_home/packages/gnu-linux/$gnu_linux_zip_trial_filename" > out.log 2> err.log
+    "packages/gnu-linux/$gnu_linux_zip_trial_filename" > out.log 2> err.log
   echo "done"
 fi

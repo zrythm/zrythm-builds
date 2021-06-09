@@ -46,17 +46,17 @@ wget_package_and_plugins () {
 
   # get package
   >&2 echo "getting package $pkg_filename for $distro..."
-  $scp_cmd \
-    "$remote_ip:$remote_packages/$distro/$pkg_filename" \
-    "$artifacts_distro_dir/$pkg_filename" > out.log 2> err.log
+  fetch_file \
+    "packages/$distro/$pkg_filename" \
+    "$artifacts_distro_dir/$pkg_filename"
   >&2 echo "done"
 
   # get trial if tag
   if is_tag ; then
     >&2 echo "getting package $pkg_trial_filename for $distro..."
-    $scp_cmd \
-      "$remote_ip:$remote_packages/$distro/$pkg_trial_filename" \
-      "$artifacts_distro_dir/$pkg_trial_filename" > out.log 2> err.log
+    fetch_file \
+      "packages/$distro/$pkg_trial_filename" \
+      "$artifacts_distro_dir/$pkg_trial_filename"
     >&2 echo "done"
   fi
 }
@@ -103,9 +103,9 @@ done
 # get manuals
 for lang in $linguas ; do
   echo "fetching $lang manual..."
-  $scp_cmd \
-    "$remote_ip:$remote_home/manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
-    "$pdf_dir/Zrythm-$zrythm_pkg_ver-$lang.pdf" > out.log 2> err.log
+  fetch_file \
+    "manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
+    "$pdf_dir/Zrythm-$zrythm_pkg_ver-$lang.pdf"
 done
 
 # make zip

@@ -25,6 +25,9 @@ echo "bundle name: $bundle_name"
 get_product_name () {
   os=$1
   case "$os" in
+    "appimage")
+      echo "$bundle_name (AppImage)"
+      ;;
     "gnu-linux")
       echo "$bundle_name (GNU/Linux)"
       ;;
@@ -90,19 +93,24 @@ prefetch () {
   osx_pkg_name="$(get_package_filename osx-brew-zip)"
   windows_pkg_name="$(get_package_filename windows10-msys)"
   gnu_linux_pkg_name="$(get_package_filename gnu-linux)"
+  appimage_pkg_name="$(get_package_filename appimage)"
   while ! [ -f "zrythm-installer/$osx_pkg_name" -a \
     -f "zrythm-installer/$windows_pkg_name" -a  \
+    -f "zrythm-installer/$appimage_pkg_name" -a  \
     -f "zrythm-installer/$gnu_linux_pkg_name" ]; do
-    >&2 echo "$osx_pkg_name or $windows_pkg_name or $gnu_linux_pkg_name don't exist. fetching..."
-    $scp_cmd \
-      "$remote_ip:$remote_home/packages/osx-brew-zip/$osx_pkg_name" \
-      "zrythm-installer/$osx_pkg_name" > out.log 2> err.log || true
-    $scp_cmd \
-      "$remote_ip:$remote_home/packages/windows10-msys/$windows_pkg_name" \
-      "zrythm-installer/$windows_pkg_name" > out.log 2> err.log || true
-    $scp_cmd \
-      "$remote_ip:$remote_home/packages/gnu-linux/$gnu_linux_pkg_name" \
-      "zrythm-installer/$gnu_linux_pkg_name" > out.log 2> err.log || true
+    >&2 echo "$osx_pkg_name or $windows_pkg_name or $gnu_linux_pkg_name $appimage_pkg_name don't exist. fetching..."
+    fetch_file \
+      "packages/osx-brew-zip/$osx_pkg_name" \
+      "zrythm-installer/$osx_pkg_name" || true
+    fetch_file \
+      "packages/windows10-msys/$windows_pkg_name" \
+      "zrythm-installer/$windows_pkg_name" || true
+    fetch_file \
+      "packages/gnu-linux/$gnu_linux_pkg_name" \
+      "zrythm-installer/$gnu_linux_pkg_name" || true
+    fetch_file \
+      "packages/appimage/$appimage_pkg_name" \
+      "zrythm-installer/$appimage_pkg_name" || true
     sleep 24
   done
 }
@@ -127,7 +135,7 @@ create_product ()
     "product[product_type]=digital" \
     "product[price]=5.00" \
     "product[product_image]=@$(pwd)/zrythm-installer/z_frame_8.png" \
-    "product[attachment]=@$product_file" | jq '.product'
+    "product[self_hosted_url]=https://$sendowl_bucket_name.s3.amazonaws.com/packages/$os/$product_filename" | jq '.product'
 }
 
 # creates or updates a product for the given type
@@ -173,6 +181,7 @@ update_or_create_bundle () {
   gnu_linux_product_id=$1
   osx_product_id=$2
   windows_product_id=$3
+  appimage_product_id=$3
 
   all_bundles="$(sendowl_get packages)"
   this_bundle="null"
@@ -199,7 +208,7 @@ update_or_create_bundle () {
         \"price\": \"5.00\", \
         \"price_is_minimum\": \"true\" \
         \"components\": { \
-          \"product_ids\": \"[$gnu_linux_product_id, $osx_product_id, $windows_product_id]\" \
+          \"product_ids\": \"[$gnu_linux_product_id, $osx_product_id, $windows_product_id, $appimage_product_id]\" \
         } \
       } \
     }"
@@ -228,11 +237,13 @@ echo "creating products..."
 gnu_linux_product_id="$(create_or_update_product "gnu-linux")"
 osx_product_id="$(create_or_update_product "osx-brew-zip")"
 windows_product_id="$(create_or_update_product "windows10-msys")"
+appimage_product_id="$(create_or_update_product "appimage")"
 echo "done"
 
-echo "created products $gnu_linux_product_id, $osx_product_id and $windows_product_id"
+echo "created products $gnu_linux_product_id, $osx_product_id, $appimage_product_id and $windows_product_id"
 
 bundle_id="$(update_or_create_bundle \
   "$gnu_linux_product_id" \
   "$osx_product_id" \
-  "$windows_product_id")"
+  "$windows_product_id" \
+  "$appimage_product_id")"

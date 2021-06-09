@@ -33,7 +33,7 @@ jobs:
         echo "installing deps"
         # use || true because it returns 1
         brew install curl gnu-sed fftw meson libsamplerate sdl2 lilv librsvg adwaita-icon-theme gtk+3 guile gtksourceview4 graphviz zstd npm rt-audio rtmidi jack qjackctl cmake pcre2 || true
-        brew install chromaprint brotli xxhash || true
+        brew install chromaprint brotli xxhash awscli || true
         echo "linking python"
         brew link --overwrite python
         #npm install -g appdmg
@@ -68,3 +68,5 @@ jobs:
         REMOTE_HOME: $(REMOTE_HOME)
         REMOTE_IP: $(REMOTE_IP)
         SSH_KEY: $(SSH_KEY)
+        AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+        AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)

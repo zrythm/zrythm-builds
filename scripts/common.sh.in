@@ -36,14 +36,23 @@ else
   sed_cmd=sed
 fi
 
+set +u
+if [ "$AWS_CLI_PATH" = "" ]; then
+  aws_cli=aws
+else
+  aws_cli="$AWS_CLI_PATH"
+fi
+set -u
+
 distros="archlinux debian10 debian11 fedora33 fedora34 ubuntu1804 ubuntu2004 ubuntu2010 gnu-linux"
 linguas="en de fr it ja pt"
+sendowl_bucket_name="sendowl-bucket"
+sendowl_bucket_url="s3://$sendowl_bucket_name"
 rsync_cmd="rsync --rsh=\"ssh $ssh_opts\""
 ssh_cmd="ssh -q $ssh_opts"
 scp_cmd="scp $ssh_opts"
 remote_ip="$REMOTE_IP"
 remote_home="$REMOTE_HOME"
-remote_packages=$remote_home/packages
 set +e
 pushd zrythm
 git describe --tags --exact-match && true || false
@@ -103,13 +112,15 @@ get_package_filename () {
 # returns if the file exists in the remote home dir
 remote_file_exists () {
   >&2 echo "checking if remote file $1 exists..."
-  $ssh_cmd $remote_ip [ -f "$remote_home/$1" ] > out.log 2> err.log
+  "$aws_cli" s3 ls "$sendowl_bucket_url/$1" > out.log 2> err.log
+  #$ssh_cmd $remote_ip [ -f "$remote_home/$1" ] > out.log 2> err.log
 }
 
 # returns if the directory exists in the remote home dir
 remote_dir_exists () {
   >&2 echo "checking if remote dir $1 exists..."
-  $ssh_cmd $remote_ip [ -d "$remote_home/$1" ] > out.log 2> err.log
+  "$aws_cli" s3 ls "$sendowl_bucket_url/$1" > out.log 2> err.log
+  #$ssh_cmd $remote_ip [ -d "$remote_home/$1" ] > out.log 2> err.log
 }
 
 # whether a package exists on the server
@@ -126,6 +137,28 @@ remote_pkg_exists () {
     >&2 echo "doesn't exist"
     false
   fi
+}
+
+fetch_file () {
+  from_file="$1"
+  to_file="$2"
+  "$aws_cli" s3 cp "$sendowl_bucket_url/$from_file" "$to_file" > out.log 2> err.log
+}
+
+send_file () {
+  from_file="$1"
+  to_file="$2"
+  "$aws_cli" s3 cp "$from_file" "$sendowl_bucket_url/$to_file" > out.log 2> err.log
+}
+
+add_file_tag () {
+  uploaded_file="$1"
+  tag_key="$2"
+  tag_value="$3"
+  "$aws_cli" s3api put-object-tagging \
+    --bucket $sendowl_bucket_name \
+    --key "$uploaded_file" \
+    --tagging '{"TagSet": [{ "Key": "'"$tag_key"'", "Value": "'"$tag_value"'" }]}' > out.log 2> err.log
 }
 
 should_skip_packaging () {

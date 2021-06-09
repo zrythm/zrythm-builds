@@ -17,6 +17,7 @@
 
 image: ubuntu/20.04
 packages:
+  - awscli
   - binutils
   - cmake
   - flex
@@ -81,7 +82,8 @@ sources:
   - https://github.com/mesonbuild/meson
 secrets:
   - 063cb70d-6da6-492a-b530-04edc07651ba
-  - c8e04c4f-fedc-4190-bf29-90ce21ccef44
+  - 3e0aef16-ba94-44fe-b7c7-89c599975473
+  - 7c85cca9-3e6f-4c7c-ba42-b44ca7379585
 shell: true
 tasks:
   - make-appimage: |

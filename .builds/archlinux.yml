@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2020 Alexandros Theodotou <alex at zrythm dot org>
+# Copyright (C) 2020-2021 Alexandros Theodotou <alex at zrythm dot org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published
@@ -17,6 +17,7 @@
 
 image: archlinux
 packages:
+  - aws-cli
   - cmake
   - gtk2
   - gtk3
@@ -76,7 +77,8 @@ sources:
   - https://github.com/mesonbuild/meson
 secrets:
   - 063cb70d-6da6-492a-b530-04edc07651ba
-  - c8e04c4f-fedc-4190-bf29-90ce21ccef44
+  - 3e0aef16-ba94-44fe-b7c7-89c599975473
+  - 7c85cca9-3e6f-4c7c-ba42-b44ca7379585
 tasks:
   - make-archlinux: |
       sudo pip3 install meson sphinx-intl furo sphinx-copybutton sphinxcontrib-svg2pdfconverter
