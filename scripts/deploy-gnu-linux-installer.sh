@@ -30,5 +30,8 @@ if is_tag ; then
   send_file \
     "/tmp/artifacts/$gnu_linux_zip_trial_filename" \
     "packages/gnu-linux/$gnu_linux_zip_trial_filename" > out.log 2> err.log
+  add_file_tag \
+    "packages/gnu-linux/$gnu_linux_zip_trial_filename" \
+    "public" "yes"
   echo "done"
 fi
