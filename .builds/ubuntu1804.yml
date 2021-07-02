@@ -67,6 +67,9 @@ sources:
   - https://git.sr.ht/~alextee/zrythm
   - https://git.sr.ht/~alextee/zrythm-installer
   - https://github.com/mesonbuild/meson
+  - https://gitlab.com/lv2/lv2
+  - https://gitlab.com/drobilla/serd
+  - https://gitlab.com/lv2/lilv
 secrets:
   - 063cb70d-6da6-492a-b530-04edc07651ba
   - 3e0aef16-ba94-44fe-b7c7-89c599975473
@@ -74,6 +77,21 @@ secrets:
 tasks:
   - make: |
       pip3 install cmake
+      pushd lv2
+      ./waf configure --copy-headers --no-coverage --no-plugins --no-check-links
+      ./waf
+      sudo ./waf install
+      popd
+      pushd serd
+      ./waf configure --no-utils --static --no-shared
+      ./waf
+      sudo ./waf install
+      popd
+      pushd lilv
+      ./waf configure --static --no-utils --no-shared --no-bash-completion --no-bindings
+      ./waf
+      sudo ./waf install
+      popd
       export PATH=$PATH:/home/build/.local/bin && zrythm-builds/scripts/make-pkg.sh ubuntu1804
   - deploy: |
       zrythm-builds/scripts/push-pkg.sh ubuntu1804
