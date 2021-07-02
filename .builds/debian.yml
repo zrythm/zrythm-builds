@@ -82,22 +82,23 @@ secrets:
   - 3e0aef16-ba94-44fe-b7c7-89c599975473
   - 7c85cca9-3e6f-4c7c-ba42-b44ca7379585
 tasks:
-  - make: |
+  - install_lilv: |
       pushd lv2
-      ./waf configure --copy-headers --no-coverage --no-plugins --no-check-links
+      CFLAGS=-fPIC ./waf configure --copy-headers --no-coverage --no-plugins --no-check-links
       ./waf
       sudo ./waf install
       popd
       pushd serd
-      ./waf configure --no-utils --static --no-shared
+      CFLAGS=-fPIC ./waf configure --no-utils --static --no-shared
       ./waf
       sudo ./waf install
       popd
       pushd lilv
-      ./waf configure --static --no-utils --no-shared --no-bash-completion --no-bindings
+      CFLAGS=-fPIC ./waf configure --static --no-utils --no-shared --no-bash-completion --no-bindings
       ./waf
       sudo ./waf install
       popd
+  - make: |
       zrythm-builds/scripts/make-pkg.sh debian10
   - deploy: |
       zrythm-builds/scripts/push-pkg.sh debian10
