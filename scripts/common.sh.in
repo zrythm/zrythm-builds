@@ -59,7 +59,10 @@ git describe --tags --exact-match && true || false
 _is_tag=$?
 popd
 set -e
+# alpha.
 zrythm_pkg_ver=$(cd zrythm && printf '%s' "$(git describe --tags | $sed_cmd -e 's/-\([0-9]\+\)/\.r\1/' | $sed_cmd 's/v//g' | $sed_cmd 's/-/\./g')")
+# alpha- (SemVer compatible)
+zrythm_pkg_semver=$(cd zrythm && printf '%s' "$(git describe --tags | $sed_cmd -e 's/-\([0-9]\+\)/\.r\1/' | $sed_cmd 's/v//g' | $sed_cmd 's/-/XXXXXX/' | $sed_cmd 's/-/\./' | $sed_cmd 's/XXXXXX/-/')")
 gnu_linux_zip_filename="zrythm-$zrythm_pkg_ver-installer.zip"
 gnu_linux_zip_trial_filename="zrythm-trial-$zrythm_pkg_ver-installer.zip"
 

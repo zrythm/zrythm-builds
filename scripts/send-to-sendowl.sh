@@ -19,73 +19,46 @@
 distro=""
 source zrythm-builds/scripts/common.sh.in
 
-bundle_name="Zrythm $zrythm_pkg_ver"
-echo "bundle name: $bundle_name"
+echo "bundle: $zrythm_pkg_semver"
 
-get_product_name () {
-  os=$1
-  case "$os" in
-    "appimage")
-      echo "$bundle_name (AppImage)"
-      ;;
-    "gnu-linux")
-      echo "$bundle_name (GNU/Linux)"
-      ;;
-    "windows"*)
-      echo "$bundle_name (Windows 64bit)"
-      ;;
-    "osx-brew-zip")
-      echo "$bundle_name (MacOS)"
-      ;;
-  esac
-}
+products_api_endpoint="https://accounts.zrythm.org/api/v1/products/"
+authorization_str="Authorization: Token $ZRYTHM_ACCOUNTS_TOKEN"
 
-sendowl_get () {
+# get a product
+product_get () {
   suffix=$1
   sleep 2
-  curl -H "Accept: application/json" \
-    "https://$SENDOWL_KEY:$SENDOWL_SECRET@www.sendowl.com/api/v1/$suffix"
+  curl -X GET \
+    -H "Accept: application/json" \
+    -H "$authorization_str" \
+    "$products_api_endpoint$suffix"
 }
 
-sendowl_post_or_put_json () {
-  suffix="$1"
-  json="$2"
-  protocol="$3"
+# create a new product
+product_post_json () {
+  json="$1"
   sleep 2
-  >&2 echo "POST/PUT $suffix"
-  curl -X $protocol -H "Accept: application/json" \
+  >&2 echo "POST $json"
+  curl -X POST \
+    -H "Accept: application/json" \
     -H "Content-type: application/json" \
+    -H "$authorization_str" \
     -d "$json" \
-    "https://$SENDOWL_KEY:$SENDOWL_SECRET@www.sendowl.com/api/v1/$suffix" > out.log 2> err.log
+    "$products_api_endpoint" > out.log 2> err.log
 }
 
-sendowl_post_json () {
-  sendowl_post_or_put_json "$1" "$2" POST
-}
+# creates a product and returns the json
+create_product ()
+{
+  if is_tag ; then
+    type_name="Single"
+  else
+    type_name="Nightly"
+  fi
+  description="<center> You will get an installer that works with the following distros/OSes:<br> <b>Arch Linux/Manjaro - <i>x86_64</i></b><br> <b>Debian 10 & 11 - <i>amd64</i></b><br> <b>Fedora 33 & 34 - <i>x86_64</i></b><br> <b>Ubuntu 18.04, 20.04, 20.10 & 21.04 - <i>amd64</i></b><br> <b>GNU/Linux - AppImage (experimental) <i>x86_64</i></b><br> <b>Windows 10 - <i>64-bit</i></b><br> <b>MacOS 10.15 (Catalina)</b><br><br> The installer includes the PDF user manual in:<br> <b>English, French, Portuguese, Italian, Japanese and German</b><br><br> plus the following optional bundled plugins:<br> <b>ZChordz, ZCompressorSP, ZLimiterSP, ZLFO, ZPhaserSP, ZSaw, ZVerbSP</b> </center>"
 
-sendowl_put_json () {
-  sendowl_post_or_put_json "$1" "$2" PUT
-}
-
-sendowl_post_form () {
-  suffix=$1
-  shift
-  sleep 2
-  >&2 echo "posting $1..."
-  cmd="curl -H \"Accept: application/json\" \
-    https://$SENDOWL_KEY:$SENDOWL_SECRET@www.sendowl.com/api/v1/$suffix "
-  for arg; do
-    cmd="$cmd -F \"$arg\""
-  done
-  eval "$cmd" > out.log 2> err.log
-}
-
-sendowl_delete () {
-  suffix=$1
-  sleep 2
-  >&2 echo "deleting $1..."
-  curl -X DELETE -H "Accept: application/json" \
-    "https://$SENDOWL_KEY:$SENDOWL_SECRET@www.sendowl.com/api/v1/$suffix" > out.log 2> err.log
+  product_post_json \
+    "{\"type\": \"$type_name\", \"description\": \"$description\", \"version\": \"$zrythm_pkg_semver\", \"image_url\": \"https://www.zrythm.org/static/icons/zrythm/z_frame_8.png\", \"price_gbp\": \"5.00\"}"
 }
 
 # prefetch the installers not on this machine
@@ -115,135 +88,12 @@ prefetch () {
   done
 }
 
-# creates a product and returns the json
-create_product ()
-{
-  os=$1
-  product_filename="$(get_package_filename $os)"
-  product_file="$(pwd)/zrythm-installer/$product_filename"
-  >&2 echo "sending $os package at $product_file..."
-  if ! test -f "$product_file"; then
-    >&2 echo "$product_file not found"
-    exit 1
-  fi
-
-  wget "--directory-prefix=$(pwd)/zrythm-installer/" \
-    https://www.zrythm.org/static/icons/zrythm/z_frame_8.png
-  sendowl_post_form \
-    "products" \
-    "product[name]=$(get_product_name $os)" \
-    "product[product_type]=digital" \
-    "product[price]=5.00" \
-    "product[product_image]=@$(pwd)/zrythm-installer/z_frame_8.png" \
-    "product[self_hosted_url]=https://$sendowl_bucket_name.s3.amazonaws.com/packages/$os/$product_filename" | jq '.product'
-}
-
-# creates or updates a product for the given type
-# and returns the product ID
-create_or_update_product () {
-  os=$1
-  all_products="$(sendowl_get "products?per_page=50&page=2")"
-
-  this_product="null"
-  i=0
-  while true; do
-    cur_product=$(echo $all_products | \
-      jq ".[$i].product" || echo "null")
-    if [ "$cur_product" = "null" ]; then
-      break
-    fi
-    if [ "$(echo "$cur_product" | jq '.name' || \
-      echo null)" = \
-      "\"$(get_product_name $os)\"" ]; then
-      this_product="$cur_product"
-      break
-    fi
-    ((i++))
-  done
-
-  # delete product if it exists
-  if [ "$this_product" != "null" ]; then
-    product_id="$(echo "$this_product" | jq '.id')"
-    sendowl_delete "products/$product_id"
-    create_or_update_product $os
-  else
-    # create one
-    this_product="$(create_product $os)"
-
-    echo "$this_product" | jq '.id'
-  fi
-}
-
-update_or_create_bundle () {
-  # create bundles on releases manually
-  return
-
-  gnu_linux_product_id=$1
-  osx_product_id=$2
-  windows_product_id=$3
-  appimage_product_id=$3
-
-  all_bundles="$(sendowl_get packages)"
-  this_bundle="null"
-  i=0
-  while true; do
-    cur_bundle="$(echo "$all_bundles" | \
-      jq ".[$i].package" || echo "null")"
-    if [ "$cur_bundle" = "null" ]; then
-      break
-    fi
-    if [ "$(echo "$cur_bundle" | jq '.name' || echo "null")" = \
-      "\"$bundle_name\"" ]; then
-      this_bundle="$cur_bundle"
-      break
-    fi
-    ((i++))
-  done
-
-  # prepare json
-  json="\
-    { \
-      \"package\": { \
-        \"name\": \"$bundle_name\", \
-        \"price\": \"5.00\", \
-        \"price_is_minimum\": \"true\" \
-        \"components\": { \
-          \"product_ids\": \"[$gnu_linux_product_id, $osx_product_id, $windows_product_id, $appimage_product_id]\" \
-        } \
-      } \
-    }"
-
-  # create or update bundle
-  if [ "$this_bundle" != "null" ]; then
-    # update
-    bundle_id="$(echo "$this_bundle" | jq '.id')"
-    sendowl_put_json "packages/$bundle_id" "$json"
-  else
-    # create
-    this_bundle="$(sendowl_post_json packages "$json" | \
-      jq '.package')"
-  fi
-
-  echo "$this_bundle" | jq '.id'
-}
-
 # fetch missing installers
 echo "prefetching installers..."
 prefetch
 echo "done"
 
-# create or update products
-echo "creating products..."
-gnu_linux_product_id="$(create_or_update_product "gnu-linux")"
-osx_product_id="$(create_or_update_product "osx-brew-zip")"
-windows_product_id="$(create_or_update_product "windows10-msys")"
-appimage_product_id="$(create_or_update_product "appimage")"
+# create product (if fail, it means the product already exists - do nothing)
+echo "creating product..."
+create_product
 echo "done"
-
-echo "created products $gnu_linux_product_id, $osx_product_id, $appimage_product_id and $windows_product_id"
-
-bundle_id="$(update_or_create_bundle \
-  "$gnu_linux_product_id" \
-  "$osx_product_id" \
-  "$windows_product_id" \
-  "$appimage_product_id")"
