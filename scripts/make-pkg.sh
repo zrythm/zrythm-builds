@@ -47,6 +47,7 @@ _locales=`join_by , $linguas`
 zrythm_git_ver="$(git ls-remote https://git.zrythm.org/zrythm/zrythm HEAD | awk '{print $1;}')"
 $meson_path build $reconfigure -Dmeson-path=$meson_path \
   -Dzrythm-git-ver=$zrythm_git_ver -Dzrythm-pkg-ver=$zrythm_pkg_ver \
+  -Dzrythm-pkg-semver=$zrythm_pkg_semver \
   -Dbreeze-dark-path="$parent_dir/breeze-icons/icons-dark" -Ddistro=$distro \
   -Dbuild-trial=false -Dmanuals-zip-file=$(pwd)/user-manual.zip \
   -Dlocales="$_locales" \

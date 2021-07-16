@@ -29,6 +29,7 @@ meson_path="$(pwd)/meson/meson.py"
 pushd zrythm-installer
 $meson_path build --reconfigure -Dmeson-path=$meson_path \
   -Dzrythm-git-ver=master -Dzrythm-pkg-ver=$zrythm_pkg_ver \
+  -Dzrythm-pkg-semver=$zrythm_pkg_semver \
   -Dbreeze-dark-path="$(pwd)/breeze-icons/icons-dark" -Ddistro=gnu-linux \
   -Dbuild-trial=false -Dpackages-dir=$artifacts_dir \
   -Dpdf-dir=$pdf_dir \
