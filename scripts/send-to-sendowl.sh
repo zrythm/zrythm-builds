@@ -52,13 +52,16 @@ create_product ()
 {
   if is_tag ; then
     type_name="Single"
+    summary="Single version"
+    description="<center> You will get an installer that works with the following distros/OSes:<br> <b>Arch Linux/Manjaro - <i>x86_64</i></b><br> <b>Debian 10 & 11 - <i>amd64</i></b><br> <b>Fedora 33 & 34 - <i>x86_64</i></b><br> <b>Ubuntu 18.04, 20.04, 20.10 & 21.04 - <i>amd64</i></b><br> <b>GNU/Linux - AppImage (experimental) <i>x86_64</i></b><br> <b>Windows 10 - <i>64-bit</i></b><br> <b>MacOS 10.15 (Catalina)</b><br><br> The installer includes the PDF user manual in:<br> <b>English, French, Portuguese, Italian, Japanese and German</b><br><br> plus the following optional bundled plugins:<br> <b>ZChordz, ZCompressorSP, ZLimiterSP, ZLFO, ZPhaserSP, ZSaw, ZVerbSP</b> </center>"
   else
     type_name="Nightly"
+    summary="Nightly build"
+    description="Nightly build at $(date)."
   fi
-  description="<center> You will get an installer that works with the following distros/OSes:<br> <b>Arch Linux/Manjaro - <i>x86_64</i></b><br> <b>Debian 10 & 11 - <i>amd64</i></b><br> <b>Fedora 33 & 34 - <i>x86_64</i></b><br> <b>Ubuntu 18.04, 20.04, 20.10 & 21.04 - <i>amd64</i></b><br> <b>GNU/Linux - AppImage (experimental) <i>x86_64</i></b><br> <b>Windows 10 - <i>64-bit</i></b><br> <b>MacOS 10.15 (Catalina)</b><br><br> The installer includes the PDF user manual in:<br> <b>English, French, Portuguese, Italian, Japanese and German</b><br><br> plus the following optional bundled plugins:<br> <b>ZChordz, ZCompressorSP, ZLimiterSP, ZLFO, ZPhaserSP, ZSaw, ZVerbSP</b> </center>"
 
   product_post_json \
-    "{\"type\": \"$type_name\", \"description\": \"$description\", \"version\": \"$zrythm_pkg_semver\", \"image_url\": \"https://www.zrythm.org/static/icons/zrythm/z_frame_8.png\", \"price_gbp\": \"5.00\"}"
+    "{\"type\": \"$type_name\", \"summary\": \"$summary\", \"description\": \"$description\", \"version\": \"$zrythm_pkg_semver\", \"image_url\": \"https://www.zrythm.org/static/icons/zrythm/z_frame_8.png\", \"price_gbp\": \"5.00\"}"
 }
 
 # prefetch the installers not on this machine
