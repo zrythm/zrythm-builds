@@ -68,6 +68,7 @@ packages:
   - qt5-base
   - p7zip
   - wget
+  - vamp-plugin-sdk
   - vim
   - xxhash
 sources:

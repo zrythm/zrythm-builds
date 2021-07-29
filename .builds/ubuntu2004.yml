@@ -73,6 +73,7 @@ packages:
   - python3-pip
   - python3-setuptools
   - xdg-utils
+  - vamp-plugin-sdk
   - zip
   - wget
   - vim

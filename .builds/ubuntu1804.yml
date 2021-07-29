@@ -61,6 +61,7 @@ packages:
   - portaudio19-dev
   - librtaudio-dev
   - zip
+  - vamp-plugin-sdk
   - xdg-utils
   - wget
 sources:
