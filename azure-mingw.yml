@@ -29,7 +29,7 @@ jobs:
       - script: cinst msys2 --params "/InstallDir=C:/msys64" --no-progress
         displayName: install msys2
 
-      - script: C:\msys64\usr\bin\bash --login -c "pacman -S --noconfirm --needed mingw-w64-x86_64-toolchain mingw-w64-x86_64-gtk3 mingw-w64-x86_64-libsamplerate mingw-w64-x86_64-fftw mingw-w64-x86_64-ffmpeg mingw-w64-x86_64-libyaml mingw-w64-x86_64-libsndfile mingw-w64-x86_64-rubberband mingw-w64-x86_64-dlfcn mingw-w64-x86_64-SDL2 mingw-w64-x86_64-chromaprint guile libguile-devel mingw-w64-x86_64-graphviz git mingw-w64-x86_64-cantarell-fonts mingw-w64-x86_64-gtksourceview4 mingw-w64-x86_64-gcc mingw-w64-x86_64-make zip mingw-w64-x86_64-binutils mingw-w64-x86_64-portaudio mingw-w64-x86_64-cmake mingw-w64-x86_64-python-setuptools mingw-w64-x86_64-ninja mingw-w64-x86_64-python-pip mingw-w64-x86_64-meson mingw-w64-x86_64-python3 mingw-w64-x86_64-gtk-doc unzip base-devel mingw-w64-x86_64-toolchain mingw-w64-x86_64-adwaita-icon-theme mingw-w64-x86_64-curl tree mingw-w64-x86_64-pcre2 mingw-w64-x86_64-xxhash mingw-w64-x86_64-vamp-plugin-sdk"
+      - script: C:\msys64\usr\bin\bash --login -c "pacman -S --noconfirm --needed mingw-w64-ucrt-x86_64-toolchain mingw-w64-ucrt-x86_64-gtk3 mingw-w64-ucrt-x86_64-libsamplerate mingw-w64-ucrt-x86_64-fftw mingw-w64-ucrt-x86_64-ffmpeg mingw-w64-ucrt-x86_64-libyaml mingw-w64-ucrt-x86_64-libsndfile mingw-w64-ucrt-x86_64-rubberband mingw-w64-ucrt-x86_64-dlfcn mingw-w64-ucrt-x86_64-SDL2 mingw-w64-ucrt-x86_64-chromaprint guile libguile-devel mingw-w64-ucrt-x86_64-graphviz git mingw-w64-ucrt-x86_64-cantarell-fonts mingw-w64-ucrt-x86_64-gtksourceview4 mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-make zip mingw-w64-ucrt-x86_64-binutils mingw-w64-ucrt-x86_64-portaudio mingw-w64-ucrt-x86_64-cmake mingw-w64-ucrt-x86_64-python-setuptools mingw-w64-ucrt-x86_64-ninja mingw-w64-ucrt-x86_64-python-pip mingw-w64-ucrt-x86_64-meson mingw-w64-ucrt-x86_64-python3 mingw-w64-ucrt-x86_64-gtk-doc unzip base-devel mingw-w64-ucrt-x86_64-toolchain mingw-w64-ucrt-x86_64-adwaita-icon-theme mingw-w64-ucrt-x86_64-curl tree mingw-w64-ucrt-x86_64-pcre2 mingw-w64-ucrt-x86_64-xxhash mingw-w64-ucrt-x86_64-vamp-plugin-sdk"
         displayName: install mingw deps
 
       - script: |
@@ -37,7 +37,7 @@ jobs:
         displayName: 'Fetch repos'
 
       - script: |
-          C:\msys64\usr\bin\bash --login -c "/mingw64/bin/pip.exe uninstall -y meson && /mingw64/bin/pip.exe install meson && /mingw64/bin/meson --version && /mingw64/bin/pip.exe install awscli"
+          C:\msys64\usr\bin\bash --login -c "/ucrt64/bin/pip.exe uninstall -y meson && /ucrt64/bin/pip.exe install meson && /ucrt64/bin/meson --version && /ucrt64/bin/pip.exe install awscli"
         displayName: 'Install meson through pip'
 
       - script: |
@@ -45,12 +45,12 @@ jobs:
         displayName: 'Install inno'
 
       - script: |
-          echo REMOTE_HOME=%REMOTE_HOME% >> C:\msys64\mingw64\.env
-          echo REMOTE_IP=%REMOTE_IP% >> C:\msys64\mingw64\.env
-          echo SSH_KEY=%SSH_KEY% >> C:\msys64\mingw64\.env
-          echo AWS_ACCESS_KEY_ID=%AWS_ACCESS_KEY_ID% >> C:\msys64\mingw64\.env
-          echo AWS_SECRET_ACCESS_KEY=%AWS_SECRET_ACCESS_KEY% >> C:\msys64\mingw64\.env
-          C:\msys64\usr\bin\bash --login -c "cd && source /mingw64/.env && echo \"$SSH_KEY\" > tmp_rsa && openssl base64 -d -A < tmp_rsa > id_rsa && grep -q \"BEGIN RSA PRIVATE KEY\" id_rsa && chmod 600 id_rsa && MESON_PATH=/mingw64/bin/meson NINJA_PATH=/mingw64/bin/ninja AWS_CLI_PATH=/mingw64/bin/aws zrythm-builds/scripts/make-pkg.sh windows10-msys windows-msys-prepare && AWS_CLI_PATH=/mingw64/bin/aws zrythm-builds/scripts/create-manuals-zip.sh windows10-msys && MESON_PATH=/mingw64/bin/meson NINJA_PATH=/mingw64/bin/ninja AWS_CLI_PATH=/mingw64/bin/aws zrythm-builds/scripts/make-pkg.sh windows10-msys && AWS_CLI_PATH=/mingw64/bin/aws zrythm-builds/scripts/push-pkg.sh windows10-msys"
+          echo REMOTE_HOME=%REMOTE_HOME% >> C:\msys64\ucrt64\.env
+          echo REMOTE_IP=%REMOTE_IP% >> C:\msys64\ucrt64\.env
+          echo SSH_KEY=%SSH_KEY% >> C:\msys64\ucrt64\.env
+          echo AWS_ACCESS_KEY_ID=%AWS_ACCESS_KEY_ID% >> C:\msys64\ucrt64\.env
+          echo AWS_SECRET_ACCESS_KEY=%AWS_SECRET_ACCESS_KEY% >> C:\msys64\ucrt64\.env
+          C:\msys64\usr\bin\bash --login -c "cd && source /ucrt64/.env && echo \"$SSH_KEY\" > tmp_rsa && openssl base64 -d -A < tmp_rsa > id_rsa && grep -q \"BEGIN RSA PRIVATE KEY\" id_rsa && chmod 600 id_rsa && MESON_PATH=/ucrt64/bin/meson NINJA_PATH=/ucrt64/bin/ninja AWS_CLI_PATH=/ucrt64/bin/aws zrythm-builds/scripts/make-pkg.sh windows10-msys windows-msys-prepare && AWS_CLI_PATH=/ucrt64/bin/aws zrythm-builds/scripts/create-manuals-zip.sh windows10-msys && MESON_PATH=/ucrt64/bin/meson NINJA_PATH=/ucrt64/bin/ninja AWS_CLI_PATH=/ucrt64/bin/aws zrythm-builds/scripts/make-pkg.sh windows10-msys && AWS_CLI_PATH=/ucrt64/bin/aws zrythm-builds/scripts/push-pkg.sh windows10-msys"
         displayName: 'Make installer'
         env:
           REMOTE_HOME: $(REMOTE_HOME)
