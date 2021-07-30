@@ -37,7 +37,7 @@ jobs:
         displayName: 'Fetch repos'
 
       - script: |
-          C:\msys64\usr\bin\bash --login -c "/mingw64/bin/pip.exe uninstall -y meson && /mingw64/bin/pip.exe install meson && /mingw64/bin/meson --version && /mingw64/bin/pip.exe install ninja && /mingw64/bin/pip.exe install awscli"
+          C:\msys64\usr\bin\bash --login -c "/mingw64/bin/pip.exe install --upgrade pip setuptools wheel && /mingw64/bin/pip.exe uninstall -y meson && /mingw64/bin/pip.exe install meson && /mingw64/bin/meson --version && /mingw64/bin/pip.exe install ninja && /mingw64/bin/pip.exe install awscli"
         displayName: 'Install meson through pip'
 
       - script: |
