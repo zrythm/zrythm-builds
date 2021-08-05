@@ -37,6 +37,7 @@ packages:
   - guile-2.2-dev
   - help2man
   - python3-sphinx
+  - libjson-glib-dev
   - ladspa-sdk
   - libfftw3-dev
   - libasound2-dev

@@ -41,6 +41,7 @@ packages:
   - libavutil-dev
   - libavformat-dev
   - libchromaprint-dev
+  - libjson-glib-dev
   - libgtksourceview-3.0-dev
   - libgraphviz-dev
   - libpcre2-dev
