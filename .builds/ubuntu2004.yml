@@ -78,6 +78,7 @@ packages:
   - zip
   - wget
   - vim
+  - zstd
 sources:
   - https://git.sr.ht/~alextee/zrythm
   - https://git.sr.ht/~alextee/zrythm-installer
