@@ -19,6 +19,7 @@ image: ubuntu/18.04
 packages:
   - awscli
   - binutils
+  - ca-certificates
   - flex
   - libfl-dev
   - libcurl4-gnutls-dev
