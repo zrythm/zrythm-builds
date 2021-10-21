@@ -55,7 +55,7 @@ packages:
   - zstd
   - rtaudio
   - rtmidi
-  - texlive-most
+  #- texlive-most
   - texlive-langjapanese
   - tar
   - zip
@@ -81,6 +81,9 @@ secrets:
   - 84335bd2-7536-4508-9ae8-61079bc2a7fb
   - 7c85cca9-3e6f-4c7c-ba42-b44ca7379585
 tasks:
+  - install-texlive: |
+      sudo sed -i '1iServer = http://mirror.lty.me/archlinux/$repo/os/$arch' /etc/pacman.d/mirrorlist
+      sudo pacman -S --noconfirm --needed texlive-most
   - make-archlinux: |
       sudo pip3 install meson sphinx-intl furo sphinx-copybutton sphinxcontrib-svg2pdfconverter
       sudo npm install -g sass
