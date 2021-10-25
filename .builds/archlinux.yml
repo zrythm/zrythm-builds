@@ -85,6 +85,8 @@ tasks:
       sudo sed -i '1iServer = http://mirror.lty.me/archlinux/$repo/os/$arch' /etc/pacman.d/mirrorlist
       sudo pacman -S --noconfirm --needed texlive-most
   - make-archlinux: |
+      # make sure pkg suffix is .pkg.tar.zst
+      echo "PKGEXT='.pkg.tar.zst'" | sudo tee -a /etc/makepkg.conf
       sudo pip3 install meson sphinx-intl furo sphinx-copybutton sphinxcontrib-svg2pdfconverter
       sudo npm install -g sass
       export PATH=$PATH:/home/build/.local/bin && \
