@@ -32,7 +32,7 @@ jobs:
         brew update || true
         echo "installing deps"
         # use || true because it returns 1
-        brew install curl gnu-sed fftw meson libsamplerate sdl2 lilv librsvg adwaita-icon-theme gtk+3 guile gtksourceview4 graphviz zstd npm rt-audio rtmidi jack qjackctl cmake pcre2 || true
+        brew install curl gnu-sed fftw meson libsamplerate sdl2 lilv librsvg adwaita-icon-theme gtk+3 guile gtksourceview5 graphviz zstd npm rt-audio rtmidi jack qjackctl cmake pcre2 libsass || true
         brew install chromaprint brotli xxhash awscli vamp-plugin-sdk json-glib || true
         echo "linking python"
         brew link --overwrite python
