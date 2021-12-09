@@ -15,7 +15,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-image: debian/buster
+image: debian/stable
 packages:
   - awscli
   - binutils
@@ -101,6 +101,6 @@ tasks:
       sudo ./waf install
       popd
   - make: |
-      zrythm-builds/scripts/make-pkg.sh debian10
+      zrythm-builds/scripts/make-pkg.sh debian11
   - deploy: |
-      zrythm-builds/scripts/push-pkg.sh debian10
+      zrythm-builds/scripts/push-pkg.sh debian11
