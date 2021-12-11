@@ -19,6 +19,7 @@ image: ubuntu/20.04
 packages:
   - awscli
   - binutils
+  - cargo
   - cmake
   - flex
   - libfl-dev
@@ -37,17 +38,18 @@ packages:
   - ninja-build
   - gettext
   - guile-2.2-dev
+  - gtk-doc-tools
   - help2man
   - python3-sphinx
   - ladspa-sdk
   - libfftw3-dev
-  - libasound2-dev
-  - libavcodec-dev
-  - libavutil-dev
-  - libavformat-dev
+  #- libasound2-dev
+  #- libavcodec-dev
+  #- libavutil-dev
+  #- libavformat-dev
   - libchromaprint-dev
-  - libjson-glib-dev
-  - libgtksourceview-3.0-dev
+  #- libjson-glib-dev
+  #- libgtksourceview-3.0-dev
   - libgraphviz-dev
   #- libsuil-dev
   #- lv2-dev
@@ -55,10 +57,11 @@ packages:
   - libsamplerate0-dev
   - libyaml-dev
   - librubberband-dev
+  - libxml2-dev
   - libxxhash-dev
   - rubberband-cli
   - libzstd-dev
-  - librsvg2-dev
+  #- librsvg2-dev
   - python3
   - rsync
   - desktop-file-utils
@@ -67,7 +70,7 @@ packages:
   - liblilv-dev
   - portaudio19-dev
   - librtaudio-dev
-  - libgdk-pixbuf2.0-dev
+  #- libgdk-pixbuf2.0-dev
   - fakeroot
   - strace
   - fuse
@@ -75,6 +78,7 @@ packages:
   - patchelf
   - python3-pip
   - python3-setuptools
+  - rustc
   - sassc
   - xdg-utils
   - vamp-plugin-sdk
@@ -92,6 +96,9 @@ secrets:
   - 7c85cca9-3e6f-4c7c-ba42-b44ca7379585
 shell: true
 tasks:
+  - switch-to-meson-release: |
+      cd meson
+      git checkout 0.60.2
   - install-wayland-protocols: |
       mkdir deps
       cd deps
@@ -107,6 +114,13 @@ tasks:
       /home/build/meson/meson.py build -Dprefix=/usr
       ninja -C build
       sudo ninja -C build install
+  - install-json-glib: |
+      cd deps
+      git clone https://gitlab.gnome.org/GNOME/json-glib
+      pushd json-glib
+      /home/build/meson/meson.py build -Dprefix=/usr -Dintrospection=disabled -Dgtk_doc=disabled -Dtests=false
+      ninja -C build
+      sudo ninja -C build install
   - install-pango: |
       cd deps
       git clone https://gitlab.gnome.org/GNOME/pango
@@ -119,6 +133,22 @@ tasks:
       git clone https://gitlab.gnome.org/GNOME/gdk-pixbuf
       pushd gdk-pixbuf
       /home/build/meson/meson.py build -Dprefix=/usr -Djpeg=enabled -Dpng=enabled -Dbuiltin_loaders=png,jpeg -Dman=false
+      ninja -C build
+      sudo ninja -C build install
+  - install-librsvg: |
+      cd deps
+      wget https://download.gnome.org/sources/librsvg/2.52/librsvg-2.52.4.tar.xz
+      tar xf librsvg-2.52.4.tar.xz
+      cd librsvg-2.52.4
+      ./configure --prefix=/usr --disable-gtk-doc --disable-vala
+      make
+      sudo make install
+  - install-gtk: |
+      cd deps
+      wget https://gitlab.gnome.org/GNOME/gtk/-/archive/12bb700c620c8a9a29947314ab35d0f2a22d795c/gtk-12bb700c620c8a9a29947314ab35d0f2a22d795c.tar.gz
+      tar xf gtk-12bb700c620c8a9a29947314ab35d0f2a22d795c.tar.gz
+      cd gtk-12bb700c620c8a9a29947314ab35d0f2a22d795c
+      /home/build/meson/meson.py build -Dprefix=/usr -Ddemos=false -Dbuild-examples=false -Dbuild-tests=false -Dmedia-gstreamer=disabled -Dintrospection=disabled
       ninja -C build
       sudo ninja -C build install
   - make-appimage: |
