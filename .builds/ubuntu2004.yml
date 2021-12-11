@@ -92,6 +92,35 @@ secrets:
   - 7c85cca9-3e6f-4c7c-ba42-b44ca7379585
 shell: true
 tasks:
+  - install-wayland-protocols: |
+      mkdir deps
+      cd deps
+      git clone git://anongit.freedesktop.org/git/wayland/wayland-protocols
+      pushd wayland-protocols
+      /home/build/meson/meson.py build -Dprefix=/usr
+      ninja -C build
+      sudo ninja -C build install
+  - install-glib: |
+      cd deps
+      git clone https://gitlab.gnome.org/GNOME/glib
+      pushd glib
+      /home/build/meson/meson.py build -Dprefix=/usr
+      ninja -C build
+      sudo ninja -C build install
+  - install-pango: |
+      cd deps
+      git clone https://gitlab.gnome.org/GNOME/pango
+      pushd pango
+      /home/build/meson/meson.py build -Dprefix=/usr
+      ninja -C build
+      sudo ninja -C build install
+  - install-gdk-pixbuf: |
+      cd deps
+      git clone https://gitlab.gnome.org/GNOME/gdk-pixbuf
+      pushd gdk-pixbuf
+      /home/build/meson/meson.py build -Dprefix=/usr -Djpeg=enabled -Dpng=enabled -Dbuiltin_loaders=png,jpeg -Dman=false
+      ninja -C build
+      sudo ninja -C build install
   - make-appimage: |
       sudo pip3 install git+https://github.com/AppImageCrafters/appimage-builder.git
       sudo pip3 install -e git+https://github.com/TheAssassin/appimagelint#egg=appimagelint
