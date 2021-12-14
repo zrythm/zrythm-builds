@@ -42,6 +42,7 @@ packages:
   - help2man
   - python3-sphinx
   - ladspa-sdk
+  - libfontconfig-dev
   - libfftw3-dev
   #- libasound2-dev
   #- libavcodec-dev
@@ -97,9 +98,8 @@ secrets:
   - 7c85cca9-3e6f-4c7c-ba42-b44ca7379585
 shell: true
 tasks:
-  - switch-to-meson-release: |
-      cd meson
-      git checkout 0.60.2
+  - prepare: |
+      sudo mkdir -p /usr/lib/zrythm
   - install-wayland-protocols: |
       mkdir deps
       cd deps

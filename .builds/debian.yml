@@ -63,8 +63,10 @@ packages:
   - libsdl2-dev
   - lv2-dev
   - liblilv-dev
+  - libjpeg-dev
   - librsvg2-dev
   - portaudio19-dev
+  - sassc
   - librtaudio-dev
   - tar
   - unzip
@@ -84,22 +86,14 @@ secrets:
   - 84335bd2-7536-4508-9ae8-61079bc2a7fb
   - 7c85cca9-3e6f-4c7c-ba42-b44ca7379585
 tasks:
-  - install_lilv: |
-      pushd lv2
-      CFLAGS=-fPIC ./waf configure --copy-headers --no-coverage --no-plugins --no-check-links
-      ./waf
-      sudo ./waf install
-      popd
-      pushd serd
-      CFLAGS=-fPIC ./waf configure --no-utils --static --no-shared
-      ./waf
-      sudo ./waf install
-      popd
-      pushd lilv
-      CFLAGS=-fPIC ./waf configure --static --no-utils --no-shared --no-bash-completion --no-bindings
-      ./waf
-      sudo ./waf install
-      popd
+  - install-wayland-protocols: |
+      mkdir deps
+      cd deps
+      git clone git://anongit.freedesktop.org/git/wayland/wayland-protocols
+      pushd wayland-protocols
+      /home/build/meson/meson.py build -Dprefix=/usr
+      ninja -C build
+      sudo ninja -C build install
   - make: |
       zrythm-builds/scripts/make-pkg.sh debian11
   - deploy: |

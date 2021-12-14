@@ -66,6 +66,7 @@ packages:
   - intltool
   - qt5-base
   - p7zip
+  - ruby-sass
   - sassc
   - wget
   - vamp-plugin-sdk
