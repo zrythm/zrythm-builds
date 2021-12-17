@@ -59,6 +59,7 @@ packages:
   - libsamplerate0-dev
   - libyaml-dev
   - librubberband-dev
+  - libtiff-dev
   - libxdamage-dev
   - libxml2-dev
   - libxxhash-dev

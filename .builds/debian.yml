@@ -66,6 +66,7 @@ packages:
   - liblilv-dev
   - libjpeg-dev
   - librsvg2-dev
+  - libtiff-dev
   - patchelf
   - portaudio19-dev
   - sassc
