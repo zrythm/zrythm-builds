@@ -65,6 +65,7 @@ packages:
   - gperf
   - intltool
   - qt5-base
+  - patchelf
   - p7zip
   - ruby-sass
   - sassc
