@@ -97,6 +97,36 @@ tasks:
       /home/build/meson/meson.py build -Dprefix=/usr
       ninja -C build
       sudo ninja -C build install
+  - install-pango: |
+      cd deps
+      git clone https://gitlab.gnome.org/GNOME/pango
+      pushd pango
+      /home/build/meson/meson.py build -Dprefix=/usr
+      ninja -C build
+      sudo ninja -C build install
+  - install-gdk-pixbuf: |
+      cd deps
+      git clone https://gitlab.gnome.org/GNOME/gdk-pixbuf
+      pushd gdk-pixbuf
+      /home/build/meson/meson.py build -Dprefix=/usr -Djpeg=enabled -Dpng=enabled -Dbuiltin_loaders=png,jpeg -Dman=false
+      ninja -C build
+      sudo ninja -C build install
+  - install-librsvg: |
+      cd deps
+      wget https://download.gnome.org/sources/librsvg/2.52/librsvg-2.52.4.tar.xz
+      tar xf librsvg-2.52.4.tar.xz
+      cd librsvg-2.52.4
+      ./configure --prefix=/usr --disable-gtk-doc --disable-vala --disable-introspection
+      make
+      sudo make install
+  - install-gtk: |
+      cd deps
+      wget https://gitlab.gnome.org/GNOME/gtk/-/archive/12bb700c620c8a9a29947314ab35d0f2a22d795c/gtk-12bb700c620c8a9a29947314ab35d0f2a22d795c.tar.gz
+      tar xf gtk-12bb700c620c8a9a29947314ab35d0f2a22d795c.tar.gz
+      cd gtk-12bb700c620c8a9a29947314ab35d0f2a22d795c
+      /home/build/meson/meson.py build -Dprefix=/usr -Ddemos=false -Dbuild-examples=false -Dbuild-tests=false -Dmedia-gstreamer=disabled -Dintrospection=disabled
+      ninja -C build
+      sudo ninja -C build install
   - make: |
       zrythm-builds/scripts/make-pkg.sh debian11
   - deploy: |
