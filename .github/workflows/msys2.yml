@@ -51,6 +51,9 @@ jobs:
             mingw-w64-ucrt-x86_64-meson
             mingw-w64-ucrt-x86_64-python3
             mingw-w64-ucrt-x86_64-gtk-doc
+            mingw-w64-ucrt-x86_64-gi-docgen
+            mingw-w64-ucrt-x86_64-graphene
+            mingw-w64-ucrt-x86_64-pango
             mingw-w64-ucrt-x86_64-toolchain
             mingw-w64-ucrt-x86_64-adwaita-icon-theme
             mingw-w64-ucrt-x86_64-curl-winssl
@@ -74,7 +77,7 @@ jobs:
           unzip inno-setup-bin.zip -d ~/
       - name: Install AWSCLI
         run: |
-          pip install awscli meson ninja
+          pip install awscli
       - name: Build and deploy
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -83,7 +86,7 @@ jobs:
           REMOTE_IP: ''
           REMOTE_HOME: ''
         run: |
-          MESON_PATH=`pwd`/meson/meson.py NINJA_PATH=/ucrt64/bin/ninja AWS_CLI_PATH=/ucrt64/bin/aws zrythm-builds/scripts/make-pkg.sh windows10-msys windows-msys-prepare
+          MESON_PATH=/ucrt64/bin/meson NINJA_PATH=/ucrt64/bin/ninja AWS_CLI_PATH=/ucrt64/bin/aws zrythm-builds/scripts/make-pkg.sh windows10-msys windows-msys-prepare
           AWS_CLI_PATH=/ucrt64/bin/aws zrythm-builds/scripts/create-manuals-zip.sh windows10-msys
-          MESON_PATH=`pwd`/meson/meson.py NINJA_PATH=/ucrt64/bin/ninja AWS_CLI_PATH=/ucrt64/bin/aws zrythm-builds/scripts/make-pkg.sh windows10-msys
+          MESON_PATH=/ucrt64/bin/meson NINJA_PATH=/ucrt64/bin/ninja AWS_CLI_PATH=/ucrt64/bin/aws zrythm-builds/scripts/make-pkg.sh windows10-msys
           AWS_CLI_PATH=/ucrt64/bin/aws zrythm-builds/scripts/push-pkg.sh windows10-msys
