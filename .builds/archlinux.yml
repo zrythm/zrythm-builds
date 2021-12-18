@@ -72,6 +72,7 @@ packages:
   - wget
   - vamp-plugin-sdk
   - vim
+  - wayland-protocols
   - xxhash
 sources:
   - https://git.sr.ht/~alextee/zrythm
