@@ -69,11 +69,12 @@ jobs:
           git clone https://git.sr.ht/~alextee/zrythm-builds
           git clone https://git.sr.ht/~alextee/zrythm-installer
           git clone https://github.com/KDE/breeze-icons
+          git clone https://github.com/mesonbuild/meson
           wget https://www.zrythm.org/downloads/inno-setup-bin.zip
           unzip inno-setup-bin.zip -d ~/
       - name: Install AWSCLI
         run: |
-          pip install awscli
+          pip install awscli meson ninja
       - name: Build and deploy
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -82,7 +83,7 @@ jobs:
           REMOTE_IP: ''
           REMOTE_HOME: ''
         run: |
-          MESON_PATH=/ucrt64/bin/meson NINJA_PATH=/ucrt64/bin/ninja AWS_CLI_PATH=/ucrt64/bin/aws zrythm-builds/scripts/make-pkg.sh windows10-msys windows-msys-prepare
+          MESON_PATH=`pwd`/meson/meson.py NINJA_PATH=/ucrt64/bin/ninja AWS_CLI_PATH=/ucrt64/bin/aws zrythm-builds/scripts/make-pkg.sh windows10-msys windows-msys-prepare
           AWS_CLI_PATH=/ucrt64/bin/aws zrythm-builds/scripts/create-manuals-zip.sh windows10-msys
-          MESON_PATH=/ucrt64/bin/meson NINJA_PATH=/ucrt64/bin/ninja AWS_CLI_PATH=/ucrt64/bin/aws zrythm-builds/scripts/make-pkg.sh windows10-msys
+          MESON_PATH=`pwd`/meson/meson.py NINJA_PATH=/ucrt64/bin/ninja AWS_CLI_PATH=/ucrt64/bin/aws zrythm-builds/scripts/make-pkg.sh windows10-msys
           AWS_CLI_PATH=/ucrt64/bin/aws zrythm-builds/scripts/push-pkg.sh windows10-msys
