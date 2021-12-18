@@ -26,6 +26,7 @@ jobs:
             tree
             guile
             libguile-devel
+            mingw-w64-i686-toolchain
             mingw-w64-ucrt-x86_64-toolchain
             mingw-w64-ucrt-x86_64-libsamplerate
             mingw-w64-ucrt-x86_64-fftw

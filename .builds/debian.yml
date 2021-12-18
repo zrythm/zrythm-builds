@@ -91,6 +91,8 @@ secrets:
 tasks:
   - install-latest-rust: |
       curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      sudo ln -s /home/build/.cargo/bin/cargo /usr/bin/cargo
+      sudo ln -s /home/build/.cargo/bin/rustc /usr/bin/rustc
   - install-wayland-protocols: |
       mkdir deps
       cd deps
@@ -121,7 +123,8 @@ tasks:
       cd librsvg-2.52.4
       ./configure --prefix=/usr --disable-gtk-doc --disable-vala --disable-introspection
       make
-      sudo make install
+      make install DESTDIR=/tmp/librsvg
+      sudo cp -RT /tmp/librsvg/usr/ /usr/
   - install-gtk: |
       cd deps
       wget https://gitlab.gnome.org/GNOME/gtk/-/archive/12bb700c620c8a9a29947314ab35d0f2a22d795c/gtk-12bb700c620c8a9a29947314ab35d0f2a22d795c.tar.gz
