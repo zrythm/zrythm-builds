@@ -36,9 +36,13 @@ jobs:
           C:\msys64\usr\bin\bash --login -c "cd && git clone https://git.sr.ht/~alextee/zrythm && git clone https://git.sr.ht/~alextee/zrythm-builds && git clone https://git.sr.ht/~alextee/zrythm-installer && git clone https://github.com/KDE/breeze-icons && git clone https://github.com/mesonbuild/meson"
         displayName: 'Fetch repos'
 
+      #- script: |
+          #C:\msys64\usr\bin\bash --login -c "/ucrt64/bin/pip.exe uninstall -y meson && /ucrt64/bin/pip.exe install meson && /ucrt64/bin/meson --version"
+        #displayName: 'Install meson through pip'
+
       - script: |
-          C:\msys64\usr\bin\bash --login -c "/ucrt64/bin/pip.exe uninstall -y meson && /ucrt64/bin/pip.exe install meson && /ucrt64/bin/meson --version && /ucrt64/bin/pip.exe install awscli"
-        displayName: 'Install meson through pip'
+          C:\msys64\usr\bin\bash --login -c "/ucrt64/bin/pip.exe install awscli"
+        displayName: 'Install awscli'
 
       - script: |
           C:\msys64\usr\bin\bash --login -c "wget https://www.zrythm.org/downloads/inno-setup-bin.zip && unzip inno-setup-bin.zip -d ~/"
