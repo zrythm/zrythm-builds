@@ -19,7 +19,6 @@ image: debian/stable
 packages:
   - awscli
   - binutils
-  - cargo
   - cmake
   - flex
   - libfl-dev
@@ -70,7 +69,6 @@ packages:
   - libtiff-dev
   - patchelf
   - portaudio19-dev
-  - rustc
   - sassc
   - librtaudio-dev
   - tar
@@ -91,6 +89,8 @@ secrets:
   - 84335bd2-7536-4508-9ae8-61079bc2a7fb
   - 7c85cca9-3e6f-4c7c-ba42-b44ca7379585
 tasks:
+  - install-latest-rust: |
+      curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
   - install-wayland-protocols: |
       mkdir deps
       cd deps
@@ -114,6 +114,7 @@ tasks:
       ninja -C build
       sudo ninja -C build install
   - install-librsvg: |
+      source $HOME/.cargo/env
       cd deps
       wget https://download.gnome.org/sources/librsvg/2.52/librsvg-2.52.4.tar.xz
       tar xf librsvg-2.52.4.tar.xz
