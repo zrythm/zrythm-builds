@@ -19,6 +19,7 @@ image: debian/stable
 packages:
   - awscli
   - binutils
+  - cargo
   - cmake
   - flex
   - libfl-dev
