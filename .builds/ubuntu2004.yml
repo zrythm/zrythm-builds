@@ -110,14 +110,6 @@ tasks:
       /home/build/meson/meson.py build -Dprefix=/usr
       ninja -C build
       sudo ninja -C build install
-  - install-libpng: |
-      cd deps
-      wget https://downloads.sourceforge.net/sourceforge/libpng/libpng-1.6.37.tar.xz
-      tar xf libpng-1.6.37.tar.xz
-      cd libpng-1.6.37
-      ./configure --prefix=/usr
-      make
-      sudo make install
   - install-glib: |
       cd deps
       git clone https://gitlab.gnome.org/GNOME/glib
