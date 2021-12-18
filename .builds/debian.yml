@@ -70,6 +70,7 @@ packages:
   - libtiff-dev
   - patchelf
   - portaudio19-dev
+  - rustc
   - sassc
   - librtaudio-dev
   - tar
