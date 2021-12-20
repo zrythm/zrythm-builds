@@ -52,8 +52,8 @@ packages:
   - lcov
   - gcovr
   - zstd
-  - rtaudio
-  - rtmidi
+  #- rtaudio
+  #- rtmidi
   #- texlive-most
   - texlive-langjapanese
   - tar
