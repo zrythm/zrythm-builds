@@ -148,9 +148,9 @@ tasks:
       sudo make install
   - install-gtk: |
       cd deps
-      wget https://gitlab.gnome.org/GNOME/gtk/-/archive/12bb700c620c8a9a29947314ab35d0f2a22d795c/gtk-12bb700c620c8a9a29947314ab35d0f2a22d795c.tar.gz
-      tar xf gtk-12bb700c620c8a9a29947314ab35d0f2a22d795c.tar.gz
-      cd gtk-12bb700c620c8a9a29947314ab35d0f2a22d795c
+      wget https://gitlab.gnome.org/GNOME/gtk/-/archive/4.6.0/gtk-4.6.0.tar.gz
+      tar xf gtk-4.6.0.tar.gz
+      cd gtk-4.6.0
       /home/build/meson/meson.py build -Dprefix=/usr -Ddemos=false -Dbuild-examples=false -Dbuild-tests=false -Dmedia-gstreamer=disabled -Dintrospection=disabled
       ninja -C build
       sudo ninja -C build install
