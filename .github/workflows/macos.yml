@@ -1,0 +1,50 @@
+name: MacOS
+on:
+  push:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          set -e
+          echo "updating brew"
+          brew update || true
+          echo "installing deps"
+          # use || true because it returns 1
+          brew install curl gnu-sed fftw meson libsamplerate sdl2 lilv librsvg adwaita-icon-theme gtk+3 guile gtksourceview5 graphviz zstd npm rt-audio rtmidi jack qjackctl cmake pcre2 libsass || true
+          brew install chromaprint brotli xxhash awscli vamp-plugin-sdk json-glib || true
+          echo "linking python"
+          brew link --overwrite python
+          #npm install -g appdmg
+          echo "installing cmake"
+          pip3 install scikit-build
+          pip3 install cmake
+      - name: Fetch repos and files
+        run: |
+          pwd
+          git clone https://git.sr.ht/~alextee/mxe
+          git clone https://git.sr.ht/~alextee/zrythm
+          git clone https://git.sr.ht/~alextee/zrythm-builds
+          git clone --recursive https://git.sr.ht/~alextee/zrythm-installer
+          git clone https://github.com/KDE/breeze-icons
+          git clone https://github.com/mesonbuild/meson
+      - name: Build and deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          # unused
+          REMOTE_IP: ''
+          REMOTE_HOME: ''
+        run: |
+          zrythm-builds/scripts/make-pkg.sh osx-brew-zip osx-brew-prepare
+          zrythm-builds/scripts/create-manuals-zip.sh osx-brew-zip
+          zrythm-builds/scripts/make-pkg.sh osx-brew-zip
+          zrythm-builds/scripts/push-pkg.sh osx-brew-zip
+
