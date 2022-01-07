@@ -67,6 +67,9 @@ jobs:
             mingw-w64-ucrt-x86_64-sassc
       - name: Fetch repos and files
         run: |
+          cd /c
+          mkdir src
+          cd src
           pwd
           git clone https://git.sr.ht/~alextee/zrythm
           git clone https://git.sr.ht/~alextee/zrythm-builds
@@ -86,6 +89,7 @@ jobs:
           REMOTE_IP: ''
           REMOTE_HOME: ''
         run: |
+          cd /c/src
           MESON_PATH=/ucrt64/bin/meson NINJA_PATH=/ucrt64/bin/ninja AWS_CLI_PATH=/ucrt64/bin/aws zrythm-builds/scripts/make-pkg.sh windows10-msys windows-msys-prepare
           AWS_CLI_PATH=/ucrt64/bin/aws zrythm-builds/scripts/create-manuals-zip.sh windows10-msys
           MESON_PATH=/ucrt64/bin/meson NINJA_PATH=/ucrt64/bin/ninja AWS_CLI_PATH=/ucrt64/bin/aws zrythm-builds/scripts/make-pkg.sh windows10-msys
