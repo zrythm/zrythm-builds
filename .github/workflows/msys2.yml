@@ -1,7 +1,7 @@
 name: MSYS2 UCRT64
 on:
   push:
-    branches: [ master ]
+    branches: [ master, nightlies ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:

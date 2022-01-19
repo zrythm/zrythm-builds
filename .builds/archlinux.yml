@@ -41,12 +41,15 @@ packages:
   - help2man
   - python-sphinx
   - ladspa
+  - libadwaita
   - jq
   - lv2
   - npm
   - graphviz
   - pcre2
   - rubberband
+  - rtaudio
+  - rtmidi
   - python-pip
   - xdg-utils
   - lcov
