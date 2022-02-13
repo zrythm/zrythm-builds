@@ -70,11 +70,13 @@ prefetch () {
   windows_pkg_name="$(get_package_filename windows10-msys)"
   gnu_linux_pkg_name="$(get_package_filename gnu-linux)"
   appimage_pkg_name="$(get_package_filename appimage)"
+  flatpak_pkg_name="$(get_package_filename flatpak)"
   while ! [ -f "zrythm-installer/$osx_pkg_name" -a \
     -f "zrythm-installer/$windows_pkg_name" -a  \
     -f "zrythm-installer/$appimage_pkg_name" -a  \
+    -f "zrythm-installer/$flatpak_pkg_name" -a  \
     -f "zrythm-installer/$gnu_linux_pkg_name" ]; do
-    >&2 echo "$osx_pkg_name or $windows_pkg_name or $gnu_linux_pkg_name $appimage_pkg_name don't exist. fetching..."
+    >&2 echo "$osx_pkg_name or $windows_pkg_name or $gnu_linux_pkg_name or $appimage_pkg_name or $flatpak_pkg_name don't exist. fetching..."
     fetch_file \
       "packages/osx-brew-zip/$osx_pkg_name" \
       "zrythm-installer/$osx_pkg_name" || true
@@ -87,6 +89,9 @@ prefetch () {
     fetch_file \
       "packages/appimage/$appimage_pkg_name" \
       "zrythm-installer/$appimage_pkg_name" || true
+    fetch_file \
+      "packages/flatpak/$flatpak_pkg_name" \
+      "zrythm-installer/$flatpak_pkg_name" || true
     sleep 24
   done
 }

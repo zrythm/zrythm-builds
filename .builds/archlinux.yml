@@ -33,6 +33,8 @@ packages:
   - alsa-lib
   - fftw
   - suil
+  - flatpak
+  - flatpak-builder
   - ffmpeg
   - python
   - gettext
@@ -100,6 +102,10 @@ tasks:
       zrythm-builds/scripts/make-pkg.sh archlinux
   - deploy-archlinux: |
       zrythm-builds/scripts/push-pkg.sh archlinux
+  - make-flatpak: |
+      zrythm-builds/scripts/make-pkg.sh flatpak
+  - deploy-flatpak: |
+      zrythm-builds/scripts/push-pkg.sh flatpak
   - gen-gnu-linux-installer-zips: |
       timeout 3800 zrythm-builds/scripts/zip-gnu-linux-packages.sh
   - deploy-gnu-linux-installer-zips: |
