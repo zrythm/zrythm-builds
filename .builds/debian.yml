@@ -53,6 +53,7 @@ packages:
   - libsamplerate0-dev
   - libyaml-dev
   - libpcre2-dev
+  - libxml2-utils
   - libxxhash-dev
   - python3
   - librubberband-dev

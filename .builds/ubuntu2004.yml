@@ -62,6 +62,7 @@ packages:
   - libtiff-dev
   - libxdamage-dev
   - libxml2-dev
+  - libxml2-utils
   - libxxhash-dev
   - rubberband-cli
   - libzstd-dev
