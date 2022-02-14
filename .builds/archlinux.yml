@@ -106,6 +106,7 @@ tasks:
       zrythm-builds/scripts/make-pkg.sh flatpak
   - deploy-flatpak: |
       zrythm-builds/scripts/push-pkg.sh flatpak
+      rm -rf /home/build/.local/share/flatpak
   - gen-gnu-linux-installer-zips: |
       timeout 3800 zrythm-builds/scripts/zip-gnu-linux-packages.sh
   - deploy-gnu-linux-installer-zips: |
