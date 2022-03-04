@@ -99,6 +99,7 @@ tasks:
       cd deps
       git clone git://anongit.freedesktop.org/git/wayland/wayland-protocols
       pushd wayland-protocols
+      git checkout 1.25
       /home/build/meson/meson.py build -Dprefix=/usr
       ninja -C build
       sudo ninja -C build install
