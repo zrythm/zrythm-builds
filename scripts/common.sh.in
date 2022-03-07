@@ -22,13 +22,13 @@ fi
 
 set -euo pipefail
 
-if [[ "$distro" = "osx" ]] || [[ "$distro" = "windows10-msys" ]] || [[ "$distro" = "osx-brew-zip" ]]; then
-  ssh_opts="-o StrictHostKeyChecking=no -i $id_rsa_path"
-  echo "using id_rsa"
-else
+#if [[ "$distro" = "osx" ]] || [[ "$distro" = "windows10-msys" ]] || [[ "$distro" = "osx-brew-zip" ]]; then
+  #ssh_opts="-o StrictHostKeyChecking=no -i $id_rsa_path"
+  #echo "using id_rsa"
+#else
   ssh_opts="-o StrictHostKeyChecking=no"
   echo "not using id_rsa"
-fi
+#fi
 
 if [[ "$distro" = "osx" ]] || [[ "$distro" = "osx-brew-zip" ]]; then
   sed_cmd=gsed
