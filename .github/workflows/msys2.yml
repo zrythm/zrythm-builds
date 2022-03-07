@@ -90,6 +90,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           id_rsa_path: '~/.ssh/id_rsa'
         run: |
+          mkdir ~/.ssh
           echo "$SSH_PRIVATE_KEY" > "$id_rsa_path"
           cd /c/src
           MESON_PATH=/ucrt64/bin/meson NINJA_PATH=/ucrt64/bin/ninja AWS_CLI_PATH=/ucrt64/bin/aws zrythm-builds/scripts/make-pkg.sh windows10-msys windows-msys-prepare

@@ -44,6 +44,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           id_rsa_path: '~/.ssh/id_rsa'
         run: |
+          mkdir ~/.ssh
           echo "$SSH_PRIVATE_KEY" > "$id_rsa_path"
           zrythm-builds/scripts/make-pkg.sh osx-brew-zip osx-brew-prepare
           zrythm-builds/scripts/create-manuals-zip.sh osx-brew-zip

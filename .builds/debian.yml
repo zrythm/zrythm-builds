@@ -87,7 +87,7 @@ sources:
   - https://gitlab.com/lv2/lilv
 secrets:
   - 063cb70d-6da6-492a-b530-04edc07651ba
-  - 84335bd2-7536-4508-9ae8-61079bc2a7fb
+  - 10b48de1-2cfb-4112-b215-080444177c46
   - 7c85cca9-3e6f-4c7c-ba42-b44ca7379585
 tasks:
   - install-latest-rust: |
