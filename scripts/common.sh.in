@@ -108,6 +108,14 @@ distro_to_pkg_type () {
   esac
 }
 
+pkg_type=$(distro_to_pkg_type "$distro")
+deploy_connection_type="$connection_type_aws"
+case "$pkg_type" in
+  "ARCH" | "DEBIAN" | "FEDORA")
+    deploy_connection_type="$connection_type_server"
+    ;;
+esac
+
 get_package_filename () {
   distro=$1
   set +u
@@ -193,7 +201,8 @@ add_file_tag () {
 
 should_skip_packaging () {
   distro=$1
-  ! is_tag && remote_pkg_exists "$distro"
+  connection_type="$2"
+  ! is_tag && remote_pkg_exists "$distro" "$connection_type"
 }
 
 join_by () {

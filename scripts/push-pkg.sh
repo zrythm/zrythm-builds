@@ -23,24 +23,17 @@ id_rsa_path=$(pwd)/id_rsa
 
 source zrythm-builds/scripts/common.sh.in
 
-# skip if file already exists and not a tag
-if should_skip_packaging $distro ; then
-  exit 0 ;
-fi
-
 pkg_filename=$(get_package_filename $distro)
 pkg_trial_filename=$(get_package_filename $distro "-trial")
 pkg_dirname="build"
 if [ "$distro" = "osx" ]; then
   pkg_dirname="artifacts"
 fi
-pkg_type=$(distro_to_pkg_type "$distro")
-deploy_connection_type="$connection_type_aws"
-case "$pkg_type" in
-  "ARCH" | "DEBIAN" | "FEDORA")
-    deploy_connection_type="$connection_type_server"
-    ;;
-esac
+
+# skip if file already exists and not a tag
+if should_skip_packaging $distro "$deploy_connection_type" ; then
+  exit 0 ;
+fi
 
 deploy_pkg () {
   filename=$1

@@ -83,7 +83,7 @@ fi
 echo "done"
 
 # skip if file already exists and not a tag
-if should_skip_packaging $distro ; then
+if should_skip_packaging $distro "$deploy_connection_type" ; then
   echo "$distro package already exists on server, skipping..."
   exit 0 ;
 fi
