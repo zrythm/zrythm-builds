@@ -66,32 +66,13 @@ create_product ()
 
 # prefetch the installers not on this machine
 prefetch () {
-  osx_pkg_name="$(get_package_filename osx-brew-zip)"
-  windows_pkg_name="$(get_package_filename windows10-msys)"
-  gnu_linux_pkg_name="$(get_package_filename gnu-linux)"
-  appimage_pkg_name="$(get_package_filename appimage)"
-  flatpak_pkg_name="$(get_package_filename flatpak)"
-  while ! [ -f "zrythm-installer/$osx_pkg_name" -a \
-    -f "zrythm-installer/$windows_pkg_name" -a  \
-    -f "zrythm-installer/$appimage_pkg_name" -a  \
-    -f "zrythm-installer/$flatpak_pkg_name" -a  \
-    -f "zrythm-installer/$gnu_linux_pkg_name" ]; do
-    >&2 echo "$osx_pkg_name or $windows_pkg_name or $gnu_linux_pkg_name or $appimage_pkg_name or $flatpak_pkg_name don't exist. fetching..."
-    fetch_file \
-      "packages/osx-brew-zip/$osx_pkg_name" \
-      "zrythm-installer/$osx_pkg_name" || true
-    fetch_file \
-      "packages/windows10-msys/$windows_pkg_name" \
-      "zrythm-installer/$windows_pkg_name" || true
-    fetch_file \
-      "packages/gnu-linux/$gnu_linux_pkg_name" \
-      "zrythm-installer/$gnu_linux_pkg_name" || true
-    fetch_file \
-      "packages/appimage/$appimage_pkg_name" \
-      "zrythm-installer/$appimage_pkg_name" || true
-    fetch_file \
-      "packages/flatpak/$flatpak_pkg_name" \
-      "zrythm-installer/$flatpak_pkg_name" || true
+  while ! [ \
+    remote_pkg_exists "osx-brew-zip" "$connection_type_aws" -a \
+    remote_pkg_exists "windows10-msys" "$connection_type_aws" -a \
+    remote_pkg_exists "gnu-linux" "$connection_type_aws" -a \
+    remote_pkg_exists "appimage" "$connection_type_aws" -a \
+    remote_pkg_exists "flatpak" "$connection_type_aws" ]; do
+    >&2 echo "final packages don't exist. waiting to check again..."
     sleep 24
   done
 }

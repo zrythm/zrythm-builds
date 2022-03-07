@@ -34,13 +34,22 @@ pkg_dirname="build"
 if [ "$distro" = "osx" ]; then
   pkg_dirname="artifacts"
 fi
+pkg_type=$(distro_to_pkg_type "$distro")
+deploy_connection_type="$connection_type_aws"
+case "$pkg_type" in
+  "ARCH" | "DEBIAN" | "FEDORA")
+    deploy_connection_type="$connection_type_server"
+    ;;
+esac
 
 deploy_pkg () {
   filename=$1
-  echo "deploying package for $distro (/tmp/artifacts/$distro/$filename)..."
+  connection_type=$2
+  src_file="/tmp/artifacts/$distro/$filename"
+  echo "deploying package for $distro ($src_file)..."
   if send_file \
-    "/tmp/artifacts/$distro/$filename" \
-    "packages/$distro/$filename" ; then
+    "$src_file" "packages/$distro/$filename" \
+    "$connection_type" ; then
     echo "succeeded"
   else
     echo >&2 "failed: $(cat out.log)"
@@ -50,14 +59,14 @@ deploy_pkg () {
 }
 
 # deploy normal package
-deploy_pkg "$pkg_filename"
+deploy_pkg "$pkg_filename" "$deploy_connection_type"
 
 # also deploy trial if tag
 if is_tag ; then
   echo "deploying trial package"
-  deploy_pkg "$pkg_trial_filename"
-  add_file_tag "packages/$distro/$pkg_trial_filename" \
-    "public" "yes"
+  deploy_pkg "$pkg_trial_filename" "$connection_type_server"
+  #add_file_tag "packages/$distro/$pkg_trial_filename" \
+    #"public" "yes"
 fi
 
 # if arch, also deploy manuals
@@ -66,7 +75,8 @@ if [ "$distro" = "archlinux" ]; then
     echo "deploying $lang manual..."
     send_file \
       "zrythm-installer/build/arch/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
-      "manual/Zrythm-$zrythm_pkg_ver-$lang.pdf"
+      "manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
+      "$connection_type_server"
     echo "done"
   done
 fi

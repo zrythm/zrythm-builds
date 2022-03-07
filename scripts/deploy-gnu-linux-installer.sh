@@ -22,16 +22,18 @@ source zrythm-builds/scripts/common.sh.in
 echo "sending $gnu_linux_zip_filename..."
 send_file \
   "/tmp/artifacts/$gnu_linux_zip_filename" \
-  "packages/gnu-linux/$gnu_linux_zip_filename"
+  "packages/gnu-linux/$gnu_linux_zip_filename" \
+  "$connection_type_aws"
 echo "done"
 
 if is_tag ; then
   echo "sending $gnu_linux_zip_trial_filename..."
   send_file \
     "/tmp/artifacts/$gnu_linux_zip_trial_filename" \
-    "packages/gnu-linux/$gnu_linux_zip_trial_filename" > out.log 2> err.log
-  add_file_tag \
     "packages/gnu-linux/$gnu_linux_zip_trial_filename" \
-    "public" "yes"
+    "$connection_type_server"
+  #add_file_tag \
+    #"packages/gnu-linux/$gnu_linux_zip_trial_filename" \
+    #"public" "yes"
   echo "done"
 fi

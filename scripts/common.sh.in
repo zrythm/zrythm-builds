@@ -53,6 +53,8 @@ ssh_cmd="ssh -q $ssh_opts"
 scp_cmd="scp $ssh_opts"
 remote_ip="$REMOTE_IP"
 remote_home="$REMOTE_HOME"
+connection_type_server="server" # own server
+connection_type_aws="aws" # aws s3
 set +e
 pushd zrythm
 git describe --tags --exact-match && true || false
@@ -117,26 +119,38 @@ get_package_filename () {
 
 # returns if the file exists in the remote home dir
 remote_file_exists () {
-  >&2 echo "checking if remote file $1 exists..."
-  "$aws_cli" s3 ls "$sendowl_bucket_url/$1" > out.log 2> err.log
-  #$ssh_cmd $remote_ip [ -f "$remote_home/$1" ] > out.log 2> err.log
+  file="$1"
+  connection_type="$2"
+  >&2 echo "checking if remote file $file exists..."
+  if [[ "$connection_type" = "$connection_type_aws" ]]; then
+    "$aws_cli" s3 ls "$sendowl_bucket_url/$file" > out.log 2> err.log
+  elif [[ "$connection_type" = "$connection_type_server" ]]; then
+    $ssh_cmd $remote_ip [ -f "$remote_home/$file" ] > out.log 2> err.log
+  fi
 }
 
 # returns if the directory exists in the remote home dir
 remote_dir_exists () {
-  >&2 echo "checking if remote dir $1 exists..."
-  "$aws_cli" s3 ls "$sendowl_bucket_url/$1" > out.log 2> err.log
-  #$ssh_cmd $remote_ip [ -d "$remote_home/$1" ] > out.log 2> err.log
+  dir="$1"
+  connection_type="$2" # aws or server
+  >&2 echo "checking if remote dir $dir exists..."
+  if [[ "$connection_type" = "$connection_type_aws" ]]; then
+    "$aws_cli" s3 ls "$sendowl_bucket_url/$dir" > out.log 2> err.log
+  elif [[ "$connection_type" = "$connection_type_server" ]]; then
+    $ssh_cmd $remote_ip [ -d "$remote_home/$dir" ] > out.log 2> err.log
+  fi
 }
 
 # whether a package exists on the server
 remote_pkg_exists () {
   distro=$1
+  connection_type="$2"
   set +u
-  trial=$2
+  trial=$3
   set -u
-  >&2 echo "checking if remote package for $distro exists $(get_package_filename $distro $trial)..."
-  if remote_file_exists packages/$distro/$(get_package_filename $distro $trial) ; then
+  filename="$(get_package_filename $distro $trial)"
+  >&2 echo "checking if remote package for $distro exists $filename..."
+  if remote_file_exists packages/$distro/$filename $connection_type ; then
     >&2 echo "exists"
     true
   else
@@ -148,13 +162,23 @@ remote_pkg_exists () {
 fetch_file () {
   from_file="$1"
   to_file="$2"
-  "$aws_cli" s3 cp "$sendowl_bucket_url/$from_file" "$to_file" > out.log 2> err.log
+  connection_type="$3"
+  if [[ "$connection_type" = "$connection_type_aws" ]]; then
+    "$aws_cli" s3 cp "$sendowl_bucket_url/$from_file" "$to_file" > out.log 2> err.log
+  elif [[ "$connection_type" = "$connection_type_server" ]]; then
+    $scp_cmd "$remote_ip:$remote_home/$from_file" "$to_file" > out.log 2> err.log
+  fi
 }
 
 send_file () {
   from_file="$1"
   to_file="$2"
-  "$aws_cli" s3 cp "$from_file" "$sendowl_bucket_url/$to_file" > out.log 2> err.log
+  connection_type="$3"
+  if [[ "$connection_type" = "$connection_type_aws" ]]; then
+    "$aws_cli" s3 cp "$from_file" "$sendowl_bucket_url/$to_file" > out.log 2> err.log
+  elif [[ "$connection_type" = "$connection_type_server" ]]; then
+    $scp_cmd "$from_file" "$remote_ip:$remote_home/$to_file" > out.log 2> err.log
+  fi
 }
 
 add_file_tag () {
