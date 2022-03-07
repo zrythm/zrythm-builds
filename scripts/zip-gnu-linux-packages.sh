@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# Copyright (C) 2020 Alexandros Theodotou <alex at zrythm dot org>
+# Copyright (C) 2020-2022 Alexandros Theodotou <alex at zrythm dot org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published
@@ -49,7 +49,8 @@ wget_package_and_plugins () {
   >&2 echo "getting package $pkg_filename for $distro..."
   fetch_file \
     "packages/$distro/$pkg_filename" \
-    "$artifacts_distro_dir/$pkg_filename"
+    "$artifacts_distro_dir/$pkg_filename" \
+    "$connection_type_server"
   >&2 echo "done"
 
   # get trial if tag
@@ -57,7 +58,8 @@ wget_package_and_plugins () {
     >&2 echo "getting package $pkg_trial_filename for $distro..."
     fetch_file \
       "packages/$distro/$pkg_trial_filename" \
-      "$artifacts_distro_dir/$pkg_trial_filename"
+      "$artifacts_distro_dir/$pkg_trial_filename" \
+      "$connection_type_server"
     >&2 echo "done"
   fi
 }
@@ -69,19 +71,20 @@ while true; do
   wait_more=0
   for lang in $linguas ; do
     if ! remote_file_exists \
-      "manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" ; then
+      "manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
+      "$connection_type_server" ; then
       echo "not exists" && wait_more=1
     fi
   done
   for distro in $distros ; do
     if [ "$distro" != "gnu-linux" ]; then
       echo "checking if remote pkg exists for $distro..."
-      if ! remote_pkg_exists $distro ; then
+      if ! remote_pkg_exists $distro "$connection_type_server" ; then
         echo "not exists" && wait_more=1
       fi
       if is_tag ; then
         echo "checking if remote trial_pkg exists for $distro..."
-        if ! remote_pkg_exists $distro "-trial"; then
+        if ! remote_pkg_exists $distro "$connection_type_server" "-trial"; then
           echo "not exists" && wait_more=1
         fi
       fi
@@ -106,7 +109,8 @@ for lang in $linguas ; do
   echo "fetching $lang manual..."
   fetch_file \
     "manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
-    "$pdf_dir/Zrythm-$zrythm_pkg_ver-$lang.pdf"
+    "$pdf_dir/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
+    "$connection_type_server"
 done
 
 # make zip
