@@ -135,7 +135,7 @@ tasks:
       sudo ninja -C build install
   - install-pango: |
       cd deps
-      git clone https://gitlab.gnome.org/GNOME/pango
+      git clone --depth 1 https://gitlab.gnome.org/GNOME/pango
       pushd pango
       /home/build/meson/meson.py build -Dprefix=/usr
       ninja -C build
@@ -157,9 +157,8 @@ tasks:
       sudo make install
   - install-gtk: |
       cd deps
-      wget https://gitlab.gnome.org/GNOME/gtk/-/archive/4.6.0/gtk-4.6.0.tar.gz
-      tar xf gtk-4.6.0.tar.gz
-      cd gtk-4.6.0
+      git clone --depth 1 https://gitlab.gnome.org/GNOME/gtk
+      pushd gtk
       /home/build/meson/meson.py build -Dprefix=/usr -Ddemos=false -Dbuild-examples=false -Dbuild-tests=false -Dmedia-gstreamer=disabled -Dintrospection=disabled
       ninja -C build
       sudo ninja -C build install
