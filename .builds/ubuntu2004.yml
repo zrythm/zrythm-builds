@@ -155,6 +155,13 @@ tasks:
       ./configure --prefix=/usr --disable-gtk-doc --disable-vala --disable-introspection
       make
       sudo make install
+  - install-harfbuzz: |
+      cd deps
+      git clone https://github.com/harfbuzz/harfbuzz
+      pushd harfbuzz
+      /home/build/meson/meson.py build -Dprefix=/usr -Dtests=disabled -Dintrospection=disabled -Ddocs=disabled
+      ninja -C build
+      sudo ninja -C build install
   - install-gtk: |
       cd deps
       git clone --depth 1 https://gitlab.gnome.org/GNOME/gtk
