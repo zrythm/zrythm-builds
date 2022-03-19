@@ -144,7 +144,7 @@ tasks:
       cd deps
       git clone --depth 1 https://gitlab.gnome.org/GNOME/pango
       pushd pango
-      /home/build/meson/meson.py build -Dprefix=/usr
+      /home/build/meson/meson.py build -Dprefix=/usr -Dintrospection=disabled
       ninja -C build
       sudo ninja -C build install
   - install-gdk-pixbuf: |
