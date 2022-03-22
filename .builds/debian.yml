@@ -129,8 +129,9 @@ tasks:
       sudo cp -RT /tmp/librsvg/usr/ /usr/
   - install-gtk: |
       cd deps
-      git clone --depth 1 https://gitlab.gnome.org/GNOME/gtk
-      pushd gtk
+      wget https://download.gnome.org/sources/gtk/4.6/gtk-4.6.0.tar.xz
+      tar xf gtk-4.6.0.tar.xz
+      pushd gtk-4.6.0
       /home/build/meson/meson.py build -Dprefix=/usr -Ddemos=false -Dbuild-examples=false -Dbuild-tests=false -Dmedia-gstreamer=disabled -Dintrospection=disabled
       ninja -C build
       sudo ninja -C build install
