@@ -103,6 +103,9 @@ shell: true
 tasks:
   - prepare: |
       sudo mkdir -p /usr/lib/zrythm
+      # needed for debian rules
+      sudo ln -s bash /bin/sh.bash
+      sudo mv /bin/sh.bash /bin/sh
   - install-wayland-protocols: |
       mkdir deps
       cd deps

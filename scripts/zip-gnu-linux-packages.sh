@@ -21,8 +21,6 @@ source zrythm-builds/scripts/common.sh.in
 
 artifacts_dir="$(pwd)/zrythm-installer/artifacts"
 mkdir -p $artifacts_dir
-pdf_dir="$(pwd)/zrythm-installer/pdf"
-mkdir -p $pdf_dir
 
 echo "configuring zrythm-installer..."
 meson_path="$(pwd)/meson/meson.py"
@@ -32,7 +30,6 @@ $meson_path build --reconfigure -Dmeson-path=$meson_path \
   -Dzrythm-pkg-semver=$zrythm_pkg_semver \
   -Dbreeze-dark-path="$(pwd)/breeze-icons/icons-dark" -Ddistro=gnu-linux \
   -Dbuild-trial=false -Dpackages-dir=$artifacts_dir \
-  -Dpdf-dir=$pdf_dir \
   --prefix=/tmp/artifacts
 popd
 echo "done"

@@ -90,6 +90,10 @@ secrets:
   - 10b48de1-2cfb-4112-b215-080444177c46
   - 7c85cca9-3e6f-4c7c-ba42-b44ca7379585
 tasks:
+  - prepare: |
+      # needed for debian rules
+      sudo ln -s bash /bin/sh.bash
+      sudo mv /bin/sh.bash /bin/sh
   - install-latest-rust: |
       curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
       sudo ln -s /home/build/.cargo/bin/cargo /usr/bin/cargo
