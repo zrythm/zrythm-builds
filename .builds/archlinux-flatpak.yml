@@ -89,22 +89,7 @@ secrets:
   - 10b48de1-2cfb-4112-b215-080444177c46
   - 7c85cca9-3e6f-4c7c-ba42-b44ca7379585
 tasks:
-  - install-texlive: |
-      sudo sed -i '1iServer = http://mirror.lty.me/archlinux/$repo/os/$arch' /etc/pacman.d/mirrorlist
-      sudo pacman -S --noconfirm --needed texlive-most
-  - make-archlinux: |
-      # make sure pkg suffix is .pkg.tar.zst
-      echo "PKGEXT='.pkg.tar.zst'" | sudo tee -a /etc/makepkg.conf
-      sudo pip3 install meson sphinx-intl furo sphinx-copybutton sphinxcontrib-svg2pdfconverter
-      export PATH=$PATH:/home/build/.local/bin
-      export MESON_PATH=meson
-      zrythm-builds/scripts/make-pkg.sh archlinux arch-pkg
-      zrythm-builds/scripts/make-pkg.sh archlinux
-  - deploy-archlinux: |
-      zrythm-builds/scripts/push-pkg.sh archlinux
-  - gen-gnu-linux-installer-zips: |
-      timeout 3800 zrythm-builds/scripts/zip-gnu-linux-packages.sh
-  - deploy-gnu-linux-installer-zips: |
-      zrythm-builds/scripts/deploy-gnu-linux-installer.sh
-  - update-sendowl: |
-      timeout 7200 zrythm-builds/scripts/send-to-sendowl.sh
+  - make-flatpak: |
+      zrythm-builds/scripts/make-pkg.sh flatpak
+  - deploy-flatpak: |
+      zrythm-builds/scripts/push-pkg.sh flatpak
