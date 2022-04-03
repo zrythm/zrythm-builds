@@ -45,7 +45,6 @@ jobs:
         run: |
           ssh-add - <<< "${SSH_PRIVATE_KEY}"
           zrythm-builds/scripts/make-pkg.sh osx-brew-zip osx-brew-prepare
-          zrythm-builds/scripts/create-manuals-zip.sh osx-brew-zip
           zrythm-builds/scripts/make-pkg.sh osx-brew-zip
           zrythm-builds/scripts/push-pkg.sh osx-brew-zip
 

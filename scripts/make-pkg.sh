@@ -49,7 +49,7 @@ $meson_path build $reconfigure -Dmeson-path=$meson_path \
   -Dzrythm-git-ver=$zrythm_git_ver -Dzrythm-pkg-ver=$zrythm_pkg_ver \
   -Dzrythm-pkg-semver=$zrythm_pkg_semver \
   -Dbreeze-dark-path="$parent_dir/breeze-icons/icons-dark" -Ddistro=$distro \
-  -Dbuild-trial=false -Dmanuals-zip-file=$(pwd)/user-manual.zip \
+  -Dbuild-trial=false \
   -Dlocales="$_locales" \
   --prefix=/tmp/artifacts/$distro
 popd

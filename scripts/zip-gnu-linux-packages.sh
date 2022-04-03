@@ -69,13 +69,6 @@ echo "waiting for packages to be submitted..."
 while true; do
   sleep 12
   wait_more=0
-  for lang in $linguas ; do
-    if ! remote_file_exists \
-      "manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
-      "$connection_type_server" ; then
-      echo "not exists" && wait_more=1
-    fi
-  done
   for distro in $distros ; do
     if [ "$distro" != "gnu-linux" ]; then
       echo "checking if remote pkg exists for $distro..."
@@ -102,15 +95,6 @@ for distro in $distros ; do
     echo "fetching packages and plugins for $distro..."
     wget_package_and_plugins $distro
   fi
-done
-
-# get manuals
-for lang in $linguas ; do
-  echo "fetching $lang manual..."
-  fetch_file \
-    "manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
-    "$pdf_dir/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
-    "$connection_type_server"
 done
 
 # make zip
