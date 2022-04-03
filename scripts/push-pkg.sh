@@ -69,7 +69,7 @@ if [ "$distro" = "archlinux" ]; then
     send_file \
       "zrythm-installer/build/arch/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
       "manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
-      "$connection_type_aws"
+      "$connection_type_server"
     echo "done"
   done
 fi

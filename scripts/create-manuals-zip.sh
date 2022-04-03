@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# Copyright (C) 2020 Alexandros Theodotou <alex at zrythm dot org>
+# Copyright (C) 2020, 2022 Alexandros Theodotou <alex at zrythm dot org>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published
@@ -16,12 +16,13 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-# This script creates the manuals zip (used by the windows
-# build)
+# This script creates the manuals zip
 
 distro=$1
 id_rsa_path="$(pwd)/id_rsa"
 source zrythm-builds/scripts/common.sh.in
+
+dest_path="$2"
 
 echo "fetching manuals from server..."
 
@@ -46,13 +47,14 @@ done
 for lang in $linguas ; do
   echo "fetching $lang manual..."
   fetch_file "manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
-    "zrythm-installer/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
+    "$dest_path/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
     "$connection_type_server"
   echo "done"
 done
 
 echo "zipping manuals..."
-pushd "zrythm-installer"
-zip user-manual.zip ./*.pdf
+pushd "$dest_path"
+pkg_filename=$(get_package_filename user-manual)
+zip "$pkg_filename" ./*.pdf
 popd
 echo "done"
