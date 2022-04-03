@@ -26,7 +26,7 @@ dest_path="$2"
 
 echo "fetching manuals from server..."
 
-mkdir -p zrythm-installer/build
+mkdir -p "$dest_path"
 while true; do
   sleep 12
   wait_more=0
@@ -53,8 +53,8 @@ for lang in $linguas ; do
 done
 
 echo "zipping manuals..."
-pushd "$dest_path"
 pkg_filename=$(get_package_filename user-manual)
+pushd "$dest_path"
 zip "$pkg_filename" ./*.pdf
 popd
 echo "done"
