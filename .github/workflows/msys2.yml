@@ -46,6 +46,7 @@ jobs:
             mingw-w64-ucrt-x86_64-portaudio
             mingw-w64-ucrt-x86_64-cmake
             mingw-w64-ucrt-x86_64-python-setuptools
+            mingw-w64-ucrt-x86_64-jack2
             mingw-w64-ucrt-x86_64-ninja
             mingw-w64-ucrt-x86_64-python-pip
             mingw-w64-ucrt-x86_64-meson
