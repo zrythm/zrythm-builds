@@ -18,6 +18,7 @@
 image: archlinux
 packages:
   - aws-cli
+  - boost
   - cmake
   - gtk2
   - gtk4

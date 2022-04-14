@@ -30,6 +30,7 @@ jobs:
             mingw-w64-ucrt-x86_64-toolchain
             mingw-w64-ucrt-x86_64-libsamplerate
             mingw-w64-ucrt-x86_64-fftw
+            mingw-w64-ucrt-x86_64-boost
             mingw-w64-ucrt-x86_64-ffmpeg
             mingw-w64-ucrt-x86_64-libyaml
             mingw-w64-ucrt-x86_64-libsndfile

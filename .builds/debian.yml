@@ -39,6 +39,7 @@ packages:
   - python3-sphinx
   - libjson-glib-dev
   - ladspa-sdk
+  - libboost-dev
   - libfftw3-dev
   - libasound2-dev
   - libavcodec-dev
