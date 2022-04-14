@@ -175,7 +175,7 @@ tasks:
       ninja -C build
       sudo ninja -C build install
   - make-appimage: |
-      sudo pip3 install git+https://github.com/AppImageCrafters/appimage-builder.git
+      sudo pip3 install git+https://github.com/AppImageCrafters/appimage-builder.git@v1.0.0-alpha.3
       sudo pip3 install -e git+https://github.com/TheAssassin/appimagelint#egg=appimagelint
       sudo wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage -O /usr/local/bin/appimagetool
       sudo chmod +x /usr/local/bin/appimagetool
