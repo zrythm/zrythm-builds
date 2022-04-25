@@ -108,6 +108,34 @@ tasks:
       /home/build/meson/meson.py build -Dprefix=/usr
       ninja -C build
       sudo ninja -C build install
+  - install-glib: |
+      cd deps
+      git clone https://gitlab.gnome.org/GNOME/glib
+      pushd glib
+      /home/build/meson/meson.py build -Dprefix=/usr
+      ninja -C build
+      sudo ninja -C build install
+  - install-json-glib: |
+      cd deps
+      git clone https://gitlab.gnome.org/GNOME/json-glib
+      pushd json-glib
+      /home/build/meson/meson.py build -Dprefix=/usr -Dintrospection=disabled -Dgtk_doc=disabled -Dtests=false
+      ninja -C build
+      sudo ninja -C build install
+  - install-cairo: |
+      cd deps
+      git clone https://github.com/freedesktop/cairo
+      pushd cairo
+      /home/build/meson/meson.py build -Dprefix=/usr -Dtests=disabled
+      ninja -C build
+      sudo ninja -C build install
+  - install-harfbuzz: |
+      cd deps
+      git clone https://github.com/harfbuzz/harfbuzz
+      pushd harfbuzz
+      /home/build/meson/meson.py build -Dprefix=/usr -Dtests=disabled -Dintrospection=disabled -Ddocs=disabled
+      ninja -C build
+      sudo ninja -C build install
   - install-pango: |
       cd deps
       git clone --depth 1 https://gitlab.gnome.org/GNOME/pango
