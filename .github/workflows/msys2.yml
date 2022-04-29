@@ -95,6 +95,6 @@ jobs:
           eval `ssh-agent -s -a /tmp/.ssh-socket`
           ssh-add - <<< "${SSH_PRIVATE_KEY}"
           cd /c/src
-          MESON_PATH=/ucrt64/bin/meson NINJA_PATH=/ucrt64/bin/ninja AWS_CLI_PATH=/ucrt64/bin/aws zrythm-builds/scripts/make-pkg.sh windows10-msys windows-msys-prepare
-          MESON_PATH=/ucrt64/bin/meson NINJA_PATH=/ucrt64/bin/ninja AWS_CLI_PATH=/ucrt64/bin/aws zrythm-builds/scripts/make-pkg.sh windows10-msys
-          AWS_CLI_PATH=/ucrt64/bin/aws zrythm-builds/scripts/push-pkg.sh windows10-msys
+          MESON_PATH=/ucrt64/bin/meson NINJA_PATH=/ucrt64/bin/ninja AWS_CLI_PATH=/ucrt64/bin/aws zrythm-builds/scripts/make-pkg.sh windows-msys windows-msys-prepare
+          MESON_PATH=/ucrt64/bin/meson NINJA_PATH=/ucrt64/bin/ninja AWS_CLI_PATH=/ucrt64/bin/aws zrythm-builds/scripts/make-pkg.sh windows-msys
+          AWS_CLI_PATH=/ucrt64/bin/aws zrythm-builds/scripts/push-pkg.sh windows-msys

@@ -47,6 +47,7 @@ deploy_pkg () {
   else
     echo >&2 "failed: $(cat out.log)"
     echo >&2 "$(cat err.log)"
+    exit 1
   fi
   echo "done"
 }
@@ -55,7 +56,7 @@ deploy_pkg () {
 deploy_pkg "$pkg_filename" "$deploy_connection_type"
 
 # also deploy trial if tag
-if is_tag ; then
+if is_tag && [[ "$distro" != "user-manual" ]]; then
   echo "deploying trial package"
   deploy_pkg "$pkg_trial_filename" "$connection_type_server"
   #add_file_tag "packages/$distro/$pkg_trial_filename" \

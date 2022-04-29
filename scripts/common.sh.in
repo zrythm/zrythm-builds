@@ -44,7 +44,7 @@ else
 fi
 set -u
 
-distros="archlinux debian11 debian12 fedora34 fedora35 ubuntu2004 ubuntu2204 gnu-linux"
+distros="archlinux debian11 debian12 fedora35 fedora36 ubuntu2004 ubuntu2204 gnu-linux"
 linguas="en de fr it ja pt"
 sendowl_bucket_name="sendowl-bucket"
 sendowl_bucket_url="s3://$sendowl_bucket_name"
@@ -84,10 +84,10 @@ distro_to_pkg_type () {
     "fedora"*)
       echo "FEDORA"
       ;;
-    "windows10")
+    "windows")
       echo "WINDOWS"
       ;;
-    "windows10-msys")
+    "windows-msys")
       echo "WINDOWS_MSYS"
       ;;
     "osx" | "macos"*)

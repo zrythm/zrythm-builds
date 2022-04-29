@@ -65,7 +65,7 @@ if ! [ "$opt" = "" ]; then
 fi
 
 echo "fetching meson subprojects..."
-if [ "$distro" = "archlinux" ] || [ "$distro" = "windows10" ]; then
+if [ "$distro" = "archlinux" ] || [ "$distro" = "windows" ]; then
   pushd zrythm
   meson subprojects download || true
   popd
@@ -74,7 +74,7 @@ if [ "$distro" = "archlinux" ] || [ "$distro" = "windows10" ]; then
   popd
 fi
 
-if [ "$distro" = "windows10" ]; then
+if [ "$distro" = "windows" ]; then
   pushd gtk
   git checkout "3.24.18"
   meson subprojects download
