@@ -16,71 +16,6 @@
 #
 
 image: archlinux
-packages:
-  - aws-cli
-  - boost
-  - cmake
-  - gtk2
-  - gtk4
-  - gtksourceview5
-  - chromaprint
-  - curl
-  - lilv
-  - libx11
-  - jack
-  - breeze-icons
-  - libsndfile
-  - libyaml
-  - libsamplerate
-  - alsa-lib
-  - fftw
-  - suil
-  - flatpak
-  - flatpak-builder
-  - ffmpeg
-  - python
-  - gettext
-  - sed
-  - ninja
-  - help2man
-  - python-sphinx
-  - ladspa
-  - libadwaita
-  - jq
-  - lv2
-  - npm
-  - graphviz
-  - pcre2
-  - rubberband
-  - rtaudio
-  - rtmidi
-  - python-pip
-  - xdg-utils
-  - lcov
-  - gcovr
-  - zstd
-  #- rtaudio
-  #- rtmidi
-  #- texlive-most
-  - texlive-langjapanese
-  - tar
-  - zip
-  - unzip
-  - rsync
-  - lzip
-  - ruby
-  - gperf
-  - intltool
-  - qt5-base
-  - patchelf
-  - p7zip
-  - ruby-sass
-  - sassc
-  - wget
-  - vamp-plugin-sdk
-  - vim
-  - wayland-protocols
-  - xxhash
 sources:
   - https://git.sr.ht/~alextee/zrythm
   - https://git.sr.ht/~alextee/zplugins
@@ -91,6 +26,10 @@ secrets:
   - 10b48de1-2cfb-4112-b215-080444177c46
   - 7c85cca9-3e6f-4c7c-ba42-b44ca7379585
 tasks:
+  - install-packages: |
+      sudo pacman -Syy
+      sudo pacman -S --noconfirm archlinux-keyring
+      sudo pacman -S --noconfirm --needed aws-cli boost cmake gtk2 gtk4 gtksourceview5 chromaprint curl lilv libx11 jack breeze-icons libsndfile libyaml libsamplerate alsa-lib fftw suil flatpak flatpak-builder ffmpeg python gettext sed ninja help2man python-sphinx ladspa libadwaita jq lv2 npm graphviz pcre2 rubberband rtaudio rtmidi python-pip xdg-utils lcov gcovr zstd texlive-langjapanese tar zip unzip rsync lzip ruby gperf intltool qt5-base patchelf p7zip ruby-sass sassc wget vamp-plugin-sdk vim wayland-protocols xxhash
   - install-texlive: |
       sudo sed -i '1iServer = http://mirror.lty.me/archlinux/$repo/os/$arch' /etc/pacman.d/mirrorlist
       sudo pacman -S --noconfirm --needed texlive-most
