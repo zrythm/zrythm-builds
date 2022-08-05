@@ -48,7 +48,7 @@ tasks:
       zrythm-builds/scripts/create-manuals-zip.sh archlinux /tmp/artifacts/user-manual
       zrythm-builds/scripts/push-pkg.sh user-manual
   - cleanup_space: |
-      sudo pacman -R --noconfirm texlive-most
+      sudo pacman -R --noconfirm texlive-langjapanese texlive-most
   - gen-gnu-linux-installer-zips: |
       timeout 3800 zrythm-builds/scripts/zip-gnu-linux-packages.sh
   - deploy-gnu-linux-installer-zips: |
