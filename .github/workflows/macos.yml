@@ -24,8 +24,8 @@ jobs:
           brew link --overwrite python
           #npm install -g appdmg
           echo "installing cmake"
-          pip3 install scikit-build
-          pip3 install cmake
+          pip3 install --user scikit-build
+          pip3 install --user cmake
       - name: Fetch repos and files
         run: |
           pwd
