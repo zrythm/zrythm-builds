@@ -103,16 +103,24 @@ secrets:
 shell: true
 tasks:
   - prepare: |
+      mkdir deps
       sudo mkdir -p /usr/lib/zrythm
       # needed for debian rules
       sudo ln -s bash /bin/sh.bash
       sudo mv /bin/sh.bash /bin/sh
+  - install-wayland: |
+      cd deps
+      git clone https://gitlab.freedesktop.org/wayland/wayland
+      pushd wayland
+      git checkout 1.21.0
+      /home/build/meson/meson.py build -Dprefix=/usr -Ddocumentation=false -Ddtd_validation=false -Dtests=false
+      ninja -C build
+      sudo ninja -C build install
   - install-wayland-protocols: |
-      mkdir deps
       cd deps
       git clone git://anongit.freedesktop.org/git/wayland/wayland-protocols
       pushd wayland-protocols
-      git checkout 1.25
+      git checkout 1.26
       /home/build/meson/meson.py build -Dprefix=/usr
       ninja -C build
       sudo ninja -C build install
