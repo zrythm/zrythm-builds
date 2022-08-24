@@ -50,8 +50,8 @@ tasks:
   - cleanup_space: |
       sudo pacman -R --noconfirm texlive-langjapanese texlive-most
   - gen-gnu-linux-installer-zips: |
-      timeout 3800 zrythm-builds/scripts/zip-gnu-linux-packages.sh
+      timeout 4600 zrythm-builds/scripts/zip-gnu-linux-packages.sh
   - deploy-gnu-linux-installer-zips: |
       zrythm-builds/scripts/deploy-gnu-linux-installer.sh
   - update-sendowl: |
-      timeout 7200 zrythm-builds/scripts/send-to-sendowl.sh
+      timeout 7400 zrythm-builds/scripts/send-to-sendowl.sh
