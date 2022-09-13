@@ -49,5 +49,3 @@ tasks:
       zrythm-builds/scripts/push-pkg.sh user-manual
   - cleanup_space: |
       sudo pacman -R --noconfirm texlive-langjapanese texlive-most
-  - update-sendowl: |
-      timeout 7400 zrythm-builds/scripts/send-to-sendowl.sh

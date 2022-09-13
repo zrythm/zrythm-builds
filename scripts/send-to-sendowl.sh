@@ -65,6 +65,7 @@ create_product ()
 }
 
 # prefetch the installers not on this machine
+# TODO check for user manuals too
 prefetch () {
   while \
     ! remote_pkg_exists "osx-brew-zip" "$connection_type_aws" \
