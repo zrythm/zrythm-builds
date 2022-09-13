@@ -44,7 +44,7 @@ else
 fi
 set -u
 
-distros="archlinux debian11 debian12 fedora36 ubuntu2004 ubuntu2204 gnu-linux"
+distros="gnu-linux"
 linguas="en de fr it ja pt"
 sendowl_bucket_name="sendowl-bucket"
 sendowl_bucket_url="s3://$sendowl_bucket_name"
@@ -75,15 +75,6 @@ is_tag () {
 distro_to_pkg_type () {
   distro=$1
   case "$distro" in
-    "archlinux")
-      echo "ARCH"
-      ;;
-    "debian"* | "ubuntu"* )
-      echo "DEBIAN"
-      ;;
-    "fedora"*)
-      echo "FEDORA"
-      ;;
     "windows")
       echo "WINDOWS"
       ;;
