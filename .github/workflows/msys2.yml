@@ -27,6 +27,8 @@ jobs:
             guile
             libguile-devel
             mingw-w64-i686-toolchain
+            mingw-w64-i686-fluidsynth
+            mingw-w64-i686-libogg
             mingw-w64-ucrt-x86_64-toolchain
             mingw-w64-ucrt-x86_64-libsamplerate
             mingw-w64-ucrt-x86_64-fftw
@@ -38,6 +40,7 @@ jobs:
             mingw-w64-ucrt-x86_64-dlfcn
             mingw-w64-ucrt-x86_64-SDL2
             mingw-w64-ucrt-x86_64-graphviz
+            mingw-w64-ucrt-x86_64-fluidsynth
             mingw-w64-ucrt-x86_64-cantarell-fonts
             mingw-w64-ucrt-x86_64-gtksourceview5
             mingw-w64-ucrt-x86_64-gcc
