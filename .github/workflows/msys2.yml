@@ -82,8 +82,8 @@ jobs:
           git clone https://git.sr.ht/~alextee/zrythm-installer
           git clone https://github.com/KDE/breeze-icons
           git clone https://github.com/mesonbuild/meson
-          wget https://www.zrythm.org/downloads/inno-setup-bin.zip
-          unzip inno-setup-bin.zip -d ~/
+          #wget https://www.zrythm.org/downloads/inno-setup-bin.zip
+          #unzip inno-setup-bin.zip -d ~/
       - name: Install AWSCLI
         run: |
           pip install awscli
