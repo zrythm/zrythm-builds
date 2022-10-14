@@ -26,9 +26,11 @@ jobs:
             tree
             guile
             libguile-devel
+            mingw-w64-i686-ccache
             mingw-w64-i686-toolchain
             mingw-w64-i686-fluidsynth
             mingw-w64-i686-libogg
+            mingw-w64-ucrt-x86_64-ccache
             mingw-w64-ucrt-x86_64-toolchain
             mingw-w64-ucrt-x86_64-libsamplerate
             mingw-w64-ucrt-x86_64-fftw
@@ -87,6 +89,21 @@ jobs:
       - name: Install AWSCLI
         run: |
           pip install awscli
+
+      - name: restore ccache
+        uses: actions/cache@v3
+        with:
+          path: C:/msys64/home/runneradmin/.ccache
+          key: msys2-ccache
+
+      - name: configure ccache
+        run: |
+          which ccache
+          test -d ~/.ccache || mkdir -p ~/.ccache
+          echo "max_size = 4.0G" > ~/.ccache/ccache.conf
+          echo "compression = true" >> ~/.ccache/ccache.conf
+          ccache -s
+
       - name: Build and deploy
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

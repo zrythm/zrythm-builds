@@ -18,8 +18,8 @@ jobs:
           brew update || true
           echo "installing deps"
           # use || true because it returns 1
-          brew install curl gnu-sed fftw meson libsamplerate sdl2 lilv librsvg adwaita-icon-theme gtk+3 guile gtksourceview5 graphviz zstd npm rt-audio rtmidi jack qjackctl cmake pcre2 libsass glib-utils || true
-          brew install chromaprint brotli xxhash awscli vamp-plugin-sdk json-glib boost || true
+          brew install ccache curl gnu-sed fftw meson libsamplerate sdl2 lilv librsvg adwaita-icon-theme gtk+3 guile gtksourceview5 graphviz zstd npm rt-audio rtmidi jack qjackctl cmake pcre2 libsass glib-utils || true
+          brew install brotli xxhash awscli vamp-plugin-sdk json-glib boost || true
           echo "linking python"
           brew link --overwrite python
           #npm install -g appdmg
@@ -35,6 +35,19 @@ jobs:
           git clone --recursive https://git.sr.ht/~alextee/zrythm-installer
           git clone https://github.com/KDE/breeze-icons
           git clone https://github.com/mesonbuild/meson
+
+      - name: restore ccache
+        uses: actions/cache@v3
+        with:
+          path: /Users/runner/Library/Caches/ccache
+          key: macos-ccache
+
+      - name: configure ccache
+        run: |
+          test -d /Users/runner/Library/Preferences/ccache || mkdir /Users/runner/Library/Preferences/ccache
+          echo "max_size = 4.0G" >> /Users/runner/Library/Preferences/ccache/ccache.conf
+          ccache -s
+
       - name: Build and deploy
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
