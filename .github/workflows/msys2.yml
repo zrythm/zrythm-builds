@@ -93,8 +93,11 @@ jobs:
       - name: restore ccache
         uses: actions/cache@v3
         with:
-          path: C:/msys64/home/runneradmin/.ccache
-          key: msys2-ccache
+          #path: C:/msys64/home/runneradmin/.ccache
+          path: D:/a/_temp/msys64/home/runneradmin/.ccache
+          key: msys2-ccache-${{ github.run_id }}
+          restore-keys: |
+            msys2-ccache
 
       - name: configure ccache
         run: |
@@ -102,7 +105,7 @@ jobs:
           test -d ~/.ccache || mkdir -p ~/.ccache
           echo "max_size = 4.0G" > ~/.ccache/ccache.conf
           echo "compression = true" >> ~/.ccache/ccache.conf
-          ccache -s
+          ccache -sv
 
       - name: Build and deploy
         env:

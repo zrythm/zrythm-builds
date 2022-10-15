@@ -31,6 +31,7 @@ packages:
   - libjpeg-dev
   - libtiff-dev
   - libsndfile1-dev
+  - lilv-utils
   - meson
   - debhelper
   - devscripts
