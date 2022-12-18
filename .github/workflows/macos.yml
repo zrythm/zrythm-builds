@@ -36,19 +36,19 @@ jobs:
           git clone https://github.com/KDE/breeze-icons
           git clone https://github.com/mesonbuild/meson
 
-      - name: restore ccache
-        uses: actions/cache@v3
-        with:
-          path: /Users/runner/Library/Caches/ccache
-          key: macos-ccache-${{ github.run_id }}
-          restore-keys: |
-            macos-ccache
+      #- name: restore ccache
+        #uses: actions/cache@v3
+        #with:
+          #path: /Users/runner/Library/Caches/ccache
+          #key: macos-ccache-${{ github.run_id }}
+          #restore-keys: |
+            #macos-ccache
 
-      - name: configure ccache
-        run: |
-          test -d /Users/runner/Library/Preferences/ccache || mkdir /Users/runner/Library/Preferences/ccache
-          echo "max_size = 4.0G" >> /Users/runner/Library/Preferences/ccache/ccache.conf
-          ccache -sv
+      #- name: configure ccache
+        #run: |
+          #test -d /Users/runner/Library/Preferences/ccache || mkdir /Users/runner/Library/Preferences/ccache
+          #echo "max_size = 4.0G" >> /Users/runner/Library/Preferences/ccache/ccache.conf
+          #ccache -sv
 
       - name: Build and deploy
         env:
