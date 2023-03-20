@@ -119,7 +119,7 @@ tasks:
       sudo ninja -C build install
   - install-wayland-protocols: |
       cd deps
-      git clone https://github.com/wayland-project/wayland-protocols --depth 1 --branch=1.26
+      git clone https://gitlab.freedesktop.org/wayland/wayland-protocols.git --depth 1 --branch=1.26
       pushd wayland-protocols
       /home/build/meson/meson.py build -Dprefix=/usr
       ninja -C build
