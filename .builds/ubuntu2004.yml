@@ -142,9 +142,9 @@ tasks:
       cd deps
       git clone https://github.com/freedesktop/cairo --depth 1
       pushd cairo
-      /home/build/meson/meson.py build -Dprefix=/usr -Dtests=disabled
-      ninja -C build
-      sudo ninja -C build install
+      /home/build/meson/meson.py setup builddir -Dprefix=/usr -Dtests=disabled
+      ninja -C builddir
+      sudo ninja -C builddir install
   - install-harfbuzz: |
       cd deps
       git clone https://github.com/harfbuzz/harfbuzz --depth 1
