@@ -61,7 +61,7 @@ create_product ()
   fi
 
   product_post_json \
-    "{\"type\": \"$type_name\", \"summary\": \"$summary\", \"description\": \"$description\", \"version\": \"$zrythm_pkg_semver\", \"image_url\": \"https://www.zrythm.org/static/icons/zrythm/z_frame_8.png\", \"price_gbp\": \"12.00\"}"
+    "{\"type\": \"$type_name\", \"summary\": \"$summary\", \"description\": \"$description\", \"version\": \"$zrythm_pkg_semver\", \"image_url\": \"https://www.zrythm.org/static/icons/zrythm/z_frame_8.png\", \"price_gbp\": \"20.00\"}"
 }
 
 # prefetch the installers not on this machine
