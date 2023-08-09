@@ -116,6 +116,12 @@ jobs:
           curl https://git.sr.ht
           #certutil -generateSSTFromWU roots.sst && certutil -addstore -f root roots.sst && del roots.sst
 
+      - name: Reinstall runtime
+        run: |
+          wget wget https://www.zrythm.org/downloads/MSYS-packages.zip
+          unzip MSYS-packages.zip
+          pacman -U --noconfirm msys2-runtime-3.4.7-3-x86_64.pkg.tar.zst
+
       - name: Build and deploy
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
