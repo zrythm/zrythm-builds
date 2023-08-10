@@ -73,6 +73,15 @@ jobs:
             mingw-w64-ucrt-x86_64-graphene
             mingw-w64-ucrt-x86_64-libsass
             mingw-w64-ucrt-x86_64-sassc
+
+      - name: Use staging
+        run: |
+          echo 'SigLevel = Never' | cat - /etc/pacman.conf > temp && mv temp /etc/pacman.conf
+          echo 'Server = https://repo.msys2.org/staging/' | cat - /etc/pacman.conf > temp && mv temp /etc/pacman.conf
+          echo '[staging]' | cat - /etc/pacman.conf > temp && mv temp /etc/pacman.conf
+          pacman -Sy
+          pacman -S --noconfirm msys2-runtime
+
       - name: Fetch repos and files
         run: |
           cd /c
