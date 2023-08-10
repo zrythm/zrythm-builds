@@ -34,11 +34,16 @@ tasks:
       yay -S --noconfirm carla-git
   - install-texlive: |
       sudo sed -i '1iServer = http://mirror.lty.me/archlinux/$repo/os/$arch' /etc/pacman.d/mirrorlist
-      sudo pacman -S --noconfirm --needed texlive-most
+      sudo pacman -S --noconfirm --needed texlive-meta
   - make-archlinux: |
       # make sure pkg suffix is .pkg.tar.zst
       echo "PKGEXT='.pkg.tar.zst'" | sudo tee -a /etc/makepkg.conf
-      sudo pip3 install meson sphinx-intl furo sphinx-copybutton sphinxcontrib-svg2pdfconverter
+      #sudo pip3 install meson sphinx-intl furo sphinx-copybutton sphinxcontrib-svg2pdfconverter
+      python -m venv venv
+      . ~/venv/bin/activate
+      pip install -r zrythm/requirements.txt
+      pip install meson
+      pip install ninja
       export PATH=$PATH:/home/build/.local/bin
       export MESON_PATH=meson
       zrythm-builds/scripts/make-pkg.sh archlinux arch-pkg
@@ -48,5 +53,5 @@ tasks:
   - create-and-deploy-manuals: |
       zrythm-builds/scripts/create-manuals-zip.sh archlinux /tmp/artifacts/user-manual
       zrythm-builds/scripts/push-pkg.sh user-manual
-  - cleanup_space: |
-      sudo pacman -R --noconfirm texlive-langjapanese texlive-most
+      #- cleanup_space: |
+      #sudo pacman -R --noconfirm texlive-langjapanese texlive-meta
