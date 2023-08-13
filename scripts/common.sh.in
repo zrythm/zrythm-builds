@@ -149,6 +149,10 @@ remote_pkg_exists () {
   set -u
   filename="$(get_package_filename $distro $trial)"
   >&2 echo "checking if remote package for $distro exists $filename..."
+  if [[ "$distro" == "user-manual-pdfs" ]]; then
+    >&2 echo "ERROR: this should never be called for $distro"
+    exit 1
+  fi
   if remote_file_exists packages/$distro/$filename $connection_type ; then
     >&2 echo "exists"
     true

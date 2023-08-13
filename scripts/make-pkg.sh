@@ -91,7 +91,7 @@ fi
 echo "$distro package does not exist on server, making..."
 pushd zrythm-installer
 $ninja_path -C build install
-if is_tag ; then
+if is_tag && [[ "$distro" != *"manual"* ]]; then
   echo "tag detected, building trial..."
   $meson_path build --reconfigure -Dbuild-trial=true
   $ninja_path -C build install

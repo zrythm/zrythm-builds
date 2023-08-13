@@ -18,6 +18,8 @@
 
 # this script pushes the given package/installer to the server
 
+set -ex
+
 distro=$1
 id_rsa_path=$(pwd)/id_rsa
 
@@ -31,7 +33,24 @@ if [ "$distro" = "osx" ]; then
 fi
 
 # skip if file already exists and not a tag
-if should_skip_packaging $distro "$deploy_connection_type" ; then
+# (no skipping for manual PDFs)
+if [ "$distro" = "user-manual-pdfs" ]; then
+  exists=1
+  for lang in $linguas ; do
+    echo "checking if $lang manual exists..."
+    if remote_file_exists "manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" "$connection_type_server"; then
+      >&2 echo "found"
+    else
+      >&2 echo "does not exist"
+      exists=0
+      break
+    fi
+  done
+  if [ $exists -eq 1 ]; then
+    echo "PDF manuals already exist - skipping"
+    exit 0 ;
+  fi
+elif should_skip_packaging $distro "$deploy_connection_type" ; then
   exit 0 ;
 fi
 
@@ -52,19 +71,8 @@ deploy_pkg () {
   echo "done"
 }
 
-# deploy normal package
-deploy_pkg "$pkg_filename" "$deploy_connection_type"
-
-# also deploy trial if tag
-if is_tag && [[ "$distro" != "user-manual" ]]; then
-  echo "deploying trial package"
-  deploy_pkg "$pkg_trial_filename" "$connection_type_server"
-  #add_file_tag "packages/$distro/$pkg_trial_filename" \
-    #"public" "yes"
-fi
-
-# if arch, also deploy manuals
-if [ "$distro" = "archlinux" ]; then
+# deploy manuals if building user-manual-pdfs
+if [ "$distro" = "user-manual-pdfs" ]; then
   for lang in $linguas ; do
     echo "deploying $lang manual..."
     send_file \
@@ -73,4 +81,15 @@ if [ "$distro" = "archlinux" ]; then
       "$connection_type_server"
     echo "done"
   done
+else
+  # deploy normal package
+  deploy_pkg "$pkg_filename" "$deploy_connection_type"
+
+  # also deploy trial if tag
+  if is_tag && [[ "$distro" != "user-manual-zip" ]]; then
+    echo "deploying trial package"
+    deploy_pkg "$pkg_trial_filename" "$connection_type_server"
+    #add_file_tag "packages/$distro/$pkg_trial_filename" \
+      #"public" "yes"
+  fi
 fi
