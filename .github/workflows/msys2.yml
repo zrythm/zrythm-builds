@@ -73,8 +73,13 @@ jobs:
             mingw-w64-ucrt-x86_64-graphene
             mingw-w64-ucrt-x86_64-libsass
             mingw-w64-ucrt-x86_64-sassc
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+
+      # Use the following to inject a tmate session to SSH and debug
+      # things
+      # TODO check docs for more usage tips (e.g. ssh on failure)
+      #- name: Setup tmate session
+        #uses: mxschmitt/action-tmate@v3
+
       - name: Fetch repos and files
         run: |
           cd /c

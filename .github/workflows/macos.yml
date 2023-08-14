@@ -36,6 +36,12 @@ jobs:
           git clone https://github.com/KDE/breeze-icons
           git clone https://github.com/mesonbuild/meson
 
+      # Use the following to inject a tmate session to SSH and debug
+      # things
+      # TODO check docs for more usage tips (e.g. ssh on failure)
+      #- name: Setup tmate session
+        #uses: mxschmitt/action-tmate@v3
+
       #- name: restore ccache
         #uses: actions/cache@v3
         #with:
