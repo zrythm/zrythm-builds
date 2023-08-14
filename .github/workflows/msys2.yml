@@ -73,6 +73,8 @@ jobs:
             mingw-w64-ucrt-x86_64-graphene
             mingw-w64-ucrt-x86_64-libsass
             mingw-w64-ucrt-x86_64-sassc
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
       - name: Fetch repos and files
         run: |
           cd /c
@@ -88,7 +90,7 @@ jobs:
           #unzip inno-setup-bin.zip -d ~/
       - name: Install AWSCLI
         run: |
-          pip install awscli pip-system-certs
+          /ucrt64/bin/pip install awscli pip-system-certs
 
       - name: restore ccache
         uses: actions/cache@v3
