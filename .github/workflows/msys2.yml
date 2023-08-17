@@ -69,6 +69,7 @@ jobs:
             mingw-w64-ucrt-x86_64-vamp-plugin-sdk
             mingw-w64-ucrt-x86_64-json-glib
             mingw-w64-ucrt-x86_64-iconv
+            mingw-w64-ucrt-x86_64-libsoxr
             mingw-w64-ucrt-x86_64-lv2
             mingw-w64-ucrt-x86_64-graphene
             mingw-w64-ucrt-x86_64-libsass
