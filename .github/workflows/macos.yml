@@ -56,6 +56,15 @@ jobs:
           #echo "max_size = 4.0G" >> /Users/runner/Library/Preferences/ccache/ccache.conf
           #ccache -sv
 
+      # Use the following to inject a tmate session to SSH and debug
+      # things
+      - name: Setup tmate session
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_enabled }}
+        uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
+          detached: true
+
       - name: Build and deploy
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -68,12 +77,3 @@ jobs:
           zrythm-builds/scripts/make-pkg.sh osx-brew-zip osx-brew-prepare
           zrythm-builds/scripts/make-pkg.sh osx-brew-zip
           zrythm-builds/scripts/push-pkg.sh osx-brew-zip
-
-      # Use the following to inject a tmate session to SSH and debug
-      # things
-      - name: Setup tmate session
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_enabled }}
-        uses: mxschmitt/action-tmate@v3
-        with:
-          limit-access-to-actor: true
-          detached: true
