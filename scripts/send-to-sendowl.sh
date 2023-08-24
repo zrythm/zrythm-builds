@@ -70,8 +70,8 @@ prefetch () {
     ! remote_pkg_exists "osx-brew-zip" "$connection_type_aws" \
     || ! remote_pkg_exists "windows-msys" "$connection_type_aws" \
     || ! remote_pkg_exists "gnu-linux" "$connection_type_aws" \
-    || ! remote_pkg_exists "user-manual-zip" "$connection_type_aws" \
-    || ! remote_pkg_exists "flatpak" "$connection_type_aws" ; do
+    || ! remote_pkg_exists "user-manual-zip" "$connection_type_aws" ; do
+    #|| ! remote_pkg_exists "flatpak" "$connection_type_aws" ; do
     >&2 echo "final packages don't exist. waiting to check again..."
     sleep 24
   done
