@@ -38,7 +38,7 @@ if [ "$distro" = "user-manual-pdfs" ]; then
   exists=1
   for lang in $linguas ; do
     echo "checking if $lang manual exists..."
-    if remote_file_exists "manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" "$connection_type_server"; then
+    if remote_file_exists "manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" "$connection_type_aws"; then
       >&2 echo "found"
     else
       >&2 echo "does not exist"
@@ -78,7 +78,7 @@ if [ "$distro" = "user-manual-pdfs" ]; then
     send_file \
       "zrythm-installer/build/arch/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
       "manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
-      "$connection_type_server"
+      "$connection_type_aws"
     echo "done"
   done
 else
@@ -88,7 +88,7 @@ else
   # also deploy trial if tag
   if is_tag && [[ "$distro" != "user-manual-zip" ]]; then
     echo "deploying trial package"
-    deploy_pkg "$pkg_trial_filename" "$connection_type_server"
+    deploy_pkg "$pkg_trial_filename" "$connection_type_aws"
     #add_file_tag "packages/$distro/$pkg_trial_filename" \
       #"public" "yes"
   fi
