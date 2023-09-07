@@ -87,9 +87,9 @@ jobs:
           mkdir src
           cd src
           pwd
-          git clone https://git.sr.ht/~alextee/zrythm
-          git clone https://git.sr.ht/~alextee/zrythm-builds
-          git clone https://git.sr.ht/~alextee/zrythm-installer
+          git clone https://gitlab.zrythm.org/zrythm/zrythm
+          git clone https://gitlab.zrythm.org/zrythm/zrythm-builds
+          git clone https://gitlab.zrythm.org/zrythm/zrythm-installer
           git clone https://github.com/KDE/breeze-icons
           git clone https://github.com/mesonbuild/meson
           #wget https://www.zrythm.org/downloads/inno-setup-bin.zip
@@ -121,7 +121,7 @@ jobs:
           # run a dummy download to force refreshing Windows' CA database.
           # See: https://bugs.python.org/issue36137
           curl https://github.com
-          curl https://git.sr.ht
+          curl https://gitlab.zrythm.org
           #certutil -generateSSTFromWU roots.sst && certutil -addstore -f root roots.sst && del roots.sst
 
       # Use the following to inject a tmate session to SSH and debug

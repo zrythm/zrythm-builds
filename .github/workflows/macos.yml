@@ -35,10 +35,9 @@ jobs:
       - name: Fetch repos and files
         run: |
           pwd
-          git clone https://git.sr.ht/~alextee/mxe
-          git clone https://git.sr.ht/~alextee/zrythm
-          git clone https://git.sr.ht/~alextee/zrythm-builds
-          git clone --recursive https://git.sr.ht/~alextee/zrythm-installer
+          git clone https://gitlab.zrythm.org/zrythm/zrythm
+          git clone https://gitlab.zrythm.org/zrythm/zrythm-builds
+          git clone --recursive https://gitlab.zrythm.org/zrythm/zrythm-installer
           git clone https://github.com/KDE/breeze-icons
           git clone https://github.com/mesonbuild/meson
 
