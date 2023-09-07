@@ -32,7 +32,7 @@ while true; do
   wait_more=0
   for lang in $linguas ; do
     echo "checking if $lang manual exists..."
-    if remote_file_exists "manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" "$connection_type_server"; then
+    if remote_file_exists "manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" "$deploy_connection_type"; then
       >&2 echo "found"
     else
       >&2 echo "does not exist"
@@ -48,7 +48,7 @@ for lang in $linguas ; do
   echo "fetching $lang manual..."
   fetch_file "manual/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
     "$dest_path/Zrythm-$zrythm_pkg_ver-$lang.pdf" \
-    "$connection_type_server"
+    "$deploy_connection_type"
   echo "done"
 done
 

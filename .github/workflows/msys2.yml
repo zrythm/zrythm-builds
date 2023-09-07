@@ -69,6 +69,10 @@ jobs:
             mingw-w64-ucrt-x86_64-toolchain
             mingw-w64-ucrt-x86_64-adwaita-icon-theme
             mingw-w64-ucrt-x86_64-curl-winssl
+            mingw-w64-ucrt-x86_64-gperf
+            mingw-w64-ucrt-x86_64-libxmlb
+            mingw-w64-ucrt-x86_64-libxslt
+            mingw-w64-ucrt-x86_64-itstool
             mingw-w64-ucrt-x86_64-pcre
             mingw-w64-ucrt-x86_64-pcre2
             mingw-w64-ucrt-x86_64-xxhash
