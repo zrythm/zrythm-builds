@@ -37,6 +37,7 @@ jobs:
             mingw-w64-i686-toolchain
             mingw-w64-i686-fluidsynth
             mingw-w64-i686-libogg
+            mingw-w64-ucrt-x86_64-appstream
             mingw-w64-ucrt-x86_64-ccache
             mingw-w64-ucrt-x86_64-toolchain
             mingw-w64-ucrt-x86_64-libsamplerate
