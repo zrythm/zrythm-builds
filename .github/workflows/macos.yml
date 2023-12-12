@@ -26,13 +26,15 @@ jobs:
           echo "installing deps"
           # use || true because it returns 1
           brew install ccache curl gnu-sed fftw meson libsamplerate sdl2 lilv librsvg adwaita-icon-theme gtk+3 guile gtksourceview5 graphviz zstd npm rt-audio rtmidi jack qjackctl cmake pcre2 libsass glib-utils || true
-          brew install brotli xxhash awscli vamp-plugin-sdk json-glib boost libsoxr gperf libxslt libxmlb itstool yyjson || true
+          brew install brotli xxhash vamp-plugin-sdk json-glib boost libsoxr gperf libxslt libxmlb itstool yyjson || true
           echo "linking python"
           brew link --overwrite python
           #npm install -g appdmg
           echo "installing cmake"
           pip3 install --user scikit-build
           pip3 install --user cmake
+          echo "installing awscli"
+          pip3 install --user awscli
       - name: Fetch repos and files
         run: |
           pwd
