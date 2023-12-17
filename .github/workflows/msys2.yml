@@ -79,7 +79,6 @@ jobs:
             mingw-w64-ucrt-x86_64-pcre2
             mingw-w64-ucrt-x86_64-xxhash
             mingw-w64-ucrt-x86_64-vamp-plugin-sdk
-            mingw-w64-ucrt-x86_64-json-glib
             mingw-w64-ucrt-x86_64-iconv
             mingw-w64-ucrt-x86_64-libsoxr
             mingw-w64-ucrt-x86_64-lv2
