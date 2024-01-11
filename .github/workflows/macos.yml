@@ -25,7 +25,7 @@ jobs:
           brew update || true
           echo "installing deps"
           # use || true because it returns 1
-          brew install ccache curl gnu-sed fftw meson libsamplerate sdl2 lilv librsvg adwaita-icon-theme gtk+3 guile gtksourceview5 graphviz zstd npm rt-audio rtmidi jack qjackctl cmake pcre2 libsass glib-utils || true
+          brew install ccache curl gnu-sed fftw meson libsamplerate sdl2 lilv librsvg adwaita-icon-theme gtk+3 guile gtksourceview5 graphviz zstd npm rt-audio rtmidi jack qjackctl cmake pcre pcre2 libsass glib-utils || true
           brew install brotli xxhash vamp-plugin-sdk boost libsoxr gperf libxslt libxmlb itstool yyjson shaderc || true
           echo "linking python"
           brew link --overwrite python
