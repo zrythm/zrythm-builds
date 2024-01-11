@@ -85,6 +85,7 @@ jobs:
             mingw-w64-ucrt-x86_64-graphene
             mingw-w64-ucrt-x86_64-libsass
             mingw-w64-ucrt-x86_64-sassc
+            mingw-w64-ucrt-x86_64-shaderc
 
       - name: Fetch repos and files
         run: |
