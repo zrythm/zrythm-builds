@@ -84,6 +84,7 @@ jobs:
             mingw-w64-ucrt-x86_64-lv2
             mingw-w64-ucrt-x86_64-graphene
             mingw-w64-ucrt-x86_64-libsass
+            mingw-w64-ucrt-x86_64-rtmidi
             mingw-w64-ucrt-x86_64-sassc
             mingw-w64-ucrt-x86_64-shaderc
             mingw-w64-ucrt-x86_64-vulkan-devel
