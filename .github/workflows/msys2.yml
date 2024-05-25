@@ -89,6 +89,7 @@ jobs:
             mingw-w64-ucrt-x86_64-shaderc
             mingw-w64-ucrt-x86_64-vulkan-devel
             mingw-w64-ucrt-x86_64-blueprint-compiler
+            mingw-w64-ucrt-x86_64-ca-certificates
 
       - name: Fetch repos and files
         run: |
