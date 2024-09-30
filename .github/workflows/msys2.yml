@@ -90,6 +90,8 @@ jobs:
             mingw-w64-ucrt-x86_64-vulkan-devel
             mingw-w64-ucrt-x86_64-blueprint-compiler
             mingw-w64-ucrt-x86_64-ca-certificates
+            mingw-w64-ucrt-x86_64-libadwaita
+            mingw-w64-ucrt-x86_64-gtkmm-4.0
 
       - name: Fetch repos and files
         run: |
