@@ -29,6 +29,11 @@ if [ "$MESON_PATH" = "" ]; then
 else
   meson_path="$MESON_PATH"
 fi
+if [ "$CMAKE_PATH" = "" ]; then
+  cmake_path="cmake"
+else
+  cmake_path="$CMAKE_PATH"
+fi
 if [ "$NINJA_PATH" = "" ]; then
   ninja_path=ninja
 else
@@ -45,7 +50,7 @@ if [ -d "build" ]; then
 fi
 _locales=`join_by , $linguas`
 zrythm_git_ver="$(git ls-remote https://gitlab.zrythm.org/zrythm/zrythm HEAD | awk '{print $1;}')"
-$meson_path build $reconfigure -Dmeson-path=$meson_path \
+$meson_path build $reconfigure -Dmeson-path=$meson_path -Dcmake-path=$cmake_path \
   -Dzrythm-git-ver=$zrythm_git_ver -Dzrythm-pkg-ver=$zrythm_pkg_ver \
   -Dzrythm-pkg-semver=$zrythm_pkg_semver \
   -Dbreeze-dark-path="$parent_dir/breeze-icons/icons-dark" -Ddistro=$distro \
