@@ -14,8 +14,8 @@ on:
 
 jobs:
   build:
-    runs-on: macos-13
-    timeout-minutes: 140
+    runs-on: macos-14
+    timeout-minutes: 100
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
