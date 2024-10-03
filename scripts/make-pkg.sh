@@ -44,7 +44,7 @@ if [ -d "build" ]; then
   reconfigure="--reconfigure"
 fi
 _locales=`join_by , $linguas`
-zrythm_git_ver="$(git ls-remote https://gitlab.zrythm.org/zrythm/zrythm HEAD | awk '{print $1;}')"
+zrythm_git_ver="$(git ls-remote https://gitlab.zrythm.org/zrythm/zrythm v1 | awk '{print $1;}')"
 $meson_path build $reconfigure -Dmeson-path=$meson_path \
   -Dzrythm-git-ver=$zrythm_git_ver -Dzrythm-pkg-ver=$zrythm_pkg_ver \
   -Dzrythm-pkg-semver=$zrythm_pkg_semver \
