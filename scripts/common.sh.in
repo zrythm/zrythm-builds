@@ -57,6 +57,7 @@ connection_type_server="server" # own server
 connection_type_aws="aws" # aws s3
 set +e
 pushd zrythm
+git checkout v1 # use v1 branch
 git describe --tags --exact-match && true || false
 _is_tag=$?
 popd
